@@ -17,12 +17,12 @@ Project scaffolding and data groundwork.
 
 A hiker can *see* every water source in the Vercors.
 
-- [ ] MapLibre map, PMTiles/Protomaps basemap, centered on the Vercors
-- [ ] Sources rendered with status colors (all `unknown` gray at this point) and type icons
-- [ ] Source detail sheet: name, type, elevation, description, status placeholder
-- [ ] Geolocation: center-on-me
-- [ ] `GET /api/v1/sources` snapshot endpoint
-- [ ] Mobile-first layout, OSM attribution
+- [x] MapLibre map, PMTiles/Protomaps basemap, centered on the Vercors
+- [x] Sources rendered with status colors (all `unknown` gray at this point) and type icons
+- [x] Source detail sheet: name, type, elevation, description, status placeholder
+- [x] Geolocation: center-on-me
+- [x] `GET /api/v1/sources` snapshot endpoint
+- [x] Mobile-first layout, OSM attribution
 
 **Exit:** shareable URL where anyone can browse Vercors water sources on their phone.
 
