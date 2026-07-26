@@ -1,0 +1,6933 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-07-26T11:26:50Z",
+    "timestamp_areas_base": "2026-05-12T07:36:16Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "node",
+  "id": 289310942,
+  "lat": 45.0516445,
+  "lon": 5.4495458,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "bottle": "yes",
+    "check_date": "2022-07-15",
+    "fee": "no",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 333095736,
+  "lat": 45.0697188,
+  "lon": 5.5499644,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "check_date": "2023-10-12",
+    "covered": "no",
+    "fee": "no",
+    "indoor": "no",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 444665839,
+  "lat": 45.0074782,
+  "lon": 5.5855094,
+  "tags": {
+    "description": "Tuyau de captage cassé dans la roche. Ne coule plus depuis des années.",
+    "intermittent": "yes",
+    "name": "Source des Clos",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 457482156,
+  "lat": 45.0065508,
+  "lon": 5.5843679,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 481317238,
+  "lat": 44.9748488,
+  "lon": 5.6200659,
+  "tags": {
+    "amenity": "drinking_water",
+    "fountain": "drinking",
+    "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre ; mise à jour :2008"
+  }
+},
+{
+  "type": "node",
+  "id": 488244817,
+  "lat": 44.9743993,
+  "lon": 5.6188845,
+  "tags": {
+    "amenity": "drinking_water",
+    "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre ; mise à jour :2008"
+  }
+},
+{
+  "type": "node",
+  "id": 488244821,
+  "lat": 44.9740311,
+  "lon": 5.6198962,
+  "tags": {
+    "amenity": "drinking_water",
+    "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre ; mise à jour :2008"
+  }
+},
+{
+  "type": "node",
+  "id": 512562875,
+  "lat": 45.1552002,
+  "lon": 5.5673950,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 512562903,
+  "lat": 45.1777529,
+  "lon": 5.6151509,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 512562916,
+  "lat": 45.1769286,
+  "lon": 5.6186083,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "fee": "no",
+    "man_made": "water_tap",
+    "source": "RTK GNSS",
+    "survey:date": "2023-04-22"
+  }
+},
+{
+  "type": "node",
+  "id": 560739840,
+  "lat": 45.1257261,
+  "lon": 5.6448630,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 763448065,
+  "lat": 44.9990476,
+  "lon": 5.6294621,
+  "tags": {
+    "amenity": "fountain",
+    "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre ; mise à jour : 2010"
+  }
+},
+{
+  "type": "node",
+  "id": 831734484,
+  "lat": 45.1263607,
+  "lon": 5.5999819,
+  "tags": {
+    "amenity": "fountain",
+    "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre ; mise à jour : 2010"
+  }
+},
+{
+  "type": "node",
+  "id": 831763541,
+  "lat": 45.1711358,
+  "lon": 5.6316121,
+  "tags": {
+    "amenity": "drinking_water",
+    "check_date": "2023-03-18",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 831933798,
+  "lat": 45.1717374,
+  "lon": 5.6677494,
+  "tags": {
+    "amenity": "drinking_water",
+    "check_date": "2023-05-01",
+    "man_made": "water_tap",
+    "source": "RTK GNSS"
+  }
+},
+{
+  "type": "node",
+  "id": 892892581,
+  "lat": 44.7768499,
+  "lon": 5.1431863,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 966016732,
+  "lat": 45.2485729,
+  "lon": 5.6287872,
+  "tags": {
+    "amenity": "fountain",
+    "name": "Circuit des Fontaines",
+    "ref": "9 - Léon Porte",
+    "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre;mise à jour :2010"
+  }
+},
+{
+  "type": "node",
+  "id": 970400856,
+  "lat": 45.2179870,
+  "lon": 5.6480607,
+  "tags": {
+    "natural": "spring",
+    "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre ; mise à jour : 2010"
+  }
+},
+{
+  "type": "node",
+  "id": 989072397,
+  "lat": 45.0553915,
+  "lon": 5.4369317,
+  "tags": {
+    "drinking_water": "no",
+    "name": "Source de Moulin Marquis",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 1000814884,
+  "lat": 44.8257142,
+  "lon": 5.4822561,
+  "tags": {
+    "drinking_water": "yes",
+    "ele": "1610",
+    "mapillary": "505657044117037",
+    "name": "Fontaine des Endettés",
+    "natural": "spring",
+    "ref:refuges.info": "1182"
+  }
+},
+{
+  "type": "node",
+  "id": 1024678726,
+  "lat": 45.0790418,
+  "lon": 5.6145533,
+  "tags": {
+    "amenity": "drinking_water",
+    "ele": "1622",
+    "name": "Source du Col de l'Arc",
+    "natural": "spring",
+    "ref:refuges.info": "2683"
+  }
+},
+{
+  "type": "node",
+  "id": 1037567078,
+  "lat": 44.9007992,
+  "lon": 5.5657821,
+  "tags": {
+    "amenity": "fountain",
+    "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre ; mise à jour : 2010"
+  }
+},
+{
+  "type": "node",
+  "id": 1037594182,
+  "lat": 44.9019616,
+  "lon": 5.5666329,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "no",
+    "fountain": "decorative",
+    "lit": "yes",
+    "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre;mise à jour : 2010"
+  }
+},
+{
+  "type": "node",
+  "id": 1037611916,
+  "lat": 44.9018957,
+  "lon": 5.5654658,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 1037805407,
+  "lat": 44.8952256,
+  "lon": 5.5767657,
+  "tags": {
+    "amenity": "fountain",
+    "source": "GPS"
+  }
+},
+{
+  "type": "node",
+  "id": 1061347170,
+  "lat": 44.8343866,
+  "lon": 5.4714008,
+  "tags": {
+    "ele": "1615",
+    "intermittent": "yes",
+    "name": "Fontaine de la plante",
+    "natural": "spring",
+    "ref:refuges.info": "4824"
+  }
+},
+{
+  "type": "node",
+  "id": 1061347315,
+  "lat": 44.8712787,
+  "lon": 5.5089643,
+  "tags": {
+    "description": "2012-07 : Un panneau signale qu'elle karstique (ne filtre pas bien) : utiliser des pastilles désinfectantes en période d'élevage",
+    "ele": "1690",
+    "intermittent": "yes",
+    "name": "Source des Serrons",
+    "natural": "spring",
+    "ref:refuges.info": "1210"
+  }
+},
+{
+  "type": "node",
+  "id": 1126284224,
+  "lat": 45.0965018,
+  "lon": 5.4194274,
+  "tags": {
+    "amenity": "drinking_water",
+    "name": "Fontaine de Pétouze"
+  }
+},
+{
+  "type": "node",
+  "id": 1174735492,
+  "lat": 44.9650754,
+  "lon": 5.5252268,
+  "tags": {
+    "name": "Source du Bénitier",
+    "natural": "spring",
+    "note": "toponymie incertaine (bivouak.net)",
+    "ref:refuges.info": "8524"
+  }
+},
+{
+  "type": "node",
+  "id": 1174735494,
+  "lat": 44.7822528,
+  "lon": 5.5088868,
+  "tags": {
+    "description": "Eau stagnante, probablement non potable",
+    "drinking_water": "no",
+    "intermittent": "yes",
+    "name": "Fontaine Pourrie",
+    "natural": "spring",
+    "ref:refuges.info": "4129"
+  }
+},
+{
+  "type": "node",
+  "id": 1255446640,
+  "lat": 44.8048547,
+  "lon": 5.5137280,
+  "tags": {
+    "ele": "1690",
+    "intermittent": "yes",
+    "name": "Source Chevalière",
+    "natural": "spring",
+    "ref:refuges.info": "1967"
+  }
+},
+{
+  "type": "node",
+  "id": 1297487393,
+  "lat": 44.8884827,
+  "lon": 5.5095111,
+  "tags": {
+    "ele": "1620",
+    "intermittent": "yes",
+    "name": "Fontaine de la Chau",
+    "natural": "spring",
+    "ref:refuges.info": "1702"
+  }
+},
+{
+  "type": "node",
+  "id": 1297487406,
+  "lat": 44.9052794,
+  "lon": 5.5102822,
+  "tags": {
+    "drinking_water": "yes",
+    "ele": "1670",
+    "name": "Fontaine du Play",
+    "natural": "spring",
+    "ref:refuges.info": "1198"
+  }
+},
+{
+  "type": "node",
+  "id": 1297696675,
+  "lat": 44.8462552,
+  "lon": 5.5183709,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "description": "Deux sources à une vingtaine de mètres l'une de l'autre avec bassins en bois.\n2024-07-27. La source du bas coule très peu. La source du haut coule bien, 46 secondes pour 1L.",
+    "drinking_water": "no",
+    "ele": "1960",
+    "name": "Fontaine du Pas des Bachassons",
+    "ref:refuges.info": "1228",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 1297696685,
+  "lat": 44.9889904,
+  "lon": 5.4995667,
+  "tags": {
+    "drinking_water": "no",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 1297696708,
+  "lat": 44.9229561,
+  "lon": 5.4836883,
+  "tags": {
+    "description": "d'après un randonneur en automne 2024 \"il semble avoir peu ou pas d'eau ici, actuellement c'est un peu humide, pas assez pour boire\"\nmai 2026 : un peu humide, pas d'eau qui coule.",
+    "drinking_water": "yes",
+    "fixme": "Source qui ne coule pas, même à la fonte des neiges. A retirer ?",
+    "intermittent": "yes",
+    "name": "Fontaine de Tiolache",
+    "name:en": "Tiolache's fountain",
+    "natural": "spring",
+    "ref:refuges.info": "1200"
+  }
+},
+{
+  "type": "node",
+  "id": 1322026408,
+  "lat": 45.1506155,
+  "lon": 5.6338053,
+  "tags": {
+    "amenity": "drinking_water",
+    "name": "Source de Moucherotte",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 1340158877,
+  "lat": 44.7940789,
+  "lon": 5.6587876,
+  "tags": {
+    "amenity": "drinking_water",
+    "fountain": "drinking",
+    "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre ; mise à jour : 2011"
+  }
+},
+{
+  "type": "node",
+  "id": 1361471508,
+  "lat": 44.9938678,
+  "lon": 5.5444714,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 1371293699,
+  "lat": 45.0282413,
+  "lon": 5.3262348,
+  "tags": {
+    "amenity": "drinking_water",
+    "drinking_water": "yes",
+    "drinking_water:legal": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 1371315071,
+  "lat": 45.1592447,
+  "lon": 5.6647283,
+  "tags": {
+    "amenity": "drinking_water",
+    "ele": "598"
+  }
+},
+{
+  "type": "node",
+  "id": 1445662320,
+  "lat": 44.9751709,
+  "lon": 5.5720985,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 1460132278,
+  "lat": 44.6959052,
+  "lon": 5.4848555,
+  "tags": {
+    "amenity": "drinking_water",
+    "survey:date": "2020-04-09"
+  }
+},
+{
+  "type": "node",
+  "id": 1468012175,
+  "lat": 45.0246452,
+  "lon": 5.5175807,
+  "tags": {
+    "amenity": "drinking_water",
+    "ref:refuges.info": "1750"
+  }
+},
+{
+  "type": "node",
+  "id": 1510078702,
+  "lat": 45.2079020,
+  "lon": 5.6170608,
+  "tags": {
+    "name": "Sornin",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 1536566700,
+  "lat": 45.1459825,
+  "lon": 5.6181237,
+  "tags": {
+    "drinking_water": "no",
+    "natural": "spring",
+    "source": "survey"
+  }
+},
+{
+  "type": "node",
+  "id": 1548800274,
+  "lat": 45.1704887,
+  "lon": 5.6302987,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap",
+    "survey:date": "2025-06-12"
+  }
+},
+{
+  "type": "node",
+  "id": 1590423744,
+  "lat": 44.8347077,
+  "lon": 5.0818173,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 1700149739,
+  "lat": 45.2713977,
+  "lon": 5.6133275,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 1700149809,
+  "lat": 45.2551316,
+  "lon": 5.5861625,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 1780075736,
+  "lat": 45.2079581,
+  "lon": 5.6170936,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "fee": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 1852029312,
+  "lat": 44.8671984,
+  "lon": 5.4753398,
+  "tags": {
+    "name": "Fontaine de Gerland",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 1853302544,
+  "lat": 44.6942264,
+  "lon": 5.4846351,
+  "tags": {
+    "amenity": "drinking_water",
+    "check_date": "2024-05-17",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 1853302545,
+  "lat": 44.6944408,
+  "lon": 5.4848213,
+  "tags": {
+    "amenity": "drinking_water",
+    "indoor": "no",
+    "man_made": "water_tap",
+    "survey:date": "2020-04-09"
+  }
+},
+{
+  "type": "node",
+  "id": 1853302546,
+  "lat": 44.6949511,
+  "lon": 5.4841138,
+  "tags": {
+    "amenity": "drinking_water",
+    "indoor": "no",
+    "man_made": "water_tap",
+    "survey:date": "2020-04-09"
+  }
+},
+{
+  "type": "node",
+  "id": 1853302547,
+  "lat": 44.6947184,
+  "lon": 5.4849167,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap",
+    "survey:date": "2020-04-09"
+  }
+},
+{
+  "type": "node",
+  "id": 1854577589,
+  "lat": 44.6944217,
+  "lon": 5.4898450,
+  "tags": {
+    "amenity": "drinking_water",
+    "survey:date": "2020-04-09"
+  }
+},
+{
+  "type": "node",
+  "id": 1854598107,
+  "lat": 44.6951978,
+  "lon": 5.4861918,
+  "tags": {
+    "amenity": "drinking_water",
+    "fountain": "drinking",
+    "survey:date": "2020-04-09"
+  }
+},
+{
+  "type": "node",
+  "id": 1854611374,
+  "lat": 44.6955848,
+  "lon": 5.4846656,
+  "tags": {
+    "amenity": "drinking_water",
+    "check_date": "2026-05-17",
+    "fountain": "drinking"
+  }
+},
+{
+  "type": "node",
+  "id": 1854631120,
+  "lat": 44.6946887,
+  "lon": 5.4845396,
+  "tags": {
+    "amenity": "drinking_water",
+    "fountain": "drinking",
+    "indoor": "no",
+    "survey:date": "2020-04-09"
+  }
+},
+{
+  "type": "node",
+  "id": 1855613964,
+  "lat": 44.6955518,
+  "lon": 5.4827761,
+  "tags": {
+    "amenity": "drinking_water",
+    "check_date": "2026-05-17",
+    "fountain": "drinking"
+  }
+},
+{
+  "type": "node",
+  "id": 1855632231,
+  "lat": 44.6951780,
+  "lon": 5.4831813,
+  "tags": {
+    "amenity": "drinking_water",
+    "check_date": "2026-05-17",
+    "fountain": "drinking"
+  }
+},
+{
+  "type": "node",
+  "id": 1858885858,
+  "lat": 44.6934149,
+  "lon": 5.4851692,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap",
+    "survey:date": "2020-04-09"
+  }
+},
+{
+  "type": "node",
+  "id": 1871486193,
+  "lat": 45.0743870,
+  "lon": 5.2831852,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 1940094645,
+  "lat": 44.7686148,
+  "lon": 5.2838557,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 1945588747,
+  "lat": 44.9112604,
+  "lon": 5.1933503,
+  "tags": {
+    "amenity": "drinking_water",
+    "check_date": "2022-05-14",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 2119534631,
+  "lat": 45.1656792,
+  "lon": 5.5773950,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 2145142590,
+  "lat": 45.1702114,
+  "lon": 5.4119106,
+  "tags": {
+    "amenity": "fountain",
+    "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre ; mise à jour :2012"
+  }
+},
+{
+  "type": "node",
+  "id": 2159544970,
+  "lat": 44.7533723,
+  "lon": 5.3731872,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 2159544972,
+  "lat": 44.7534116,
+  "lon": 5.3719764,
+  "tags": {
+    "amenity": "drinking_water",
+    "check_date": "2026-04-23",
+    "man_made": "water_tap",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 2258082544,
+  "lat": 44.7550331,
+  "lon": 5.3695306,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 2295129700,
+  "lat": 44.6609786,
+  "lon": 5.7001602,
+  "tags": {
+    "amenity": "fountain",
+    "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre. Mise à jour : 2013"
+  }
+},
+{
+  "type": "node",
+  "id": 2295130406,
+  "lat": 44.6656528,
+  "lon": 5.7054613,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "yes",
+    "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre. Mise à jour : 2013"
+  }
+},
+{
+  "type": "node",
+  "id": 2335009726,
+  "lat": 45.0169458,
+  "lon": 5.6134232,
+  "tags": {
+    "amenity": "drinking_water",
+    "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre ; mise à jour :2012"
+  }
+},
+{
+  "type": "node",
+  "id": 2357112661,
+  "lat": 44.8070132,
+  "lon": 5.5135754,
+  "tags": {
+    "description": "2024-07-28 12 secondes pour 1 littre",
+    "ele": "1603",
+    "name": "Source de la bergerie des Chaumailloux",
+    "natural": "spring",
+    "ref:refuges.info": "5818",
+    "source": "gps"
+  }
+},
+{
+  "type": "node",
+  "id": 2377388972,
+  "lat": 45.2064684,
+  "lon": 5.6595055,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "bottle": "no",
+    "fee": "no",
+    "heritage": "3",
+    "heritage:operator": "mhs",
+    "historic": "wayside_cross",
+    "man_made": "water_tap",
+    "mhs:inscription_date": "1943-06-09",
+    "name": "Fontaine",
+    "ref:mhs": "PA00117283",
+    "source:heritage": "data.gouv.fr:Ministère de la Culture - 04/2015",
+    "wheelchair": "yes",
+    "wikidata": "Q22967056"
+  }
+},
+{
+  "type": "node",
+  "id": 2377388986,
+  "lat": 45.2073142,
+  "lon": 5.6586336,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "bottle": "yes",
+    "drinking_water:seasonal": "yes",
+    "fee": "no",
+    "man_made": "water_well",
+    "pump": "manual",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 2378347668,
+  "lat": 44.7934668,
+  "lon": 5.4693163,
+  "tags": {
+    "drinking_water": "yes",
+    "ele": "1620",
+    "name": "Fontaine des Bachassons",
+    "natural": "spring",
+    "note": "Source Karstique périodiquement non potable.\nCoule bien au 23/05/26",
+    "ref:refuges.info": "1215"
+  }
+},
+{
+  "type": "node",
+  "id": 2378349212,
+  "lat": 44.7458464,
+  "lon": 5.5045687,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 2379604090,
+  "lat": 45.2105797,
+  "lon": 5.6431129,
+  "tags": {
+    "amenity": "drinking_water",
+    "check_date": "2023-10-23",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 2405735114,
+  "lat": 45.0601442,
+  "lon": 5.3435498,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 2405937508,
+  "lat": 45.1216756,
+  "lon": 5.3379307,
+  "tags": {
+    "access": "customers",
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 2405937512,
+  "lat": 45.1222054,
+  "lon": 5.3382415,
+  "tags": {
+    "access": "customers",
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 2415184056,
+  "lat": 44.8276161,
+  "lon": 5.6248245,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 2415184209,
+  "lat": 44.8321260,
+  "lon": 5.6087628,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 2425360735,
+  "lat": 44.8133243,
+  "lon": 5.1649984,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 2425376812,
+  "lat": 44.8927261,
+  "lon": 5.2534138,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 2428860526,
+  "lat": 45.0811952,
+  "lon": 5.6263333,
+  "tags": {
+    "drinking_water": "yes",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 2429635434,
+  "lat": 44.8362141,
+  "lon": 5.3500012,
+  "tags": {
+    "amenity": "drinking_water",
+    "check_date": "2023-09-24",
+    "fountain": "drinking",
+    "indoor": "no",
+    "name": "Fontaine du Plainet",
+    "source": "survey"
+  }
+},
+{
+  "type": "node",
+  "id": 2429635503,
+  "lat": 44.9357825,
+  "lon": 5.4318425,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "bottle": "yes",
+    "check_date": "2024-04-10",
+    "fee": "no",
+    "fountain": "stone_block",
+    "indoor": "no",
+    "intermittent": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 2429635556,
+  "lat": 45.0212503,
+  "lon": 5.4425225,
+  "tags": {
+    "amenity": "drinking_water",
+    "bottle": "yes",
+    "description": "Fontaine",
+    "fee": "no",
+    "fountain": "drinking",
+    "indoor": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 2466689147,
+  "lat": 44.7515935,
+  "lon": 5.3734293,
+  "tags": {
+    "amenity": "drinking_water",
+    "check_date": "2023-04-11",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 2467599690,
+  "lat": 44.7512531,
+  "lon": 5.3717146,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 2468007718,
+  "lat": 45.0739422,
+  "lon": 5.5634939,
+  "tags": {
+    "drinking_water": "conditional",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 2510421935,
+  "lat": 44.9263178,
+  "lon": 5.6148338,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "no",
+    "name": "Ponsonnanche"
+  }
+},
+{
+  "type": "node",
+  "id": 2728336742,
+  "lat": 45.1869744,
+  "lon": 5.6129661,
+  "tags": {
+    "natural": "spring",
+    "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre ; mise à jour :2012+ GPS My surveys"
+  }
+},
+{
+  "type": "node",
+  "id": 2881029015,
+  "lat": 44.8855287,
+  "lon": 5.4437985,
+  "tags": {
+    "name": "Source de la maison forestière de la Coche",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 2952966714,
+  "lat": 44.8453716,
+  "lon": 5.6208700,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 2952966716,
+  "lat": 44.8454514,
+  "lon": 5.6217252,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 2952966718,
+  "lat": 44.8461557,
+  "lon": 5.6228819,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 2963245224,
+  "lat": 44.9990251,
+  "lon": 5.6294605,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 2963245230,
+  "lat": 45.0001163,
+  "lon": 5.6304125,
+  "tags": {
+    "amenity": "drinking_water",
+    "check_date": "2024-05-05",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 2963246588,
+  "lat": 45.0217095,
+  "lon": 5.6450770,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 2963246606,
+  "lat": 45.0245653,
+  "lon": 5.6454763,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 2973776560,
+  "lat": 44.6604851,
+  "lon": 5.7292017,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 2973777169,
+  "lat": 44.6584767,
+  "lon": 5.7283462,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 2975063893,
+  "lat": 44.6596186,
+  "lon": 5.6920983,
+  "tags": {
+    "amenity": "fountain",
+    "survey:date": "2023-04-24"
+  }
+},
+{
+  "type": "node",
+  "id": 2975087034,
+  "lat": 44.7007089,
+  "lon": 5.6818795,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 2980153645,
+  "lat": 44.8247967,
+  "lon": 5.5732709,
+  "tags": {
+    "amenity": "drinking_water",
+    "image": "File:Fontaine à Ruthière.jpg"
+  }
+},
+{
+  "type": "node",
+  "id": 2980153729,
+  "lat": 44.8443719,
+  "lon": 5.5802755,
+  "tags": {
+    "amenity": "drinking_water",
+    "drinking_water:legal": "no",
+    "fountain": "drinking",
+    "ref:refuges.info": "8429"
+  }
+},
+{
+  "type": "node",
+  "id": 2986729314,
+  "lat": 44.8267039,
+  "lon": 5.6237151,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 2986729322,
+  "lat": 44.8271302,
+  "lon": 5.6229216,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "yes",
+    "survey:date": "2019-07-14"
+  }
+},
+{
+  "type": "node",
+  "id": 2986729325,
+  "lat": 44.8273702,
+  "lon": 5.6073242,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 3015538684,
+  "lat": 44.7514106,
+  "lon": 5.3686603,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "bottle": "yes",
+    "check_date": "2022-07-31",
+    "man_made": "water_tap",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 3015538704,
+  "lat": 44.7538432,
+  "lon": 5.3741470,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 3015538706,
+  "lat": 44.7549400,
+  "lon": 5.3747385,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 3022629411,
+  "lat": 44.7462157,
+  "lon": 5.5043620,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 3022629413,
+  "lat": 44.7465246,
+  "lon": 5.5045310,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 3029713352,
+  "lat": 44.8111907,
+  "lon": 5.5728989,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "yes",
+    "image": "File:Fontaine église Chichilianne.jpg"
+  }
+},
+{
+  "type": "node",
+  "id": 3029713370,
+  "lat": 44.8128455,
+  "lon": 5.5726733,
+  "tags": {
+    "amenity": "drinking_water",
+    "check_date": "2024-06-30"
+  }
+},
+{
+  "type": "node",
+  "id": 3031736305,
+  "lat": 44.7733083,
+  "lon": 5.5514136,
+  "tags": {
+    "ele": "1820",
+    "intermittent": "yes",
+    "name": "Fontaine de Colombette",
+    "natural": "spring",
+    "ref:refuges.info": "1964",
+    "water": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 3088063570,
+  "lat": 44.7531556,
+  "lon": 5.3700369,
+  "tags": {
+    "amenity": "drinking_water",
+    "check_date": "2025-11-10",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 3092780147,
+  "lat": 44.8944426,
+  "lon": 5.3706746,
+  "tags": {
+    "amenity": "drinking_water",
+    "check_date": "2023-05-15",
+    "indoor": "no",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 3095690739,
+  "lat": 45.0602324,
+  "lon": 5.3453109,
+  "tags": {
+    "amenity": "drinking_water",
+    "check_date": "2025-10-18"
+  }
+},
+{
+  "type": "node",
+  "id": 3095691248,
+  "lat": 45.0612126,
+  "lon": 5.3458566,
+  "tags": {
+    "amenity": "drinking_water",
+    "description": "été uniquement",
+    "image": "https://europeanwaterproject.org/photos/2020/EWP3095691248.jpg",
+    "man_made": "water_tap",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 3095691249,
+  "lat": 45.0611215,
+  "lon": 5.3442194,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "check_date": "2022-01-09",
+    "fee": "no",
+    "man_made": "water_well",
+    "pump": "manual",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 3095691250,
+  "lat": 45.0612425,
+  "lon": 5.3449612,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 3095691251,
+  "lat": 45.0615297,
+  "lon": 5.3443801,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 3098505579,
+  "lat": 45.1280510,
+  "lon": 5.5886704,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 3100948076,
+  "lat": 45.2679573,
+  "lon": 5.6190542,
+  "tags": {
+    "description": "Visité le 24/07/2021, la fontaine est cassée.",
+    "disused:amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 3115305484,
+  "lat": 45.1212351,
+  "lon": 5.3617223,
+  "tags": {
+    "amenity": "drinking_water",
+    "description": "robinet sur evier"
+  }
+},
+{
+  "type": "node",
+  "id": 3126885632,
+  "lat": 45.1223620,
+  "lon": 5.3698038,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 3382400169,
+  "lat": 44.8843571,
+  "lon": 5.2459143,
+  "tags": {
+    "drinking_water": "yes",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 3446162127,
+  "lat": 44.7644026,
+  "lon": 5.0774458,
+  "tags": {
+    "amenity": "drinking_water",
+    "check_date": "2023-02-04",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 3508980792,
+  "lat": 45.1803129,
+  "lon": 5.6598840,
+  "tags": {
+    "drinking_water": "conditional",
+    "drinking_water:legal": "no",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 3509055586,
+  "lat": 45.1643897,
+  "lon": 5.6514813,
+  "tags": {
+    "covered": "yes",
+    "man_made": "water_well"
+  }
+},
+{
+  "type": "node",
+  "id": 3543779106,
+  "lat": 45.1423498,
+  "lon": 5.6716223,
+  "tags": {
+    "drinking_water": "conditional",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 3591983232,
+  "lat": 45.2006382,
+  "lon": 5.4785246,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 3599381208,
+  "lat": 44.8637201,
+  "lon": 5.4615415,
+  "tags": {
+    "name": "Fontaine de l'Adret",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 3599388897,
+  "lat": 44.8621545,
+  "lon": 5.4371040,
+  "tags": {
+    "amenity": "drinking_water",
+    "description": "fontaine de Béguère"
+  }
+},
+{
+  "type": "node",
+  "id": 3599394909,
+  "lat": 44.9004811,
+  "lon": 5.4676838,
+  "tags": {
+    "man_made": "water_well"
+  }
+},
+{
+  "type": "node",
+  "id": 3607761412,
+  "lat": 45.1708917,
+  "lon": 5.6669986,
+  "tags": {
+    "drinking_water": "conditional",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 3632090847,
+  "lat": 45.1798061,
+  "lon": 5.5901399,
+  "tags": {
+    "drinking_water": "conditional",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 3654781994,
+  "lat": 44.8282482,
+  "lon": 5.6067548,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 3654878198,
+  "lat": 44.8030859,
+  "lon": 5.6497798,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 3654878626,
+  "lat": 44.8110292,
+  "lon": 5.6367783,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 3667153290,
+  "lat": 45.1103354,
+  "lon": 5.3828468,
+  "tags": {
+    "name": "Source du ruisseau des Carmes",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 3673566729,
+  "lat": 45.0568639,
+  "lon": 5.4784348,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 3682823066,
+  "lat": 45.2070701,
+  "lon": 5.6578115,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 3692243246,
+  "lat": 45.1720642,
+  "lon": 5.6651932,
+  "tags": {
+    "drinking_water": "conditional",
+    "man_made": "water_tap",
+    "ref:refuges.info": "7731"
+  }
+},
+{
+  "type": "node",
+  "id": 3707621979,
+  "lat": 45.1776141,
+  "lon": 5.6086792,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 3710736407,
+  "lat": 45.2236932,
+  "lon": 5.5320857,
+  "tags": {
+    "name": "Fontaine des Sangliers",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 3717007859,
+  "lat": 45.0739777,
+  "lon": 5.5242580,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 3717526425,
+  "lat": 45.1682779,
+  "lon": 5.5866577,
+  "tags": {
+    "drinking_water": "conditional",
+    "name": "Source de la Graille",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 3726311821,
+  "lat": 45.1265704,
+  "lon": 5.6469608,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 3746289040,
+  "lat": 45.0448505,
+  "lon": 5.5583757,
+  "tags": {
+    "drinking_water": "conditional",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 3746289760,
+  "lat": 45.0649548,
+  "lon": 5.4896332,
+  "tags": {
+    "drinking_water": "conditional",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 3746289776,
+  "lat": 45.0698886,
+  "lon": 5.5530231,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 3746289826,
+  "lat": 45.1964606,
+  "lon": 5.5923880,
+  "tags": {
+    "drinking_water": "conditional",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 3746289827,
+  "lat": 45.1964667,
+  "lon": 5.5922234,
+  "tags": {
+    "drinking_water": "no",
+    "drinking_water:legal": "no",
+    "man_made": "water_well"
+  }
+},
+{
+  "type": "node",
+  "id": 3746289828,
+  "lat": 45.1965197,
+  "lon": 5.5920612,
+  "tags": {
+    "drinking_water": "no",
+    "drinking_water:legal": "no",
+    "man_made": "water_well"
+  }
+},
+{
+  "type": "node",
+  "id": 3748418756,
+  "lat": 45.0525802,
+  "lon": 5.5879032,
+  "tags": {
+    "drinking_water": "conditional",
+    "name": "Fontaine de Roybon",
+    "natural": "spring",
+    "ref:refuges.info": "2578",
+    "wikidata": "Q131012424",
+    "wikimedia_commons": "File:Source_de_Roybon_(2789948818).jpg"
+  }
+},
+{
+  "type": "node",
+  "id": 3748418770,
+  "lat": 45.0502029,
+  "lon": 5.5874839,
+  "tags": {
+    "man_made": "water_well"
+  }
+},
+{
+  "type": "node",
+  "id": 3748418772,
+  "lat": 45.0503593,
+  "lon": 5.5872686,
+  "tags": {
+    "man_made": "water_well"
+  }
+},
+{
+  "type": "node",
+  "id": 3748418804,
+  "lat": 45.0532412,
+  "lon": 5.5857784,
+  "tags": {
+    "man_made": "water_well"
+  }
+},
+{
+  "type": "node",
+  "id": 3761559721,
+  "lat": 45.0391091,
+  "lon": 5.1988447,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 3797967729,
+  "lat": 45.2476138,
+  "lon": 5.6266217,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "unknown",
+    "name": "Circuit des Fontaines",
+    "ref": "1 - Place Victor Jat"
+  }
+},
+{
+  "type": "node",
+  "id": 3806731014,
+  "lat": 45.2090621,
+  "lon": 5.6576380,
+  "tags": {
+    "drinking_water": "yes",
+    "drinking_water:legal": "yes",
+    "drinking_water:seasonal": "yes",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 3815466104,
+  "lat": 44.8652725,
+  "lon": 5.5414757,
+  "tags": {
+    "description": "2009-06 : Donne abondamment jusque fin juin",
+    "intermittent": "yes",
+    "name": "Ruisseau du Barri",
+    "natural": "spring",
+    "ref:refuges.info": "2747"
+  }
+},
+{
+  "type": "node",
+  "id": 3815814689,
+  "lat": 45.0462877,
+  "lon": 5.3544110,
+  "tags": {
+    "name": "Grotte du Diable",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 3819401351,
+  "lat": 45.2469300,
+  "lon": 5.6240137,
+  "tags": {
+    "access": "private",
+    "amenity": "fountain",
+    "drinking_water": "no",
+    "name": "Circuit des Fontaines",
+    "ref": "3 - Pailler"
+  }
+},
+{
+  "type": "node",
+  "id": 3841922954,
+  "lat": 44.6861233,
+  "lon": 5.6850369,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 3843697053,
+  "lat": 44.6611353,
+  "lon": 5.7185063,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 3862554429,
+  "lat": 45.2462821,
+  "lon": 5.6282328,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "no",
+    "name": "Circuit des Fontaines",
+    "ref": "5 - rue du 19 mars 1962"
+  }
+},
+{
+  "type": "node",
+  "id": 3862554430,
+  "lat": 45.2463309,
+  "lon": 5.6260391,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "no",
+    "name": "Circuit des Fontaines",
+    "ref": "4 - ancienne école"
+  }
+},
+{
+  "type": "node",
+  "id": 3862554431,
+  "lat": 45.2472722,
+  "lon": 5.6252413,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "no",
+    "name": "Circuit des Fontaines",
+    "ref": "2 - église"
+  }
+},
+{
+  "type": "node",
+  "id": 3862554438,
+  "lat": 45.2493758,
+  "lon": 5.6257817,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "no",
+    "name": "Circuit des Fontaines",
+    "ref": "8 - Abbé Cuchet"
+  }
+},
+{
+  "type": "node",
+  "id": 3862554439,
+  "lat": 45.2483031,
+  "lon": 5.6260393,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "no",
+    "name": "Circuit des Fontaines",
+    "ref": "7 - Lavoir du pont de l'Eyrard"
+  }
+},
+{
+  "type": "node",
+  "id": 3862554440,
+  "lat": 45.2477438,
+  "lon": 5.6270122,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "no",
+    "name": "Circuit des Fontaines",
+    "ref": "6 - Carrefour Jat-Porte"
+  }
+},
+{
+  "type": "node",
+  "id": 3862554442,
+  "lat": 45.2454619,
+  "lon": 5.6305264,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "no",
+    "name": "Circuit des Fontaines",
+    "ref": "11 - Fontaine de l'Argentier"
+  }
+},
+{
+  "type": "node",
+  "id": 3862554444,
+  "lat": 45.2390516,
+  "lon": 5.6338433,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "yes",
+    "name": "Circuit des Fontaines",
+    "ref": "15 - Chemin de la Vigne",
+    "year_of_construction": "1902"
+  }
+},
+{
+  "type": "node",
+  "id": 3862554445,
+  "lat": 45.2372889,
+  "lon": 5.6350217,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "yes",
+    "ref": "17 - Chemin de la Source"
+  }
+},
+{
+  "type": "node",
+  "id": 3862564519,
+  "lat": 45.2535084,
+  "lon": 5.5999089,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "unknown"
+  }
+},
+{
+  "type": "node",
+  "id": 3862564520,
+  "lat": 45.2530538,
+  "lon": 5.5997884,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "unknown"
+  }
+},
+{
+  "type": "node",
+  "id": 3862564521,
+  "lat": 45.2525405,
+  "lon": 5.5987141,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "unknown"
+  }
+},
+{
+  "type": "node",
+  "id": 3865073300,
+  "lat": 45.2467464,
+  "lon": 5.6300211,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "no",
+    "name": "Circuit des Fontaines",
+    "ref": "10 - Noyers"
+  }
+},
+{
+  "type": "node",
+  "id": 3866364648,
+  "lat": 44.8526437,
+  "lon": 5.4223247,
+  "tags": {
+    "amenity": "drinking_water",
+    "check_date": "2024-09-15",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 3887528578,
+  "lat": 45.2705263,
+  "lon": 5.6162354,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 3983253093,
+  "lat": 45.1768803,
+  "lon": 5.5422592,
+  "tags": {
+    "amenity": "drinking_water",
+    "check_date": "2022-03-12"
+  }
+},
+{
+  "type": "node",
+  "id": 3985318694,
+  "lat": 45.1976762,
+  "lon": 5.5340324,
+  "tags": {
+    "amenity": "drinking_water",
+    "name": "Font Renard",
+    "ref:refuges.info": "2418"
+  }
+},
+{
+  "type": "node",
+  "id": 3985318708,
+  "lat": 45.2295425,
+  "lon": 5.5417688,
+  "tags": {
+    "amenity": "drinking_water",
+    "name": "Fontaine de Nave",
+    "ref:refuges.info": "1269"
+  }
+},
+{
+  "type": "node",
+  "id": 3987172825,
+  "lat": 45.1263256,
+  "lon": 5.5958798,
+  "tags": {
+    "amenity": "drinking_water",
+    "fee": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 4083500085,
+  "lat": 45.1931640,
+  "lon": 5.6184184,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "yes",
+    "fountain": "stone_block",
+    "lit": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 4136728791,
+  "lat": 44.9388082,
+  "lon": 5.6099454,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 4136801380,
+  "lat": 44.9335084,
+  "lon": 5.6251663,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 4170158202,
+  "lat": 44.9263115,
+  "lon": 5.6147915,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 4171833619,
+  "lat": 44.7943437,
+  "lon": 5.5443882,
+  "tags": {
+    "description": "Bon débit en général, tuyau et bachals",
+    "ele": "1820",
+    "intermittent": "yes",
+    "name": "Fontaine du Creuson",
+    "natural": "spring",
+    "ref:refuges.info": "1214"
+  }
+},
+{
+  "type": "node",
+  "id": 4173143735,
+  "lat": 45.1252920,
+  "lon": 5.6630358,
+  "tags": {
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 4212839939,
+  "lat": 45.2450530,
+  "lon": 5.6310365,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "no",
+    "name": "Circuit des Fontaines",
+    "ref": "12 - Lavoir du Maupas"
+  }
+},
+{
+  "type": "node",
+  "id": 4212839941,
+  "lat": 45.2486918,
+  "lon": 5.6262436,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "no",
+    "name": "Circuit des Fontaines",
+    "ref": "7bis - Chateau Gaché"
+  }
+},
+{
+  "type": "node",
+  "id": 4313258899,
+  "lat": 45.0880993,
+  "lon": 5.5556162,
+  "tags": {
+    "amenity": "drinking_water",
+    "check_date": "2022-10-26",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 4329072604,
+  "lat": 44.8227830,
+  "lon": 5.5475351,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 4348997542,
+  "lat": 44.9547698,
+  "lon": 5.3264342,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 4349001007,
+  "lat": 44.9501944,
+  "lon": 5.3285323,
+  "tags": {
+    "name": "Fontaine de la Lauze",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 4361984105,
+  "lat": 44.7015834,
+  "lon": 5.8064830,
+  "tags": {
+    "description": "Bon débit, mais eau provenant du lac et souvent polluée par les bêtes",
+    "name": "Source du Lauzon",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 4378080301,
+  "lat": 44.9361801,
+  "lon": 5.4322527,
+  "tags": {
+    "amenity": "drinking_water",
+    "drinking_water": "yes",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 4383769442,
+  "lat": 44.6896909,
+  "lon": 5.7097629,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 4383769444,
+  "lat": 44.6903334,
+  "lon": 5.7103589,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 4384273717,
+  "lat": 44.6646919,
+  "lon": 5.7041261,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 4396045510,
+  "lat": 44.7943545,
+  "lon": 5.5547174,
+  "tags": {
+    "description": "Bon débit en général, source réaménagée avec un robinet",
+    "ele": "1695",
+    "intermittent": "yes",
+    "name": "Source de l'Essaure",
+    "natural": "spring",
+    "ref:refuges.info": "4024"
+  }
+},
+{
+  "type": "node",
+  "id": 4406525883,
+  "lat": 44.7154531,
+  "lon": 5.5291300,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 4406528450,
+  "lat": 44.7371708,
+  "lon": 5.5548878,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 4406528483,
+  "lat": 44.7552073,
+  "lon": 5.5952014,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 4406542950,
+  "lat": 44.8121487,
+  "lon": 5.5799095,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 4406542951,
+  "lat": 44.8118433,
+  "lon": 5.5805063,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 4418146816,
+  "lat": 44.7554043,
+  "lon": 5.6149015,
+  "tags": {
+    "name": "Source de Freydières",
+    "natural": "spring",
+    "ref:refuges.info": "3262"
+  }
+},
+{
+  "type": "node",
+  "id": 4421248294,
+  "lat": 44.8583022,
+  "lon": 5.5781551,
+  "tags": {
+    "fixme": "eau potable ?",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 4421248513,
+  "lat": 44.8681199,
+  "lon": 5.5947199,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 4422025327,
+  "lat": 44.8792873,
+  "lon": 5.4700518,
+  "tags": {
+    "drinking_water": "yes",
+    "name": "Fontaine de Pichet",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 4425289267,
+  "lat": 44.7165076,
+  "lon": 5.4342496,
+  "tags": {
+    "amenity": "fountain",
+    "name": "Lavoir"
+  }
+},
+{
+  "type": "node",
+  "id": 4425401847,
+  "lat": 44.7132759,
+  "lon": 5.4315012,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 4462511613,
+  "lat": 44.7626014,
+  "lon": 5.6076700,
+  "tags": {
+    "ele": "1290",
+    "name": "Source du Fanjat",
+    "natural": "spring",
+    "ref:refuges.info": "3723"
+  }
+},
+{
+  "type": "node",
+  "id": 4462511752,
+  "lat": 44.7732714,
+  "lon": 5.6058358,
+  "tags": {
+    "access": "permissive",
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 4466618994,
+  "lat": 44.8664303,
+  "lon": 5.4577925,
+  "tags": {
+    "name": "Fontaine de Font Froide",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 4493335447,
+  "lat": 44.8012757,
+  "lon": 5.6494000,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 4542511056,
+  "lat": 44.8914940,
+  "lon": 5.5464463,
+  "tags": {
+    "name": "Source du Champ de l'Herse",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 4599290759,
+  "lat": 44.9530770,
+  "lon": 5.2690619,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 4687392663,
+  "lat": 44.7241390,
+  "lon": 5.4734947,
+  "tags": {
+    "ele": "1485",
+    "name": "Fontaine des Tuiles",
+    "natural": "spring",
+    "ref:refuges.info": "5602"
+  }
+},
+{
+  "type": "node",
+  "id": 4829196888,
+  "lat": 45.2723517,
+  "lon": 5.6145406,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "no",
+    "fountain": "decorative"
+  }
+},
+{
+  "type": "node",
+  "id": 4887306369,
+  "lat": 44.7992102,
+  "lon": 5.3843109,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 4887344775,
+  "lat": 44.8400074,
+  "lon": 5.4064418,
+  "tags": {
+    "amenity": "drinking_water",
+    "check_date": "2025-07-16",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 4887399543,
+  "lat": 44.8703498,
+  "lon": 5.4167173,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 4970364321,
+  "lat": 45.0602968,
+  "lon": 5.3467980,
+  "tags": {
+    "drinking_water": "yes",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 4973326222,
+  "lat": 44.9036633,
+  "lon": 5.5694150,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 4973883813,
+  "lat": 44.9999742,
+  "lon": 5.6292567,
+  "tags": {
+    "amenity": "drinking_water",
+    "survey:date": "2022-05-12",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 4973952923,
+  "lat": 44.9072350,
+  "lon": 5.5550348,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 4985056618,
+  "lat": 45.0532991,
+  "lon": 5.3675776,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 5022892813,
+  "lat": 44.9012057,
+  "lon": 5.2503370,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 5022892814,
+  "lat": 44.9441027,
+  "lon": 5.3622065,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "check_date": "2023-08-31",
+    "fee": "no",
+    "seasonal": "summer"
+  }
+},
+{
+  "type": "node",
+  "id": 5022892815,
+  "lat": 44.9568286,
+  "lon": 5.2955851,
+  "tags": {
+    "amenity": "drinking_water",
+    "check_date": "2023-10-04",
+    "fountain": "drinking"
+  }
+},
+{
+  "type": "node",
+  "id": 5022892816,
+  "lat": 44.9672521,
+  "lon": 5.4159105,
+  "tags": {
+    "amenity": "drinking_water",
+    "fountain": "drinking"
+  }
+},
+{
+  "type": "node",
+  "id": 5022892817,
+  "lat": 45.0257492,
+  "lon": 5.3230090,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 5022892818,
+  "lat": 45.1205652,
+  "lon": 5.3622777,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 5022892819,
+  "lat": 45.1468597,
+  "lon": 5.3778478,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 5022892820,
+  "lat": 45.1704758,
+  "lon": 5.4125256,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 5120376502,
+  "lat": 44.8980258,
+  "lon": 5.3211808,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 5230698302,
+  "lat": 45.0668717,
+  "lon": 5.5580856,
+  "tags": {
+    "amenity": "drinking_water",
+    "check_date": "2024-07-18",
+    "fountain": "drinking"
+  }
+},
+{
+  "type": "node",
+  "id": 5291837164,
+  "lat": 45.1040443,
+  "lon": 5.4730848,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "fountain": "drinking"
+  }
+},
+{
+  "type": "node",
+  "id": 5319118127,
+  "lat": 45.1295114,
+  "lon": 5.4316369,
+  "tags": {
+    "fixme": "resurvey",
+    "name": "Fontaine de Bury",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 5342543993,
+  "lat": 45.0560720,
+  "lon": 5.2262270,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 5434729121,
+  "lat": 44.7764263,
+  "lon": 5.1432371,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 5482606040,
+  "lat": 44.7494680,
+  "lon": 5.3673955,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 5579988122,
+  "lat": 44.9739110,
+  "lon": 5.1511224,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "bottle": "no",
+    "description": "robinet exterieur",
+    "drinking_water": "yes",
+    "indoor": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 5603896931,
+  "lat": 44.7211484,
+  "lon": 5.4910859,
+  "tags": {
+    "description": "2018-01 : - la source a été aménagée, il y a un petit réservoir fermé en béton avec un clapet métallique à ouvrir pour pouvoir puiser l'eau. - la source a en général un très faible débit",
+    "ele": "1750",
+    "name": "Source de Baume Rousse",
+    "natural": "spring",
+    "ref:refuges.info": "1444"
+  }
+},
+{
+  "type": "node",
+  "id": 5612309399,
+  "lat": 44.7645470,
+  "lon": 5.0779423,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 5680336419,
+  "lat": 45.1048254,
+  "lon": 5.4541971,
+  "tags": {
+    "drinking_water": "yes",
+    "name": "Fontaine La grand Font",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 5725016330,
+  "lat": 44.8439991,
+  "lon": 5.5090051,
+  "tags": {
+    "description": "il existe 2 résurgences, la première sous le sommet, la seconde 100 mètres plus au nord.",
+    "intermittent": "yes",
+    "name": "Source Mazilier",
+    "natural": "spring",
+    "ref:refuges.info": "4153"
+  }
+},
+{
+  "type": "node",
+  "id": 5725060166,
+  "lat": 44.8570047,
+  "lon": 5.5100184,
+  "tags": {
+    "description": "source temporaire",
+    "intermittent": "yes",
+    "name": "Fontaine de Bonnevau",
+    "natural": "spring",
+    "ref:refuges.info": "1963"
+  }
+},
+{
+  "type": "node",
+  "id": 5725060167,
+  "lat": 44.8485963,
+  "lon": 5.5016203,
+  "tags": {
+    "description": "Prudence, la fontaine se trouve sur le rebord du Trou du Diable. Bien visible sous la roche voûtée, pas de robinet, mais cela dit, il est possible d'y puiser de l'eau avec une grosse tasse sans souiller, dans le petit dièdre.",
+    "ele": "1655",
+    "intermittent": "yes",
+    "name": "Fontaine du Diable",
+    "natural": "spring",
+    "ref:refuges.info": "4154"
+  }
+},
+{
+  "type": "node",
+  "id": 5737468144,
+  "lat": 44.9769500,
+  "lon": 5.3368905,
+  "tags": {
+    "name": "Source du Cholet",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 5749744468,
+  "lat": 44.8690723,
+  "lon": 5.5946213,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 5750243507,
+  "lat": 44.8643307,
+  "lon": 5.5588044,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "conditional"
+  }
+},
+{
+  "type": "node",
+  "id": 5759156881,
+  "lat": 44.7613092,
+  "lon": 5.6216727,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "conditional"
+  }
+},
+{
+  "type": "node",
+  "id": 5759156918,
+  "lat": 44.7761728,
+  "lon": 5.5910432,
+  "tags": {
+    "amenity": "drinking_water",
+    "drinking_water": "yes",
+    "ref:refuges.info": "6499"
+  }
+},
+{
+  "type": "node",
+  "id": 5760339440,
+  "lat": 44.8212401,
+  "lon": 5.6253373,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 5760592390,
+  "lat": 44.7905341,
+  "lon": 5.6583469,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 5760839417,
+  "lat": 44.8271980,
+  "lon": 5.6220315,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "covered": "no",
+    "fee": "no",
+    "survey:date": "2019-07-14",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 5761455167,
+  "lat": 44.8279242,
+  "lon": 5.6214635,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 5761760559,
+  "lat": 45.0331828,
+  "lon": 5.6323144,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "yes",
+    "ref:refuges.info": "3732"
+  }
+},
+{
+  "type": "node",
+  "id": 5799219853,
+  "lat": 45.0617424,
+  "lon": 5.5784285,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "man_made": "water_tap",
+    "water_source": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 5809896354,
+  "lat": 45.0667296,
+  "lon": 5.3903770,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "bottle": "yes",
+    "description": "fontaine",
+    "drinking_water": "yes",
+    "indoor": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 5842133071,
+  "lat": 44.8969903,
+  "lon": 5.4805316,
+  "tags": {
+    "ele": "1490",
+    "intermittent": "yes",
+    "name": "Fontaine de Musille",
+    "natural": "spring",
+    "ref:refuges.info": "6389"
+  }
+},
+{
+  "type": "node",
+  "id": 5862622694,
+  "lat": 45.1294983,
+  "lon": 5.5888145,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 5893046633,
+  "lat": 44.6661348,
+  "lon": 5.7061389,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 5894654017,
+  "lat": 44.6809705,
+  "lon": 5.7112370,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 5928812485,
+  "lat": 44.7856124,
+  "lon": 5.5518103,
+  "tags": {
+    "description": "Source captée sous un regard, peu pratique sans un récipient ou autre petit bol",
+    "drinking_water": "no",
+    "ele": "1760",
+    "intermittent": "yes",
+    "name": "Source de Grailler",
+    "natural": "spring",
+    "ref:refuges.info": "4144"
+  }
+},
+{
+  "type": "node",
+  "id": 5955563098,
+  "lat": 44.7964461,
+  "lon": 5.5992849,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 6017235500,
+  "lat": 44.8605897,
+  "lon": 5.5613431,
+  "tags": {
+    "amenity": "drinking_water",
+    "description": "2024-07-27 Très bon débit"
+  }
+},
+{
+  "type": "node",
+  "id": 6023643135,
+  "lat": 44.8701108,
+  "lon": 5.5976695,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 6094133711,
+  "lat": 45.2022917,
+  "lon": 5.5381273,
+  "tags": {
+    "amenity": "drinking_water",
+    "name": "Fontaine de Font Cellier"
+  }
+},
+{
+  "type": "node",
+  "id": 6094133715,
+  "lat": 45.1334624,
+  "lon": 5.5089569,
+  "tags": {
+    "amenity": "drinking_water",
+    "check_date": "2025-09-30",
+    "fountain": "drinking"
+  }
+},
+{
+  "type": "node",
+  "id": 6094133808,
+  "lat": 45.2637142,
+  "lon": 5.5662411,
+  "tags": {
+    "amenity": "drinking_water",
+    "bottle": "yes",
+    "cold_water": "no",
+    "fee": "no",
+    "fountain": "water_tap",
+    "hot_water": "no",
+    "iced_water": "no",
+    "man_made": "water_well",
+    "opening_hours": "24/7",
+    "panoramax": "887de4d0-0c3b-4a32-8e3a-94c18ef46854",
+    "pump": "manual",
+    "room_temperature_water": "yes",
+    "seasonal": "no",
+    "warm_water": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 6096614546,
+  "lat": 45.1867290,
+  "lon": 5.5074106,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 6097032085,
+  "lat": 45.1254002,
+  "lon": 5.5272362,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 6253560075,
+  "lat": 45.0292316,
+  "lon": 5.4793750,
+  "tags": {
+    "drinking_water": "no",
+    "name": "Source d'Herbouilly",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 6272285119,
+  "lat": 45.0226743,
+  "lon": 5.4533180,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "no",
+    "intermittent": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 6298715598,
+  "lat": 45.1766991,
+  "lon": 5.5054312,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 6370410237,
+  "lat": 44.7785848,
+  "lon": 5.1428390,
+  "tags": {
+    "drinking_water": "yes",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 6452315970,
+  "lat": 45.1743352,
+  "lon": 5.5434645,
+  "tags": {
+    "amenity": "drinking_water",
+    "fee": "no",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 6484339260,
+  "lat": 44.9133996,
+  "lon": 5.1046263,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "fee": "yes",
+    "man_made": "water_tap",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 6484339263,
+  "lat": 44.7779351,
+  "lon": 5.1430220,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 6484339264,
+  "lat": 44.7780617,
+  "lon": 5.1416541,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "fee": "yes",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 6554875327,
+  "lat": 45.1270845,
+  "lon": 5.5270269,
+  "tags": {
+    "amenity": "drinking_water",
+    "drinking_water": "yes",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 6555548081,
+  "lat": 44.7937526,
+  "lon": 5.3476564,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 6566226214,
+  "lat": 45.0496267,
+  "lon": 5.5759967,
+  "tags": {
+    "drinking_water": "no",
+    "name": "Source de la Fauge",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 6594340143,
+  "lat": 45.0846223,
+  "lon": 5.5285764,
+  "tags": {
+    "amenity": "drinking_water",
+    "bottle": "yes",
+    "fee": "no",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 6594813102,
+  "lat": 45.1693242,
+  "lon": 5.4139663,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 6603933706,
+  "lat": 44.7944341,
+  "lon": 5.6562625,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 6614987960,
+  "lat": 44.7306254,
+  "lon": 5.5402590,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 6615917408,
+  "lat": 45.0189112,
+  "lon": 5.2907171,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 6615940741,
+  "lat": 44.8130891,
+  "lon": 5.5751900,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 6615967294,
+  "lat": 44.8119779,
+  "lon": 5.5738808,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 6622298170,
+  "lat": 45.0143686,
+  "lon": 5.6134350,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 6677487394,
+  "lat": 45.0387960,
+  "lon": 5.1996661,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 6681638574,
+  "lat": 45.0353721,
+  "lon": 5.2093331,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 6699128648,
+  "lat": 44.9550243,
+  "lon": 5.1422520,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 6699135154,
+  "lat": 45.0475625,
+  "lon": 5.3410369,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 6699153746,
+  "lat": 45.0475873,
+  "lon": 5.3409879,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 6702614950,
+  "lat": 45.1192513,
+  "lon": 5.6108914,
+  "tags": {
+    "amenity": "drinking_water",
+    "ref:refuges.info": "5599"
+  }
+},
+{
+  "type": "node",
+  "id": 6703001320,
+  "lat": 44.9011843,
+  "lon": 5.2503972,
+  "tags": {
+    "name": "Source",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 6711492532,
+  "lat": 44.8227570,
+  "lon": 5.5504124,
+  "tags": {
+    "amenity": "drinking_water",
+    "ref:refuges.info": "8427"
+  }
+},
+{
+  "type": "node",
+  "id": 6715488475,
+  "lat": 44.7868599,
+  "lon": 5.3166533,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 6725013584,
+  "lat": 44.7731183,
+  "lon": 5.5377154,
+  "tags": {
+    "ele": "1860",
+    "intermittent": "yes",
+    "karst": "yes",
+    "name": "Source du Marichaume",
+    "natural": "spring",
+    "ref:refuges.info": "3679",
+    "seasonal": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 6725117042,
+  "lat": 44.8060194,
+  "lon": 5.5114634,
+  "tags": {
+    "description": "2024-07-28 1 minute 40 secondes pour 1 littre",
+    "ele": "1650",
+    "name": "Source des Chamailloux, e",
+    "natural": "spring",
+    "ref:refuges.info": "3699"
+  }
+},
+{
+  "type": "node",
+  "id": 6725175450,
+  "lat": 44.9034947,
+  "lon": 5.5092251,
+  "tags": {
+    "drinking_water": "yes",
+    "ele": "1670",
+    "intermittent": "yes",
+    "name": "Deuxième Fontaine du Play",
+    "natural": "spring",
+    "ref:refuges.info": "1199"
+  }
+},
+{
+  "type": "node",
+  "id": 6733231270,
+  "lat": 44.8766471,
+  "lon": 5.5296153,
+  "tags": {
+    "ele": "1646",
+    "name": "Fontaine du Veymont",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 6742376104,
+  "lat": 45.0873858,
+  "lon": 5.6050001,
+  "tags": {
+    "drinking_water": "yes",
+    "intermittent": "yes",
+    "name": "Font Froide",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 6742425756,
+  "lat": 44.9977298,
+  "lon": 5.5711913,
+  "tags": {
+    "intermittent": "yes",
+    "name": "Fontaine des Sarrasins",
+    "natural": "spring",
+    "ref:refuges.info": "1965"
+  }
+},
+{
+  "type": "node",
+  "id": 6742450414,
+  "lat": 44.9147223,
+  "lon": 5.5226035,
+  "tags": {
+    "fixme": "Position aproximative",
+    "intermittent": "yes",
+    "name": "Fontaine de Berrièves",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 6795015295,
+  "lat": 44.8025168,
+  "lon": 5.3333296,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 6816032209,
+  "lat": 44.6885456,
+  "lon": 5.6917053,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 6862757290,
+  "lat": 45.0704899,
+  "lon": 5.5512759,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "no",
+    "fountain": "decorative",
+    "lit": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 7019880898,
+  "lat": 44.7772980,
+  "lon": 5.1433821,
+  "tags": {
+    "amenity": "drinking_water",
+    "check_date": "2026-04-24",
+    "man_made": "water_well",
+    "name": "Fontaine d'eau potable",
+    "pump": "manual"
+  }
+},
+{
+  "type": "node",
+  "id": 7019893392,
+  "lat": 44.7768330,
+  "lon": 5.1431988,
+  "tags": {
+    "amenity": "drinking_water",
+    "bottle": "yes",
+    "cold_water": "no",
+    "fee": "no",
+    "fountain": "bottle_refill",
+    "hot_water": "no",
+    "iced_water": "no",
+    "name": "Fontaine d'eau potable",
+    "opening_hours": "24/7",
+    "panoramax": "51426f1a-c96b-41e7-821f-74f7728bc6e1",
+    "pump": "manual",
+    "room_temperature_water": "yes",
+    "warm_water": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 7218230180,
+  "lat": 44.8871788,
+  "lon": 5.1579734,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 7256252864,
+  "lat": 44.7189283,
+  "lon": 5.7034050,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 7537772287,
+  "lat": 45.0691849,
+  "lon": 5.6020059,
+  "tags": {
+    "drinking_water": "yes",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 7543832998,
+  "lat": 45.2071348,
+  "lon": 5.4668704,
+  "tags": {
+    "amenity": "drinking_water",
+    "indoor": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 7551942277,
+  "lat": 45.2315395,
+  "lon": 5.5916678,
+  "tags": {
+    "name": "source",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 7553251921,
+  "lat": 44.8232097,
+  "lon": 5.3880297,
+  "tags": {
+    "intermittent": "yes",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 7562467207,
+  "lat": 45.0567298,
+  "lon": 5.5953244,
+  "tags": {
+    "access": "no",
+    "drinking_water": "yes",
+    "name": "Fontaine de Pissavache",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 7562467208,
+  "lat": 45.0566604,
+  "lon": 5.5923240,
+  "tags": {
+    "drinking_water": "yes",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 7562467209,
+  "lat": 45.0570431,
+  "lon": 5.5908219,
+  "tags": {
+    "drinking_water": "yes",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 7562840426,
+  "lat": 45.0778192,
+  "lon": 5.5931309,
+  "tags": {
+    "name": "Fontaine de Machiret",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 7562931640,
+  "lat": 45.0677668,
+  "lon": 5.5987321,
+  "tags": {
+    "name": "Fontaine du Chaulange",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 7589396822,
+  "lat": 44.9943649,
+  "lon": 5.5837648,
+  "tags": {
+    "drinking_water": "yes",
+    "intermittent": "yes",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 7589534413,
+  "lat": 45.0113586,
+  "lon": 5.5552183,
+  "tags": {
+    "alt_name": "Source Bressant",
+    "name": "Fontaine de l'Ours",
+    "natural": "spring",
+    "ref:refuges.info": "3031"
+  }
+},
+{
+  "type": "node",
+  "id": 7589534520,
+  "lat": 45.0813915,
+  "lon": 5.6079634,
+  "tags": {
+    "intermittent": "yes",
+    "name": "Source du Berger",
+    "natural": "spring",
+    "ref:refuges.info": "1770"
+  }
+},
+{
+  "type": "node",
+  "id": 7624982444,
+  "lat": 45.0669217,
+  "lon": 5.3913267,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 7645879109,
+  "lat": 44.7022018,
+  "lon": 5.3477703,
+  "tags": {
+    "name": "Source St Martin",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 7676254233,
+  "lat": 45.1802650,
+  "lon": 5.6328558,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 7687016553,
+  "lat": 44.7529811,
+  "lon": 5.3726963,
+  "tags": {
+    "amenity": "drinking_water",
+    "bottle": "yes",
+    "fountain": "bubbler",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 7756420683,
+  "lat": 45.0591558,
+  "lon": 5.3813036,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 7756439700,
+  "lat": 45.0486324,
+  "lon": 5.3902900,
+  "tags": {
+    "drinking_water": "no",
+    "fixme": "position approximative",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 7812855618,
+  "lat": 45.2358300,
+  "lon": 5.6190580,
+  "tags": {
+    "intermittent": "no",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 7837427830,
+  "lat": 44.6944507,
+  "lon": 5.4874691,
+  "tags": {
+    "amenity": "drinking_water",
+    "fountain": "drinking"
+  }
+},
+{
+  "type": "node",
+  "id": 7837450209,
+  "lat": 44.6943144,
+  "lon": 5.4854526,
+  "tags": {
+    "amenity": "drinking_water",
+    "fountain": "drinking",
+    "survey:date": "2020-04-09"
+  }
+},
+{
+  "type": "node",
+  "id": 7858505912,
+  "lat": 44.9973742,
+  "lon": 5.5300639,
+  "tags": {
+    "description": "200m après l'entrée du gouffre, sur la paroi de droite (sous terre donc).",
+    "drinking_water": "yes",
+    "intermittent": "no",
+    "name": "Source de la Combe de Fer",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 7895132348,
+  "lat": 44.9760772,
+  "lon": 5.5629954,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 7911142677,
+  "lat": 44.8404923,
+  "lon": 5.5129279,
+  "tags": {
+    "description": "Un petit tuyau permet de remplir une bouteille",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 7997627095,
+  "lat": 44.9949361,
+  "lon": 5.5603153,
+  "tags": {
+    "name": "Fontaine Barnière",
+    "natural": "spring",
+    "ref:refuges.info": "3831"
+  }
+},
+{
+  "type": "node",
+  "id": 8128500961,
+  "lat": 45.1289881,
+  "lon": 5.6135713,
+  "tags": {
+    "drinking_water": "yes",
+    "name": "Fontaine des Jeux",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 8177072547,
+  "lat": 45.2199931,
+  "lon": 5.5165185,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 8272197968,
+  "lat": 45.2876652,
+  "lon": 5.6102177,
+  "tags": {
+    "amenity": "drinking_water",
+    "fountain": "drinking"
+  }
+},
+{
+  "type": "node",
+  "id": 8436039690,
+  "lat": 45.0609797,
+  "lon": 5.3459872,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 8436039691,
+  "lat": 45.0627233,
+  "lon": 5.3425933,
+  "tags": {
+    "amenity": "drinking_water",
+    "bottle": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 8436039693,
+  "lat": 45.0642988,
+  "lon": 5.3360280,
+  "tags": {
+    "amenity": "drinking_water",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 8436039700,
+  "lat": 45.1322900,
+  "lon": 5.5422492,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 8458954519,
+  "lat": 44.7510721,
+  "lon": 5.3709780,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 8498048754,
+  "lat": 44.9613490,
+  "lon": 5.5534056,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 8498048755,
+  "lat": 44.9611740,
+  "lon": 5.5537791,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 8498052845,
+  "lat": 44.9654382,
+  "lon": 5.5436017,
+  "tags": {
+    "name": "Source temporaire de l'Eterpa",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 8657989541,
+  "lat": 44.8331163,
+  "lon": 5.6056338,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 8685739169,
+  "lat": 44.8320473,
+  "lon": 5.5960844,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 8685739176,
+  "lat": 44.8313506,
+  "lon": 5.5890913,
+  "tags": {
+    "access": "private",
+    "man_made": "spring_box",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 8730756095,
+  "lat": 45.0655007,
+  "lon": 5.3926290,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 8771979626,
+  "lat": 45.0970751,
+  "lon": 5.4826244,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 8812210707,
+  "lat": 44.7600059,
+  "lon": 5.1128115,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 8839938985,
+  "lat": 45.1167074,
+  "lon": 5.5908566,
+  "tags": {
+    "drinking_water": "yes",
+    "name": "La Grande Fontaine",
+    "natural": "spring",
+    "ref:refuges.info": "6858"
+  }
+},
+{
+  "type": "node",
+  "id": 8840170287,
+  "lat": 45.1048807,
+  "lon": 5.6044065,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 8852651457,
+  "lat": 44.7761293,
+  "lon": 5.5912578,
+  "tags": {
+    "drinking_water": "yes",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 8865910387,
+  "lat": 45.2078950,
+  "lon": 5.6577980,
+  "tags": {
+    "amenity": "drinking_water",
+    "drinking_water:seasonal": "yes",
+    "man_made": "water_well",
+    "pump": "manual"
+  }
+},
+{
+  "type": "node",
+  "id": 8868717971,
+  "lat": 45.2089403,
+  "lon": 5.6567686,
+  "tags": {
+    "amenity": "drinking_water",
+    "drinking_water:seasonal": "yes",
+    "man_made": "water_well",
+    "pump": "manual"
+  }
+},
+{
+  "type": "node",
+  "id": 8868722841,
+  "lat": 45.2099076,
+  "lon": 5.6573883,
+  "tags": {
+    "amenity": "drinking_water",
+    "drinking_water:seasonal": "yes",
+    "man_made": "water_well",
+    "pump": "manual"
+  }
+},
+{
+  "type": "node",
+  "id": 8868722842,
+  "lat": 45.2082961,
+  "lon": 5.6590973,
+  "tags": {
+    "amenity": "drinking_water",
+    "drinking_water:seasonal": "no",
+    "man_made": "water_well",
+    "pump": "manual"
+  }
+},
+{
+  "type": "node",
+  "id": 8894976386,
+  "lat": 44.9747974,
+  "lon": 5.2805583,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 8913145652,
+  "lat": 45.0225153,
+  "lon": 5.3274212,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 8930924881,
+  "lat": 44.7426990,
+  "lon": 5.5299465,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 8931337143,
+  "lat": 44.9093450,
+  "lon": 5.6036962,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 8971740661,
+  "lat": 44.7145826,
+  "lon": 5.5876851,
+  "tags": {
+    "man_made": "water_well",
+    "pump": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 9008592338,
+  "lat": 44.9776252,
+  "lon": 5.2540070,
+  "tags": {
+    "amenity": "fountain",
+    "name": "Fontaine du Chêne"
+  }
+},
+{
+  "type": "node",
+  "id": 9014804887,
+  "lat": 45.0423844,
+  "lon": 5.4764556,
+  "tags": {
+    "drinking_water": "no",
+    "intermittent": "yes",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 9038943064,
+  "lat": 45.0643046,
+  "lon": 5.3367331,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 9040170508,
+  "lat": 44.7940388,
+  "lon": 5.1084209,
+  "tags": {
+    "access": "yes",
+    "drinking_water:signed": "no",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 9043696551,
+  "lat": 45.1827357,
+  "lon": 5.5518107,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 9043725343,
+  "lat": 45.1737000,
+  "lon": 5.5606102,
+  "tags": {
+    "drinking_water": "conditional",
+    "intermittent": "no",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 9051705825,
+  "lat": 45.0859302,
+  "lon": 5.3395777,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 9140152539,
+  "lat": 45.2363299,
+  "lon": 5.5062271,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 9153339705,
+  "lat": 45.1704442,
+  "lon": 5.5392682,
+  "tags": {
+    "drinking_water": "yes",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 9160150656,
+  "lat": 45.1141049,
+  "lon": 5.6087767,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 9168084065,
+  "lat": 44.8524415,
+  "lon": 5.0932648,
+  "tags": {
+    "description": "A natural spring easy to access from the path, just step down onto the rocks and enjoy the beautiful fresh water!",
+    "drinking_water": "yes",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 9216408710,
+  "lat": 45.0424145,
+  "lon": 5.4765642,
+  "tags": {
+    "amenity": "drinking_water",
+    "description": "possibilité de faire le plein en eau",
+    "name": "Ruisseau/ fontaine / eau",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 9244089752,
+  "lat": 44.8367483,
+  "lon": 5.6039949,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 9245650429,
+  "lat": 45.2520521,
+  "lon": 5.5968433,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 9251479146,
+  "lat": 45.0143604,
+  "lon": 5.6135596,
+  "tags": {
+    "amenity": "drinking_water",
+    "bottle": "yes",
+    "fee": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 9336226061,
+  "lat": 44.7279329,
+  "lon": 5.3402755,
+  "tags": {
+    "description": "Derrière le gîte forestier, coule faiblement fin juin 2013",
+    "ele": "960",
+    "natural": "spring",
+    "ref:refuges.info": "4052"
+  }
+},
+{
+  "type": "node",
+  "id": 9337100285,
+  "lat": 44.7125000,
+  "lon": 5.5080000,
+  "tags": {
+    "name": "Source de l'Echalas",
+    "natural": "spring",
+    "ref:refuges.info": "1865"
+  }
+},
+{
+  "type": "node",
+  "id": 9337100286,
+  "lat": 44.7169700,
+  "lon": 5.5056500,
+  "tags": {
+    "name": "Source de Font Froide",
+    "natural": "spring",
+    "ref:refuges.info": "1864"
+  }
+},
+{
+  "type": "node",
+  "id": 9337728473,
+  "lat": 44.7492401,
+  "lon": 5.4488593,
+  "tags": {
+    "description": "2006-05 : Débit surabondant. il ne doit y avoir aucun pb même au coeur de l'été.",
+    "ele": "1052",
+    "name": "Fontaine de Juillet",
+    "natural": "spring",
+    "ref:refuges.info": "1247"
+  }
+},
+{
+  "type": "node",
+  "id": 9337813467,
+  "lat": 44.7419886,
+  "lon": 5.4572953,
+  "tags": {
+    "description": "2020-05 : Suintement sous la roche, elle coule dans un petit bac de plastique. Bien visible du sentier.",
+    "ele": "1480",
+    "name": "Fontaine du Repos",
+    "natural": "spring",
+    "ref:refuges.info": "3309"
+  }
+},
+{
+  "type": "node",
+  "id": 9337813468,
+  "lat": 44.7348800,
+  "lon": 5.4650300,
+  "tags": {
+    "description": "2021-07 : Source temporaire. Un petit tuyau sort dans des rochers, un second, à quelques mètres et plus ancien, sort dans une petite dépression herbeuse.",
+    "ele": "1860",
+    "intermittent": "yes",
+    "name": "Source de Malcollet",
+    "natural": "spring",
+    "ref:refuges.info": "7777"
+  }
+},
+{
+  "type": "node",
+  "id": 9339326166,
+  "lat": 44.7430659,
+  "lon": 5.5300994,
+  "tags": {
+    "ele": "1540",
+    "name": "Source de Tussac",
+    "natural": "spring",
+    "ref:refuges.info": "6964"
+  }
+},
+{
+  "type": "node",
+  "id": 9339359554,
+  "lat": 44.7489400,
+  "lon": 5.5669000,
+  "tags": {
+    "description": "2012-06 : Coule faiblement et proche du sol, au bord du chemin, à droite en montant, dans un petit virage à gauche, au niveau d'un petit embranchement, juste après un bout de grange.",
+    "ele": "1350",
+    "name": "Fontaine Morte",
+    "natural": "spring",
+    "ref:refuges.info": "3700"
+  }
+},
+{
+  "type": "node",
+  "id": 9339391893,
+  "lat": 44.7512958,
+  "lon": 5.5773564,
+  "tags": {
+    "description": "2018-11 : Un tuyau capte la source d'eau qui se situe plus haut",
+    "ele": "1315",
+    "name": "Source de Gerbeau",
+    "natural": "spring",
+    "ref:refuges.info": "5841"
+  }
+},
+{
+  "type": "node",
+  "id": 9339404441,
+  "lat": 44.7452645,
+  "lon": 5.6233330,
+  "tags": {
+    "description": "Il y a plusieurs sources côte à côte. Les sources mentionnées ici ne coulent pas beaucoup, et sortent au raz du sol dans des plaques de mousses.",
+    "ele": "1625",
+    "name": "Sources du col de Jiboui",
+    "natural": "spring",
+    "ref:refuges.info": "2334"
+  }
+},
+{
+  "type": "node",
+  "id": 9339928703,
+  "lat": 44.7976431,
+  "lon": 5.4451451,
+  "tags": {
+    "intermittent": "yes",
+    "name": "Fontaine de Viresac",
+    "natural": "spring",
+    "note": "Avril 2022 : pas d'eau. Juste le rocher humide.",
+    "ref:refuges.info": "1718"
+  }
+},
+{
+  "type": "node",
+  "id": 9339931452,
+  "lat": 44.8089837,
+  "lon": 5.4711042,
+  "tags": {
+    "description": "2021-08 : A partir de la baraque du Pison , descendre 200m vers le(sud ouest), la source est sur la gauche du chemin. Difficile à trouver. Débit insignifiant même au printemps. Bassin rempli de débris végétaux.",
+    "ele": "1553",
+    "name": "Fontaine de l'Ours",
+    "natural": "spring",
+    "ref:refuges.info": "1216"
+  }
+},
+{
+  "type": "node",
+  "id": 9339931453,
+  "lat": 44.8095384,
+  "lon": 5.4555729,
+  "tags": {
+    "amenity": "fountain",
+    "name": "Fontaine du Château",
+    "ref:refuges.info": "3595"
+  }
+},
+{
+  "type": "node",
+  "id": 9340194475,
+  "lat": 44.8190000,
+  "lon": 5.4750000,
+  "tags": {
+    "description": "2007-11 : Fontaine bien visible du sentier. Il est recommandé de prendre des pastilles de purification.",
+    "ele": "1350",
+    "intermittent": "yes",
+    "name": "Fontaine des Gravelles",
+    "natural": "spring",
+    "ref:refuges.info": "1944"
+  }
+},
+{
+  "type": "node",
+  "id": 9342354297,
+  "lat": 44.8263500,
+  "lon": 5.4540200,
+  "tags": {
+    "ele": "1395",
+    "intermittent": "yes",
+    "name": "Fontaine des econdus",
+    "natural": "spring",
+    "ref:refuges.info": "1906"
+  }
+},
+{
+  "type": "node",
+  "id": 9370942464,
+  "lat": 45.0856254,
+  "lon": 5.5248751,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "bottle": "yes",
+    "fee": "no",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 9372797402,
+  "lat": 44.7538665,
+  "lon": 5.3770025,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 9372800890,
+  "lat": 44.7279465,
+  "lon": 5.3402602,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 9372802056,
+  "lat": 45.0325486,
+  "lon": 5.5263054,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 9380538545,
+  "lat": 45.0503782,
+  "lon": 5.4492102,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 9396052984,
+  "lat": 45.0167545,
+  "lon": 5.4414057,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 9591901544,
+  "lat": 45.2355513,
+  "lon": 5.5090930,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 9613186572,
+  "lat": 45.0210041,
+  "lon": 5.2687814,
+  "tags": {
+    "drinking_water": "conditional",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 9654998486,
+  "lat": 44.9863493,
+  "lon": 5.2526906,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 9666640065,
+  "lat": 45.0140195,
+  "lon": 5.6382648,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 9674882983,
+  "lat": 44.8765955,
+  "lon": 5.5631713,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 9757155089,
+  "lat": 44.7430295,
+  "lon": 5.3909226,
+  "tags": {
+    "access": "permissive",
+    "drinking_water": "yes",
+    "man_made": "water_tap",
+    "note": "Eau pour cyclistes et randonneurs"
+  }
+},
+{
+  "type": "node",
+  "id": 9764651217,
+  "lat": 45.0129483,
+  "lon": 5.6132447,
+  "tags": {
+    "amenity": "drinking_water",
+    "survey:date": "2022-05-23"
+  }
+},
+{
+  "type": "node",
+  "id": 9764651417,
+  "lat": 45.0132409,
+  "lon": 5.6341098,
+  "tags": {
+    "amenity": "fountain",
+    "survey:date": "2022-05-23"
+  }
+},
+{
+  "type": "node",
+  "id": 9786971195,
+  "lat": 45.1385138,
+  "lon": 5.6672120,
+  "tags": {
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 9799238981,
+  "lat": 44.8129564,
+  "lon": 5.1659833,
+  "tags": {
+    "amenity": "fountain",
+    "fountain": "nozzle",
+    "lit": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 9803536557,
+  "lat": 44.9555401,
+  "lon": 5.5883882,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 9803544912,
+  "lat": 45.0154037,
+  "lon": 5.6147092,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 9803549992,
+  "lat": 44.9550569,
+  "lon": 5.5905365,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 9809172601,
+  "lat": 45.0612904,
+  "lon": 5.5790834,
+  "tags": {
+    "access": "no",
+    "name": "Fontaine de Magdelen",
+    "natural": "spring",
+    "ref:refuges.info": "2579"
+  }
+},
+{
+  "type": "node",
+  "id": 9823572729,
+  "lat": 45.1702344,
+  "lon": 5.6452345,
+  "tags": {
+    "intermittent": "yes",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 9833423255,
+  "lat": 44.6935236,
+  "lon": 5.4808554,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 9873673888,
+  "lat": 44.7631328,
+  "lon": 5.2867729,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 9876988666,
+  "lat": 45.0240925,
+  "lon": 5.6457008,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 9907534826,
+  "lat": 44.6870220,
+  "lon": 5.5962927,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 9907555598,
+  "lat": 44.6879840,
+  "lon": 5.5981290,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 9916277470,
+  "lat": 45.0593557,
+  "lon": 5.2433533,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 9932287331,
+  "lat": 45.0748478,
+  "lon": 5.5547921,
+  "tags": {
+    "access": "permissive",
+    "amenity": "drinking_water",
+    "fee": "no",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 9936946064,
+  "lat": 45.0705942,
+  "lon": 5.5514985,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 10031331591,
+  "lat": 45.1186115,
+  "lon": 5.6570414,
+  "tags": {
+    "man_made": "spring_box",
+    "natural": "spring",
+    "source": "IGN - 2022-06"
+  }
+},
+{
+  "type": "node",
+  "id": 10031331592,
+  "lat": 45.1181386,
+  "lon": 5.6582850,
+  "tags": {
+    "man_made": "spring_box",
+    "natural": "spring",
+    "source": "IGN - 2022-06"
+  }
+},
+{
+  "type": "node",
+  "id": 10031331603,
+  "lat": 45.1133493,
+  "lon": 5.6588709,
+  "tags": {
+    "man_made": "spring_box",
+    "natural": "spring",
+    "source": "IGN - 2022-06"
+  }
+},
+{
+  "type": "node",
+  "id": 10048137802,
+  "lat": 44.8452296,
+  "lon": 5.5804110,
+  "tags": {
+    "amenity": "drinking_water",
+    "drinking_water": "yes",
+    "fountain": "drinking"
+  }
+},
+{
+  "type": "node",
+  "id": 10050990885,
+  "lat": 44.9698297,
+  "lon": 5.5153785,
+  "tags": {
+    "description": "Résurgence au milieu d'une doline dans la forêt, eau boueuse. Coule très rarement d’après un garde forestier.",
+    "drinking_water": "no",
+    "intermittent": "yes",
+    "name": "Fontaine Gravianelle",
+    "natural": "spring",
+    "ref:refuges.info": "4155"
+  }
+},
+{
+  "type": "node",
+  "id": 10053674506,
+  "lat": 45.0006686,
+  "lon": 5.6070053,
+  "tags": {
+    "description": "Metal pipe flowing into nearby stream",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 10079263672,
+  "lat": 45.1772087,
+  "lon": 5.5513412,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 10095081155,
+  "lat": 45.1363021,
+  "lon": 5.6613781,
+  "tags": {
+    "amenity": "fountain",
+    "name": "Pierre-Paris"
+  }
+},
+{
+  "type": "node",
+  "id": 10147221783,
+  "lat": 44.7097389,
+  "lon": 5.4016611,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "fee": "no",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 10262134499,
+  "lat": 45.0856786,
+  "lon": 5.4731956,
+  "tags": {
+    "drinking_water": "yes",
+    "inlet": "direct",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 10262558909,
+  "lat": 45.0859313,
+  "lon": 5.4733365,
+  "tags": {
+    "access": "private",
+    "amenity": "drinking_water",
+    "bottle": "yes",
+    "description": "Fontaine",
+    "fee": "no",
+    "indoor": "no",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 10263102299,
+  "lat": 45.0793597,
+  "lon": 5.4610991,
+  "tags": {
+    "drinking_water": "no",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 10273142416,
+  "lat": 45.0574668,
+  "lon": 5.4514689,
+  "tags": {
+    "drinking_water": "no",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 10289591591,
+  "lat": 45.0891547,
+  "lon": 5.4629384,
+  "tags": {
+    "access": "yes",
+    "drinking_water": "no",
+    "man_made": "water_well",
+    "pump": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 10291391841,
+  "lat": 45.1022264,
+  "lon": 5.4746228,
+  "tags": {
+    "amenity": "fountain",
+    "bottle": "no",
+    "fee": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 10314993122,
+  "lat": 45.0875891,
+  "lon": 5.4674425,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 10570159292,
+  "lat": 45.2451360,
+  "lon": 5.6267448,
+  "tags": {
+    "man_made": "water_well"
+  }
+},
+{
+  "type": "node",
+  "id": 10585524891,
+  "lat": 44.9669717,
+  "lon": 5.4781553,
+  "tags": {
+    "man_made": "water_well",
+    "name": "Puits de Darbounouse",
+    "pump": "no",
+    "ref:refuges.info": "4050"
+  }
+},
+{
+  "type": "node",
+  "id": 10585567268,
+  "lat": 44.8666710,
+  "lon": 5.4471319,
+  "tags": {
+    "name": "Fontaine de la Baume",
+    "natural": "spring",
+    "ref:refuges.info": "8570"
+  }
+},
+{
+  "type": "node",
+  "id": 10632365669,
+  "lat": 45.1054651,
+  "lon": 5.4661418,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 10665123818,
+  "lat": 44.9342247,
+  "lon": 5.4313649,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "yes",
+    "intermittent": "no",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 10678599525,
+  "lat": 45.0749840,
+  "lon": 5.5125176,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "yes",
+    "fountain": "drinking",
+    "lit": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 10678599530,
+  "lat": 45.0767233,
+  "lon": 5.5148650,
+  "tags": {
+    "amenity": "fountain",
+    "fountain": "drinking"
+  }
+},
+{
+  "type": "node",
+  "id": 10678599539,
+  "lat": 45.0812352,
+  "lon": 5.5167934,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "yes",
+    "fountain": "drinking"
+  }
+},
+{
+  "type": "node",
+  "id": 10689522754,
+  "lat": 44.8996531,
+  "lon": 5.3195661,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 10770727695,
+  "lat": 45.2446740,
+  "lon": 5.6321812,
+  "tags": {
+    "man_made": "water_well"
+  }
+},
+{
+  "type": "node",
+  "id": 10778157232,
+  "lat": 45.2163812,
+  "lon": 5.5083465,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 10787119959,
+  "lat": 45.0720942,
+  "lon": 5.5514937,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "bottle": "yes",
+    "fee": "no",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 10787187747,
+  "lat": 45.1297617,
+  "lon": 5.5289428,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 10796666072,
+  "lat": 44.9712027,
+  "lon": 5.6101231,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 10796666162,
+  "lat": 44.9750828,
+  "lon": 5.6199678,
+  "tags": {
+    "drinking_water": "no",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 10856150442,
+  "lat": 44.7460015,
+  "lon": 5.4365140,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 10859884962,
+  "lat": 45.0583633,
+  "lon": 5.4520302,
+  "tags": {
+    "amenity": "fountain",
+    "covered": "no",
+    "drinking_water": "yes",
+    "fountain": "stone_block",
+    "indoor": "no",
+    "lit": "no",
+    "name": "Fontaine de la marteliere",
+    "operator": "Commune de Saint Julien",
+    "source": "survey"
+  }
+},
+{
+  "type": "node",
+  "id": 10929241454,
+  "lat": 44.9541840,
+  "lon": 5.5514548,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 10965667708,
+  "lat": 45.0177278,
+  "lon": 5.4456169,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 10965783371,
+  "lat": 45.0887120,
+  "lon": 5.4255777,
+  "tags": {
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 10965795026,
+  "lat": 45.0914787,
+  "lon": 5.3826006,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "drinking_water": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 10978311028,
+  "lat": 45.1401796,
+  "lon": 5.6256159,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 10980635437,
+  "lat": 45.1786146,
+  "lon": 5.6054984,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 10980635438,
+  "lat": 45.1779165,
+  "lon": 5.5970967,
+  "tags": {
+    "drinking_water": "no",
+    "intermittent": "yes",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 10980635439,
+  "lat": 45.1808744,
+  "lon": 5.5957716,
+  "tags": {
+    "drinking_water": "yes",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 10982364710,
+  "lat": 44.9568415,
+  "lon": 5.4369402,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 11001312132,
+  "lat": 45.1995665,
+  "lon": 5.6375666,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 11003058058,
+  "lat": 45.2394208,
+  "lon": 5.5851947,
+  "tags": {
+    "description": "Écoulement d'eau situé à peu près au milieu du tunnel, s'écoule le long le mur nord. Suffisant pour remplir une bouteille.",
+    "drinking_water": "no",
+    "layer": "-1",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 11007018579,
+  "lat": 44.8975256,
+  "lon": 5.3202340,
+  "tags": {
+    "drinking_water": "yes",
+    "man_made": "water_tap",
+    "name": "Eau potable"
+  }
+},
+{
+  "type": "node",
+  "id": 11027568397,
+  "lat": 44.8994970,
+  "lon": 5.3022787,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 11030192532,
+  "lat": 44.8687372,
+  "lon": 5.4155249,
+  "tags": {
+    "access": "yes",
+    "drinking_water": "yes",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 11076574466,
+  "lat": 44.9123894,
+  "lon": 5.1091497,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 11076579318,
+  "lat": 44.9110827,
+  "lon": 5.1930382,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 11078792983,
+  "lat": 44.8277233,
+  "lon": 5.6080659,
+  "tags": {
+    "access": "customers",
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 11083314675,
+  "lat": 45.1333820,
+  "lon": 5.5087766,
+  "tags": {
+    "drinking_water": "yes",
+    "name": "Fontaine Desfonds",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 11111323546,
+  "lat": 44.7524687,
+  "lon": 5.3713247,
+  "tags": {
+    "amenity": "drinking_water",
+    "indoor": "no",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 11123517036,
+  "lat": 44.9131064,
+  "lon": 5.2083873,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "bottle": "yes",
+    "fee": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 11137265686,
+  "lat": 44.8776077,
+  "lon": 5.0767916,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "bottle": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 11148588507,
+  "lat": 44.7027470,
+  "lon": 5.8042386,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 11154412820,
+  "lat": 45.1207168,
+  "lon": 5.3377674,
+  "tags": {
+    "amenity": "fountain",
+    "name": "Fontaine de Beauvoir-en-Royan"
+  }
+},
+{
+  "type": "node",
+  "id": 11159359939,
+  "lat": 44.9142931,
+  "lon": 5.3795952,
+  "tags": {
+    "access": "yes",
+    "bottle": "yes",
+    "drinking_water": "yes",
+    "fee": "no",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 11165277521,
+  "lat": 44.9677390,
+  "lon": 5.4155075,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 11199535419,
+  "lat": 44.9000208,
+  "lon": 5.4639199,
+  "tags": {
+    "elevation": "1441",
+    "intermittent": "yes",
+    "name": "Source de Pré Rateau",
+    "natural": "spring",
+    "ref:refuges.info": "7050"
+  }
+},
+{
+  "type": "node",
+  "id": 11245872437,
+  "lat": 44.6928157,
+  "lon": 5.6007490,
+  "tags": {
+    "amenity": "fountain",
+    "description": "Cette eau de source alimente aussi la maison voisine.",
+    "drinking_water": "yes",
+    "fountain": "drinking",
+    "lit": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 11248438873,
+  "lat": 45.0555597,
+  "lon": 5.5676231,
+  "tags": {
+    "amenity": "drinking_water",
+    "drinking_water:legal": "unknown"
+  }
+},
+{
+  "type": "node",
+  "id": 11248990908,
+  "lat": 45.2171024,
+  "lon": 5.5591854,
+  "tags": {
+    "name": "Fontaine du Rafour",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 11252716078,
+  "lat": 45.0227915,
+  "lon": 5.4530720,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "no",
+    "intermittent": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 11353551130,
+  "lat": 45.0189669,
+  "lon": 5.2897375,
+  "tags": {
+    "description": "Öffentliche Wasserzapfstelle",
+    "man_made": "water_tap",
+    "name": "Wasser"
+  }
+},
+{
+  "type": "node",
+  "id": 11464367132,
+  "lat": 45.0043140,
+  "lon": 5.3107728,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 11465638605,
+  "lat": 45.0074101,
+  "lon": 5.3010075,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 11489062744,
+  "lat": 44.9900618,
+  "lon": 5.4885520,
+  "tags": {
+    "name": "Fontaine de la Coinchette",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 11816498366,
+  "lat": 44.7531142,
+  "lon": 5.3712575,
+  "tags": {
+    "amenity": "drinking_water",
+    "fee": "no",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 11816816794,
+  "lat": 45.0882779,
+  "lon": 5.4678309,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 11823067637,
+  "lat": 45.2723153,
+  "lon": 5.6145524,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 11835242028,
+  "lat": 45.1571187,
+  "lon": 5.4151073,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 11861660345,
+  "lat": 45.0501956,
+  "lon": 5.2668669,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 11917905076,
+  "lat": 44.6930112,
+  "lon": 5.4853310,
+  "tags": {
+    "amenity": "drinking_water",
+    "indoor": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 11918482573,
+  "lat": 44.6750530,
+  "lon": 5.7024873,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 11959730603,
+  "lat": 44.6931124,
+  "lon": 5.6932952,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 11959730604,
+  "lat": 44.6890700,
+  "lon": 5.6919434,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 11959731862,
+  "lat": 44.6629042,
+  "lon": 5.7175509,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 11959731863,
+  "lat": 44.6629623,
+  "lon": 5.7168884,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 11971663278,
+  "lat": 45.0118247,
+  "lon": 5.5715719,
+  "tags": {
+    "fixme": "resurvey : ne semble pas exister",
+    "intermittent": "yes",
+    "name": "Fontaine de la Plante",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 11973784255,
+  "lat": 44.6538965,
+  "lon": 5.7265221,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 11973784256,
+  "lat": 44.6620881,
+  "lon": 5.7185389,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 11983689717,
+  "lat": 45.1155563,
+  "lon": 5.3998702,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "fee": "no",
+    "pump": "manual",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12039508519,
+  "lat": 44.8371662,
+  "lon": 5.1874771,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "fee": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 12047528169,
+  "lat": 44.8741401,
+  "lon": 5.0773342,
+  "tags": {
+    "drinking_water:signed": "no",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 12047528171,
+  "lat": 44.8739237,
+  "lon": 5.0781704,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 12062935090,
+  "lat": 44.8718747,
+  "lon": 5.6072609,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 12065252344,
+  "lat": 45.0414173,
+  "lon": 5.5800658,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 12066636027,
+  "lat": 45.0254804,
+  "lon": 5.3240680,
+  "tags": {
+    "drinking_water": "yes",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 12066723419,
+  "lat": 45.0245011,
+  "lon": 5.3231229,
+  "tags": {
+    "drinking_water": "yes",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 12092181951,
+  "lat": 45.2008031,
+  "lon": 5.4616130,
+  "tags": {
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 12103341772,
+  "lat": 45.0698856,
+  "lon": 5.5530225,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 12110417712,
+  "lat": 45.0706432,
+  "lon": 5.5573189,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 12110689533,
+  "lat": 44.7542088,
+  "lon": 5.3741243,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 12110739611,
+  "lat": 44.7540318,
+  "lon": 5.3721825,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 12114093815,
+  "lat": 45.0559688,
+  "lon": 5.4030003,
+  "tags": {
+    "amenity": "drinking_water",
+    "drinking_water": "yes",
+    "lit": "no",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12114690193,
+  "lat": 44.8539640,
+  "lon": 5.5275522,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 12114846336,
+  "lat": 44.8572961,
+  "lon": 5.5645529,
+  "tags": {
+    "description": "2024-07-27 Très bon débit",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 12138360503,
+  "lat": 44.8050749,
+  "lon": 5.0429387,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 12168521872,
+  "lat": 44.8734580,
+  "lon": 5.0777992,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 12229672301,
+  "lat": 44.8113658,
+  "lon": 5.5800161,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 12281537814,
+  "lat": 45.2627491,
+  "lon": 5.5611279,
+  "tags": {
+    "amenity": "drinking_water",
+    "bottle": "yes",
+    "cold_water": "no",
+    "fee": "no",
+    "fountain": "water_tap",
+    "hot_water": "no",
+    "iced_water": "no",
+    "opening_hours": "24/7",
+    "panoramax": "694d0f02-5601-45de-8bce-d10ed372b330",
+    "room_temperature_water": "yes",
+    "seasonal": "no",
+    "warm_water": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 12287817910,
+  "lat": 44.7145445,
+  "lon": 5.5876774,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 12287817927,
+  "lat": 44.7141462,
+  "lon": 5.5870018,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 12291493301,
+  "lat": 45.0742456,
+  "lon": 5.2836782,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 12331379994,
+  "lat": 45.1257088,
+  "lon": 5.5911624,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 12347709434,
+  "lat": 44.6594899,
+  "lon": 5.6255697,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 12369399884,
+  "lat": 45.1755155,
+  "lon": 5.6400726,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 12394230758,
+  "lat": 44.7744846,
+  "lon": 5.4087201,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "fee": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 12407640996,
+  "lat": 44.8993944,
+  "lon": 5.0959327,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "fee": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 12437019058,
+  "lat": 45.2372151,
+  "lon": 5.5082204,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 12437062969,
+  "lat": 45.0024902,
+  "lon": 5.3085105,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 12437062971,
+  "lat": 44.6906251,
+  "lon": 5.4330839,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 12437062972,
+  "lat": 44.6914890,
+  "lon": 5.4344038,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 12499075159,
+  "lat": 45.0732817,
+  "lon": 5.5783340,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 12501030617,
+  "lat": 45.0589002,
+  "lon": 5.2487913,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "fee": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 12533767905,
+  "lat": 45.1740362,
+  "lon": 5.6368357,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 12533767913,
+  "lat": 45.1725150,
+  "lon": 5.6292584,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 12533768007,
+  "lat": 45.1670922,
+  "lon": 5.6310441,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 12618283983,
+  "lat": 45.1799734,
+  "lon": 5.5259065,
+  "tags": {
+    "fixme": "position à affiner",
+    "name": "Source des Plagneux",
+    "natural": "spring",
+    "ref:refuges.info": "4833"
+  }
+},
+{
+  "type": "node",
+  "id": 12630287854,
+  "lat": 45.2773519,
+  "lon": 5.5685642,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "fee": "no",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 12643690104,
+  "lat": 44.7674974,
+  "lon": 5.1189485,
+  "tags": {
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 12666371891,
+  "lat": 45.0554566,
+  "lon": 5.2271326,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 12752274402,
+  "lat": 45.1583983,
+  "lon": 5.4598278,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 12762317590,
+  "lat": 44.9701358,
+  "lon": 5.5520332,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "yes",
+    "lit": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 12779245259,
+  "lat": 44.9773759,
+  "lon": 5.1934741,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 12802926321,
+  "lat": 45.0463154,
+  "lon": 5.3926844,
+  "tags": {
+    "drinking_water": "no",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 12803707926,
+  "lat": 44.8471289,
+  "lon": 5.2007713,
+  "tags": {
+    "fixme": "emplacement sans doute approximatif",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 12805899997,
+  "lat": 44.9082894,
+  "lon": 5.5527911,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 12806117602,
+  "lat": 45.0528592,
+  "lon": 5.5884952,
+  "tags": {
+    "name": "Ruisseau",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 12840735907,
+  "lat": 44.8747387,
+  "lon": 5.5703828,
+  "tags": {
+    "building": "service",
+    "description": "Il y a bien une source accessible au bas du batiment",
+    "man_made": "spring_box",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 12871325161,
+  "lat": 44.9543801,
+  "lon": 5.4261397,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 12909019544,
+  "lat": 45.1704676,
+  "lon": 5.6302458,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "no",
+    "lit": "no",
+    "survey:date": "2025-06-12"
+  }
+},
+{
+  "type": "node",
+  "id": 12942397000,
+  "lat": 45.0714049,
+  "lon": 5.5513327,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "fee": "no",
+    "fountain": "drinking",
+    "man_made": "water_tap",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12953473923,
+  "lat": 45.1798316,
+  "lon": 5.6170695,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 12971950945,
+  "lat": 45.0177800,
+  "lon": 5.5301623,
+  "tags": {
+    "amenity": "drinking_water",
+    "fee": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 13028150988,
+  "lat": 45.0504905,
+  "lon": 5.5607982,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "conditional"
+  }
+},
+{
+  "type": "node",
+  "id": 13028568973,
+  "lat": 45.0725331,
+  "lon": 5.3977314,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 13042185777,
+  "lat": 44.7309192,
+  "lon": 5.1046644,
+  "tags": {
+    "man_made": "spring_box",
+    "natural": "spring",
+    "source": "IGN - 2024-03-15"
+  }
+},
+{
+  "type": "node",
+  "id": 13042185778,
+  "lat": 44.7684711,
+  "lon": 5.0989709,
+  "tags": {
+    "man_made": "spring_box",
+    "natural": "spring",
+    "source": "IGN - 2024-03-15"
+  }
+},
+{
+  "type": "node",
+  "id": 13042199773,
+  "lat": 44.8664626,
+  "lon": 5.0575439,
+  "tags": {
+    "man_made": "spring_box",
+    "natural": "spring",
+    "source": "IGN - 2024-03-15"
+  }
+},
+{
+  "type": "node",
+  "id": 13042201896,
+  "lat": 44.7354535,
+  "lon": 5.0941843,
+  "tags": {
+    "man_made": "spring_box",
+    "natural": "spring",
+    "source": "IGN - 2024-03-15"
+  }
+},
+{
+  "type": "node",
+  "id": 13042204024,
+  "lat": 44.8827512,
+  "lon": 5.0638487,
+  "tags": {
+    "man_made": "spring_box",
+    "natural": "spring",
+    "source": "IGN - 2024-03-15"
+  }
+},
+{
+  "type": "node",
+  "id": 13042204257,
+  "lat": 44.8714367,
+  "lon": 5.0556622,
+  "tags": {
+    "man_made": "spring_box",
+    "natural": "spring",
+    "source": "IGN - 2024-03-15"
+  }
+},
+{
+  "type": "node",
+  "id": 13042204964,
+  "lat": 44.7959986,
+  "lon": 5.1090022,
+  "tags": {
+    "man_made": "spring_box",
+    "natural": "spring",
+    "source": "IGN - 2024-03-15"
+  }
+},
+{
+  "type": "node",
+  "id": 13042212799,
+  "lat": 44.7291589,
+  "lon": 5.2218256,
+  "tags": {
+    "man_made": "spring_box",
+    "natural": "spring",
+    "source": "IGN - 2024-03-15"
+  }
+},
+{
+  "type": "node",
+  "id": 13042217379,
+  "lat": 44.7702804,
+  "lon": 5.0727029,
+  "tags": {
+    "man_made": "spring_box",
+    "natural": "spring",
+    "source": "IGN - 2024-03-15"
+  }
+},
+{
+  "type": "node",
+  "id": 13042218799,
+  "lat": 44.8187855,
+  "lon": 5.1666318,
+  "tags": {
+    "man_made": "spring_box",
+    "natural": "spring",
+    "source": "IGN - 2024-03-15"
+  }
+},
+{
+  "type": "node",
+  "id": 13042219122,
+  "lat": 44.8857705,
+  "lon": 5.1137238,
+  "tags": {
+    "man_made": "spring_box",
+    "natural": "spring",
+    "source": "IGN - 2024-03-15"
+  }
+},
+{
+  "type": "node",
+  "id": 13042219702,
+  "lat": 44.9159734,
+  "lon": 5.1039827,
+  "tags": {
+    "man_made": "spring_box",
+    "natural": "spring",
+    "source": "IGN - 2024-03-15"
+  }
+},
+{
+  "type": "node",
+  "id": 13042221208,
+  "lat": 44.8693785,
+  "lon": 5.1008579,
+  "tags": {
+    "man_made": "spring_box",
+    "natural": "spring",
+    "source": "IGN - 2024-03-15"
+  }
+},
+{
+  "type": "node",
+  "id": 13042223045,
+  "lat": 44.8381738,
+  "lon": 5.1959694,
+  "tags": {
+    "man_made": "spring_box",
+    "natural": "spring",
+    "source": "IGN - 2024-03-15"
+  }
+},
+{
+  "type": "node",
+  "id": 13042223563,
+  "lat": 44.7168580,
+  "lon": 5.2209611,
+  "tags": {
+    "man_made": "spring_box",
+    "natural": "spring",
+    "source": "IGN - 2024-03-15"
+  }
+},
+{
+  "type": "node",
+  "id": 13042224402,
+  "lat": 44.8372542,
+  "lon": 5.0812084,
+  "tags": {
+    "man_made": "spring_box",
+    "natural": "spring",
+    "source": "IGN - 2024-03-15"
+  }
+},
+{
+  "type": "node",
+  "id": 13042224527,
+  "lat": 44.7737551,
+  "lon": 5.1439985,
+  "tags": {
+    "name": "la Bourne",
+    "natural": "spring",
+    "source": "IGN - 2024-03-15"
+  }
+},
+{
+  "type": "node",
+  "id": 13042225905,
+  "lat": 44.8008681,
+  "lon": 5.1130399,
+  "tags": {
+    "man_made": "spring_box",
+    "natural": "spring",
+    "source": "IGN - 2024-03-15"
+  }
+},
+{
+  "type": "node",
+  "id": 13042231118,
+  "lat": 44.7915857,
+  "lon": 5.0988790,
+  "tags": {
+    "man_made": "spring_box",
+    "natural": "spring",
+    "source": "IGN - 2024-03-15"
+  }
+},
+{
+  "type": "node",
+  "id": 13042231438,
+  "lat": 44.7717168,
+  "lon": 5.1338768,
+  "tags": {
+    "name": "Sarrier",
+    "natural": "spring",
+    "source": "IGN - 2024-03-15"
+  }
+},
+{
+  "type": "node",
+  "id": 13042234463,
+  "lat": 44.7779536,
+  "lon": 5.1292502,
+  "tags": {
+    "man_made": "spring_box",
+    "natural": "spring",
+    "source": "IGN - 2024-03-15"
+  }
+},
+{
+  "type": "node",
+  "id": 13042239494,
+  "lat": 44.8218208,
+  "lon": 5.1854036,
+  "tags": {
+    "man_made": "spring_box",
+    "natural": "spring",
+    "source": "IGN - 2024-03-15"
+  }
+},
+{
+  "type": "node",
+  "id": 13043076615,
+  "lat": 44.6697504,
+  "lon": 5.6452454,
+  "tags": {
+    "name": "Source de Fontlonge",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 13050146721,
+  "lat": 44.7382531,
+  "lon": 5.5547880,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 13055710057,
+  "lat": 45.0864415,
+  "lon": 5.3390090,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 13055710058,
+  "lat": 45.0841913,
+  "lon": 5.3364943,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "fixme": "emplacement exact dans e cimetière à voir"
+  }
+},
+{
+  "type": "node",
+  "id": 13055710070,
+  "lat": 45.2020598,
+  "lon": 5.4817447,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 13055710071,
+  "lat": 45.2017268,
+  "lon": 5.4816211,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "fixme": "emplacement exact à valider"
+  }
+},
+{
+  "type": "node",
+  "id": 13055710072,
+  "lat": 45.1207143,
+  "lon": 5.3377310,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 13055710073,
+  "lat": 45.0630177,
+  "lon": 5.3438481,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "fixme": "emplacement exact à valider"
+  }
+},
+{
+  "type": "node",
+  "id": 13055710087,
+  "lat": 45.0872132,
+  "lon": 5.4667738,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 13055710088,
+  "lat": 45.0882973,
+  "lon": 5.4678525,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 13063039589,
+  "lat": 44.8953552,
+  "lon": 5.3703831,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 13078480182,
+  "lat": 45.0858559,
+  "lon": 5.3390111,
+  "tags": {
+    "amenity": "fountain",
+    "drinking_water": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 13078482919,
+  "lat": 45.0864325,
+  "lon": 5.3390925,
+  "tags": {
+    "drinking_water": "yes",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 13085495030,
+  "lat": 44.8695408,
+  "lon": 5.2218846,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 13106091278,
+  "lat": 45.0753568,
+  "lon": 5.5534566,
+  "tags": {
+    "access": "permissive",
+    "amenity": "drinking_water",
+    "fee": "no",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 13121666541,
+  "lat": 45.0425370,
+  "lon": 5.5483038,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 13142375274,
+  "lat": 45.1761732,
+  "lon": 5.6177015,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 13169347607,
+  "lat": 45.0640259,
+  "lon": 5.2948619,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 13169347608,
+  "lat": 45.0629005,
+  "lon": 5.3025092,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "fee": "no",
+    "fixme": "emplacement précis à voir"
+  }
+},
+{
+  "type": "node",
+  "id": 13169347609,
+  "lat": 45.0635615,
+  "lon": 5.3044948,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "fixme": "emplacement précis à voir"
+  }
+},
+{
+  "type": "node",
+  "id": 13171482670,
+  "lat": 45.1479719,
+  "lon": 5.4387368,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "note": "ouvert uniquement l'été"
+  }
+},
+{
+  "type": "node",
+  "id": 13180633655,
+  "lat": 45.2019712,
+  "lon": 5.4612382,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 13180633656,
+  "lat": 45.2010450,
+  "lon": 5.4601875,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "fixme": "emplacement exact a verifier"
+  }
+},
+{
+  "type": "node",
+  "id": 13227245682,
+  "lat": 44.8118185,
+  "lon": 5.5723448,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "fee": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 13228473601,
+  "lat": 44.8876867,
+  "lon": 5.5398534,
+  "tags": {
+    "description": "Source qui coule depuis un tuyau dans un bachasson",
+    "inscription": "2019 Gresse Amis Bois",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 13273940054,
+  "lat": 44.8514969,
+  "lon": 5.5617777,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 13294178750,
+  "lat": 44.8864521,
+  "lon": 5.3572697,
+  "tags": {
+    "name": "Fontaine de Béguin",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 13300497384,
+  "lat": 44.9808702,
+  "lon": 5.4229555,
+  "tags": {
+    "man_made": "spring_box",
+    "name": "Font Claire",
+    "natural": "spring",
+    "source": "IGN - 2025-09-15"
+  }
+},
+{
+  "type": "node",
+  "id": 13300516675,
+  "lat": 45.0013320,
+  "lon": 5.4217483,
+  "tags": {
+    "man_made": "spring_box",
+    "natural": "spring",
+    "source": "IGN - 2025-09-15"
+  }
+},
+{
+  "type": "node",
+  "id": 13301301984,
+  "lat": 44.9889844,
+  "lon": 5.4447379,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 13333251153,
+  "lat": 44.7160583,
+  "lon": 5.4339323,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "charge": "0",
+    "operator": "commune de laval d'aix",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 13353415620,
+  "lat": 45.0662307,
+  "lon": 5.5560685,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "fee": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 13367846921,
+  "lat": 44.9862745,
+  "lon": 5.2725477,
+  "tags": {
+    "access": "yes",
+    "drinking_water": "yes",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 13367931951,
+  "lat": 44.9650888,
+  "lon": 5.2706344,
+  "tags": {
+    "drinking_water": "yes",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 13417763601,
+  "lat": 45.1062953,
+  "lon": 5.5845502,
+  "tags": {
+    "amenity": "fountain"
+  }
+},
+{
+  "type": "node",
+  "id": 13460268940,
+  "lat": 44.9060465,
+  "lon": 5.5890041,
+  "tags": {
+    "amenity": "watering_place",
+    "description": "Source avec bachasson qui coulait en juillet 2025",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 13722063517,
+  "lat": 44.8475316,
+  "lon": 5.6244723,
+  "tags": {
+    "drinking_water": "yes",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 13723554843,
+  "lat": 45.1428051,
+  "lon": 5.4850589,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 13752963956,
+  "lat": 44.8691823,
+  "lon": 5.2042105,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 13781446089,
+  "lat": 45.2065562,
+  "lon": 5.4659685,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 13784988001,
+  "lat": 44.7298020,
+  "lon": 5.6181668,
+  "tags": {
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 13810941095,
+  "lat": 44.8559988,
+  "lon": 5.4317518,
+  "tags": {
+    "access": "private",
+    "description": "captage protégé par une grille",
+    "man_made": "water_well",
+    "name": "Captage des Neys"
+  }
+},
+{
+  "type": "node",
+  "id": 13828813194,
+  "lat": 44.7523738,
+  "lon": 5.3678451,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 13848370565,
+  "lat": 44.7540966,
+  "lon": 5.3729193,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 13855774465,
+  "lat": 44.8830306,
+  "lon": 5.2453487,
+  "tags": {
+    "drinking_water": "yes",
+    "natural": "spring"
+  }
+},
+{
+  "type": "node",
+  "id": 13859593808,
+  "lat": 44.7524818,
+  "lon": 5.3727163,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 13871814601,
+  "lat": 44.8129188,
+  "lon": 5.1719358,
+  "tags": {
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 13882410094,
+  "lat": 44.7744653,
+  "lon": 5.4093633,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "fee": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 13882410095,
+  "lat": 44.7741956,
+  "lon": 5.4079450,
+  "tags": {
+    "access": "no",
+    "amenity": "drinking_water",
+    "fee": "no",
+    "note": "Fontaine mais robinet fermé et impossible à ouvrir.\nJe la crée donc avec \"access=no\"."
+  }
+},
+{
+  "type": "node",
+  "id": 13905554022,
+  "lat": 44.6938616,
+  "lon": 5.7079838,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 13936436229,
+  "lat": 45.1479061,
+  "lon": 5.4387889,
+  "tags": {
+    "access": "yes",
+    "amenity": "drinking_water",
+    "fee": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 13946858684,
+  "lat": 44.7513861,
+  "lon": 5.3727268,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 13965178026,
+  "lat": 45.2016614,
+  "lon": 5.4607415,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 13965231530,
+  "lat": 45.2019743,
+  "lon": 5.4614975,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 13989342392,
+  "lat": 44.7575443,
+  "lon": 5.3695860,
+  "tags": {
+    "amenity": "drinking_water",
+    "check_date": "2026-07-02"
+  }
+},
+{
+  "type": "node",
+  "id": 13996177238,
+  "lat": 44.7961424,
+  "lon": 5.6580239,
+  "tags": {
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 13997931012,
+  "lat": 44.6975652,
+  "lon": 5.4828493,
+  "tags": {
+    "drinking_water": "yes",
+    "man_made": "water_tap"
+  }
+},
+{
+  "type": "node",
+  "id": 14006268190,
+  "lat": 44.8112693,
+  "lon": 5.4606575,
+  "tags": {
+    "amenity": "drinking_water"
+  }
+},
+{
+  "type": "node",
+  "id": 14045903205,
+  "lat": 45.0788930,
+  "lon": 5.4472674,
+  "tags": {
+    "drinking_water:signed": "no",
+    "man_made": "water_tap"
+  }
+}
+
+  ]
+}
