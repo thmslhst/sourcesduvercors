@@ -78,7 +78,8 @@ No GraphQL, no realtime. Snapshot + poll is plenty at this scale.
 ## Cross-cutting decisions
 
 - **PWA, not native.** One codebase, no app-store friction. Accepted trade-offs: iOS PWA storage-eviction quirks and no reliable Background Sync on iOS (mitigation: sync on app focus; warn users not to delete the "installed" app).
-- **i18n from day one (open):** UI French-first; keep strings in a message catalog even before adding English. Decide the library when the first screen is built.
+- **i18n from day one (decided):** UI French-first; all user-facing strings live in a typed message catalog (`lib/i18n/fr.ts`), no i18n library for now. Revisit the library question when English is actually added.
+- **MapLibre pinned to v5:** maplibre-gl 6.0.0 (released 2026-07) silently fails to load any style in our setup (style stays unparsed, no errors emitted). Stay on ^5 until v6.x is verified working.
 - **Performance budgets:** initial JS < 300 KB gzipped (MapLibre dominates; code-split everything else); map interactive < 3 s on a mid-range phone over 4G.
 - **Privacy:** no tracking of user location server-side; geolocation is used client-side only to center the map. No analytics beyond privacy-friendly aggregate counts (open: Plausible vs. nothing).
 - **Testing:** unit tests for the confidence/derivation logic (the one algorithm that matters), integration tests for API routes, one Playwright happy-path (view map → open source → submit observation) including an offline-mode scenario.
