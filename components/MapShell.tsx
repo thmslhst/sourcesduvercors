@@ -36,12 +36,19 @@ export default function MapShell() {
         if (!cancelled) setState({ phase: "ready", snapshot });
       })
       .catch(() => {
-        if (!cancelled) setState({ phase: "error" });
+        // A silent refresh failure keeps the last good snapshot on screen.
+        if (!cancelled) {
+          setState((prev) => (prev.phase === "ready" ? prev : { phase: "error" }));
+        }
       });
     return () => {
       cancelled = true;
     };
   }, [reloadKey]);
+
+  // After a write (observation/reaction) the derived statuses changed
+  // server-side: re-fetch without dropping the rendered map data.
+  const onMutated = useCallback(() => setReloadKey((k) => k + 1), []);
 
   const sources = useMemo(
     () => (state.phase === "ready" ? state.snapshot.sources : []),
@@ -52,6 +59,13 @@ export default function MapShell() {
     [sources, selectedId],
   );
   const onSelect = useCallback((id: string | null) => setSelectedId(id), []);
+
+  // Dev-only hook so tests/tools can drive selection without a canvas click.
+  useEffect(() => {
+    if (process.env.NODE_ENV === "production") return;
+    (window as unknown as { __selectSource?: typeof onSelect }).__selectSource =
+      onSelect;
+  }, [onSelect]);
 
   return (
     <div className="fixed inset-0 overflow-hidden">
@@ -86,7 +100,11 @@ export default function MapShell() {
         </div>
       )}
 
-      <SourceSheet source={selected} onClose={() => setSelectedId(null)} />
+      <SourceSheet
+        source={selected}
+        onClose={() => setSelectedId(null)}
+        onMutated={onMutated}
+      />
     </div>
   );
 }

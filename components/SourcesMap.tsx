@@ -158,6 +158,9 @@ export default function SourcesMap({
       attributionControl: { compact: true },
     });
     mapRef.current = map;
+    if (process.env.NODE_ENV !== "production") {
+      (window as unknown as { __map?: MapLibreMap }).__map = map;
+    }
 
     map.addControl(new NavigationControl({ showCompass: false }));
     // Geolocation is client-side only: used to center the map, never sent

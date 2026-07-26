@@ -10,9 +10,9 @@ Project documentation lives at the repo root — start with
 
 ## Stack
 
-Next.js (App Router) + TypeScript + Tailwind · PostgreSQL/PostGIS (Neon) +
-Prisma · Vercel. Map (MapLibre + PMTiles) and auth (Better Auth) arrive in
-later phases — see [ARCHITECTURE.md](ARCHITECTURE.md).
+Next.js (App Router) + TypeScript + Tailwind · MapLibre GL + PMTiles ·
+PostgreSQL/PostGIS (Neon) + Prisma · Better Auth (magic link) · Vercel —
+see [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ## Development
 
@@ -38,6 +38,19 @@ One-time, from the [Neon console](https://console.neon.tech) or CLI:
 ```bash
 npm run db:migrate
 ```
+
+## Auth (Better Auth)
+
+Sign-in is passwordless: the app emails a magic link. Configuration lives in
+`.env` (see [.env.example](.env.example)):
+
+- `BETTER_AUTH_SECRET` / `BETTER_AUTH_URL` — required.
+- `RESEND_API_KEY` — optional; without it (local dev) the magic link is
+  printed to the server console instead of being emailed.
+
+Moderation: promote an account by setting `role = 'admin'` on its `user` row
+(manual SQL by design — no UI). Admins can soft-delete abusive observations
+via `DELETE /api/v1/observations/:id`.
 
 ## Importing the OSM catalog
 

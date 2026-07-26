@@ -30,13 +30,13 @@ A hiker can *see* every water source in the Vercors.
 
 The community loop: report → confirm → trust.
 
-- [ ] Better Auth with magic-link email; minimal account (display name)
-- [ ] Submit observation flow (≤ 3 taps: source → status → send; optional comment)
-- [ ] Confirm / dispute on the latest observation
-- [ ] `source_current_status` view wired through API; map colors + confidence badges go live
-- [ ] Source detail shows observation history ("flowing well — 3 days ago, confirmed by 2")
-- [ ] Admin soft-delete for abusive content
-- [ ] Unit tests locking the confidence rules ([DOMAIN.md](DOMAIN.md))
+- [x] Better Auth with magic-link email; minimal account (display name)
+- [x] Submit observation flow (≤ 3 taps: source → status → send; optional comment)
+- [x] Confirm / dispute on the latest observation
+- [x] `source_current_status` view wired through API; map colors + confidence badges go live
+- [x] Source detail shows observation history ("flowing well — 3 days ago, confirmed by 2")
+- [x] Admin soft-delete for abusive content
+- [x] Unit tests locking the confidence rules ([DOMAIN.md](DOMAIN.md))
 
 **Exit:** two different users can report and confirm a real spring, and the map reflects it with correct confidence.
 

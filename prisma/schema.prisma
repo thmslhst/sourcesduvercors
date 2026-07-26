@@ -116,6 +116,7 @@ model User {
   name          String
   email         String   @unique
   emailVerified Boolean  @default(false)
+  role          String   @default("user")
   image         String?
   createdAt     DateTime @default(now()) @db.Timestamptz(6)
   updatedAt     DateTime @default(now()) @db.Timestamptz(6)

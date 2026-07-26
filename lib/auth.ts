@@ -1,0 +1,44 @@
+/**
+ * Better Auth server instance (ARCHITECTURE.md — auth). Magic-link only:
+ * no passwords to manage. The Better Auth core tables live in
+ * prisma/schema.prisma; `user.name` doubles as the public display name,
+ * `user.role` ('user' | 'admin') gates moderation (DOMAIN.md § Users & trust).
+ */
+
+import { betterAuth } from "better-auth";
+import { prismaAdapter } from "better-auth/adapters/prisma";
+import { magicLink } from "better-auth/plugins";
+
+import { prisma } from "./db/client";
+import { sendMagicLinkEmail } from "./email";
+
+export const auth = betterAuth({
+  database: prismaAdapter(prisma, { provider: "postgresql" }),
+  user: {
+    additionalFields: {
+      role: {
+        type: "string",
+        defaultValue: "user",
+        input: false, // never settable from the client
+      },
+    },
+  },
+  plugins: [
+    magicLink({
+      sendMagicLink: async ({ email, url }) => {
+        await sendMagicLinkEmail(email, url);
+      },
+    }),
+  ],
+});
+
+export type Session = typeof auth.$Infer.Session;
+
+/** Session lookup for API route handlers; null when not signed in. */
+export async function getSession(request: Request): Promise<Session | null> {
+  return auth.api.getSession({ headers: request.headers });
+}
+
+export function isAdmin(session: Session): boolean {
+  return session.user.role === "admin";
+}

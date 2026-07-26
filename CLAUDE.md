@@ -2,7 +2,7 @@
 
 Offline-first PWA helping hikers assess whether natural water sources in the Vercors are actually flowing. Community observations + confidence levels on a map. One question only: **"Can I trust this water source?"**
 
-**Status:** Phase 1 (read-only map) complete — MapLibre map with local PMTiles basemap, sources snapshot API, detail sheet, geolocation. Next: Phase 2 (observations & confidence) of [ROADMAP.md](ROADMAP.md).
+**Status:** Phase 2 (observations & confidence) complete — magic-link auth (Better Auth), observation submit + confirm/dispute, derived status/confidence live on map and detail sheet, admin soft-delete. Next: Phase 3 (offline) of [ROADMAP.md](ROADMAP.md).
 
 ## Context documents
 

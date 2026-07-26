@@ -30,6 +30,9 @@ export type DisplayStatus = ObservationStatus | "unknown";
 export const CONFIDENCE_LEVELS = ["high", "medium", "low", "unknown"] as const;
 export type Confidence = (typeof CONFIDENCE_LEVELS)[number];
 
+export const REACTION_TYPES = ["confirm", "dispute"] as const;
+export type ReactionType = (typeof REACTION_TYPES)[number];
+
 /** Age windows in days (DOMAIN.md § Confidence model, v1). */
 export const CONFIDENCE_WINDOWS_DAYS = {
   /** high requires age ≤ this AND ≥ 1 confirmation AND no disputes */

@@ -5,7 +5,11 @@
  * Terminology follows the DOMAIN.md glossary.
  */
 
-import type { DisplayStatus, SourceType } from "../domain/constants";
+import type {
+  Confidence,
+  DisplayStatus,
+  SourceType,
+} from "../domain/constants";
 
 export const fr = {
   appName: "Sources du Vercors",
@@ -32,9 +36,59 @@ export const fr = {
     unknown: "Statut inconnu",
   } satisfies Record<DisplayStatus, string>,
 
-  /** Phase 1 placeholder: everything is `unknown` until observations exist. */
   noObservationYet:
-    "Aucune observation pour le moment. Bientôt, les randonneurs pourront signaler l’état de cette source.",
+    "Aucune observation pour le moment. Soyez la première personne à signaler l’état de cette source.",
+
+  confidence: {
+    high: "Confiance élevée",
+    medium: "Confiance moyenne",
+    low: "Confiance faible",
+    unknown: "Confiance inconnue",
+  } satisfies Record<Confidence, string>,
+
+  /** "il y a 3 jours" — relative time for observation facts lines. */
+  timeAgo: (iso: string, now: Date = new Date()): string => {
+    const minutes = Math.max(
+      0,
+      Math.round((now.getTime() - Date.parse(iso)) / 60_000),
+    );
+    if (minutes < 1) return "à l’instant";
+    if (minutes < 60) return `il y a ${minutes} min`;
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return `il y a ${hours} h`;
+    const days = Math.floor(hours / 24);
+    if (days === 1) return "hier";
+    return `il y a ${days} jours`;
+  },
+
+  confirmedBy: (n: number) =>
+    n === 1 ? "confirmé par 1 randonneur" : `confirmé par ${n} randonneurs`,
+  disputedBy: (n: number) =>
+    n === 1 ? "contesté par 1 randonneur" : `contesté par ${n} randonneurs`,
+
+  recentObservations: "Observations récentes",
+  yourObservation: "votre observation",
+  confirm: "Confirmer",
+  dispute: "Signaler obsolète",
+  reactionFailed: "Impossible d’enregistrer votre avis. Réessayez.",
+
+  reportTitle: "Signaler l’état actuel",
+  commentPlaceholder: "Commentaire (facultatif)",
+  send: "Envoyer",
+  sending: "Envoi…",
+  observationSaved: "Merci ! Observation enregistrée.",
+  observationFailed: "Échec de l’envoi. Réessayez.",
+
+  signInTitle: "Connectez-vous pour contribuer",
+  signInIntro:
+    "Un e-mail avec un lien de connexion vous sera envoyé — pas de mot de passe.",
+  emailPlaceholder: "Votre e-mail",
+  namePlaceholder: "Nom affiché (ex. « Rando26 »)",
+  sendMagicLink: "Recevoir le lien de connexion",
+  magicLinkSent: "Lien envoyé ! Ouvrez l’e-mail sur cet appareil.",
+  magicLinkFailed: "Impossible d’envoyer le lien. Vérifiez l’adresse.",
+  signedInAs: (name: string) => `Connecté·e : ${name}`,
+  signOut: "Se déconnecter",
 
   elevation: (m: number) => `${m.toLocaleString("fr-FR")} m`,
 
