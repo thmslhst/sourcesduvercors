@@ -9,11 +9,13 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-import { useSession, signOut } from "@/lib/auth-client";
+import { signOut } from "@/lib/auth-client";
+import { useOfflineSession } from "@/lib/offline/session";
 import type { ReactionType } from "@/lib/domain/constants";
 import type { SourceDetail } from "@/lib/domain/detail";
 import { STATUS_COLORS } from "@/lib/domain/display";
 import type { SourceSnapshotItem } from "@/lib/domain/snapshot";
+import { enqueueOutbox } from "@/lib/offline/outbox";
 import { fr } from "@/lib/i18n/fr";
 import ObservationForm from "./ObservationForm";
 import ObservationHistory from "./ObservationHistory";
@@ -31,7 +33,9 @@ export default function SourceSheet({
   onClose,
   onMutated,
 }: SourceSheetProps) {
-  const { data: session } = useSession();
+  // Offline-tolerant: falls back to the mirrored session when the
+  // get-session call can't reach the server (lib/offline/session.ts).
+  const session = useOfflineSession();
   // Keyed by source id so a stale detail (or error) never shows for the
   // newly selected source — no state reset needed on selection change.
   const [detailFor, setDetailFor] = useState<{
@@ -39,6 +43,9 @@ export default function SourceSheet({
     detail: SourceDetail;
   } | null>(null);
   const [reactionErrorFor, setReactionErrorFor] = useState<string | null>(null);
+  const [reactionQueuedFor, setReactionQueuedFor] = useState<string | null>(
+    null,
+  );
 
   const sourceId = source?.id ?? null;
   const sessionUserId = session?.user.id ?? null;
@@ -66,17 +73,35 @@ export default function SourceSheet({
   const onReact = useCallback(
     async (observationId: string, type: ReactionType) => {
       setReactionErrorFor(null);
+      setReactionQueuedFor(null);
+      let res: Response;
       try {
-        const res = await fetch(
-          `/api/v1/observations/${observationId}/${type}`,
-          { method: "POST" },
-        );
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        await fetchDetail();
-        onMutated();
+        res = await fetch(`/api/v1/observations/${observationId}/${type}`, {
+          method: "POST",
+        });
       } catch {
-        setReactionErrorFor(sourceId);
+        // Network unreachable → outbox with a client UUID (idempotent
+        // replay, ARCHITECTURE.md § Write path offline).
+        try {
+          await enqueueOutbox({
+            kind: "reaction",
+            id: crypto.randomUUID(),
+            enqueuedAt: new Date().toISOString(),
+            observationId,
+            type,
+          });
+          setReactionQueuedFor(sourceId);
+        } catch {
+          setReactionErrorFor(sourceId);
+        }
+        return;
       }
+      if (!res.ok) {
+        setReactionErrorFor(sourceId);
+        return;
+      }
+      await fetchDetail();
+      onMutated();
     },
     [fetchDetail, onMutated, sourceId],
   );
@@ -90,6 +115,7 @@ export default function SourceSheet({
 
   const detail = detailFor?.sourceId === source.id ? detailFor.detail : null;
   const reactionError = reactionErrorFor === source.id;
+  const reactionQueued = reactionQueuedFor === source.id;
 
   // Fresher-than-snapshot facts once the detail call lands.
   const current = detail?.source ?? source;
@@ -163,6 +189,7 @@ export default function SourceSheet({
             canReact={session !== null && session !== undefined}
             onReact={onReact}
             reactionError={reactionError}
+            reactionQueued={reactionQueued}
           />
         </div>
       )}

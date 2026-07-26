@@ -34,3 +34,34 @@ export function deriveConfidence({
   }
   return "low";
 }
+
+const CONFIDENCE_RANK: Record<Confidence, number> = {
+  high: 3,
+  medium: 2,
+  low: 1,
+  unknown: 0,
+};
+
+/**
+ * Offline age-based decay of a *cached* confidence (ARCHITECTURE.md § Data
+ * flow). The snapshot doesn't carry dispute counts, so the client can't
+ * re-run `deriveConfidence`; instead it caps the server-derived value by the
+ * best confidence the observation's age still allows. Decay is monotonic —
+ * it only ever downgrades, never upgrades.
+ */
+export function decayConfidence(
+  cached: Confidence,
+  ageDays: number | null,
+): Confidence {
+  let cap: Confidence;
+  if (ageDays === null || ageDays > CONFIDENCE_WINDOWS_DAYS.known) {
+    cap = "unknown";
+  } else if (ageDays > CONFIDENCE_WINDOWS_DAYS.medium) {
+    cap = "low";
+  } else if (ageDays > CONFIDENCE_WINDOWS_DAYS.high) {
+    cap = "medium";
+  } else {
+    cap = "high";
+  }
+  return CONFIDENCE_RANK[cap] < CONFIDENCE_RANK[cached] ? cap : cached;
+}

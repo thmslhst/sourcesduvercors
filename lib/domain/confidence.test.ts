@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { deriveConfidence } from "./confidence";
+import { decayConfidence, deriveConfidence } from "./confidence";
 
 // These tests lock the v1 rules from DOMAIN.md. The SQL view
 // source_current_status must stay semantically identical.
@@ -53,5 +53,46 @@ describe("deriveConfidence", () => {
     expect(
       deriveConfidence({ ageDays: 60, confirmations: 0, disputes: 0 }),
     ).toBe("low");
+  });
+});
+
+// Offline decay: cap a cached (server-derived) confidence by observation age.
+describe("decayConfidence", () => {
+  it("keeps fresh data unchanged", () => {
+    expect(decayConfidence("high", 2)).toBe("high");
+    expect(decayConfidence("medium", 5)).toBe("medium");
+  });
+
+  it("never upgrades — a dispute-capped low stays low even when fresh", () => {
+    expect(decayConfidence("low", 2)).toBe("low");
+    expect(decayConfidence("unknown", 2)).toBe("unknown");
+  });
+
+  it("degrades high past the 7-day window", () => {
+    expect(decayConfidence("high", 7)).toBe("high");
+    expect(decayConfidence("high", 7.5)).toBe("medium");
+  });
+
+  it("degrades to low past the 21-day window", () => {
+    expect(decayConfidence("high", 22)).toBe("low");
+    expect(decayConfidence("medium", 22)).toBe("low");
+  });
+
+  it("decays everything to unknown past 60 days", () => {
+    expect(decayConfidence("high", 61)).toBe("unknown");
+    expect(decayConfidence("low", 61)).toBe("unknown");
+  });
+
+  it("is unknown with no observation", () => {
+    expect(decayConfidence("unknown", null)).toBe("unknown");
+  });
+
+  it("matches deriveConfidence at every boundary when there are no reactions", () => {
+    // With 0 confirmations / 0 disputes the age cap and the full derivation
+    // agree from `medium` downward — the two rule sets can't drift apart.
+    for (const ageDays of [0, 7, 7.1, 21, 21.1, 60, 60.1]) {
+      const derived = deriveConfidence({ ageDays, confirmations: 0, disputes: 0 });
+      expect(decayConfidence(derived, ageDays)).toBe(derived);
+    }
   });
 });

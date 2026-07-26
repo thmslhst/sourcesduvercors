@@ -7,6 +7,8 @@
  */
 
 import type { Confidence, DisplayStatus, ObservationStatus } from "./constants";
+import { decayConfidence } from "./confidence";
+import type { SourceSnapshotItem } from "./snapshot";
 
 export function deriveDisplayStatus(
   status: ObservationStatus | null,
@@ -14,6 +16,33 @@ export function deriveDisplayStatus(
 ): DisplayStatus {
   if (confidence === "unknown" || status === null) return "unknown";
   return status;
+}
+
+const MS_PER_DAY = 24 * 60 * 60 * 1000;
+
+/**
+ * Re-bucket a cached snapshot item against the current clock: a source
+ * cached as high confidence days ago must degrade while offline
+ * (ARCHITECTURE.md § Data flow). Fresh data passes through unchanged.
+ */
+export function decaySnapshotItem(
+  item: SourceSnapshotItem,
+  now: Date,
+): SourceSnapshotItem {
+  const ageDays =
+    item.lastObservedAt === null
+      ? null
+      : (now.getTime() - Date.parse(item.lastObservedAt)) / MS_PER_DAY;
+  const confidence = decayConfidence(item.confidence, ageDays);
+  if (confidence === item.confidence) return item;
+  return {
+    ...item,
+    confidence,
+    status: deriveDisplayStatus(
+      item.status === "unknown" ? null : item.status,
+      confidence,
+    ),
+  };
 }
 
 /**

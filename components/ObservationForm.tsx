@@ -3,6 +3,10 @@
 /**
  * The ≤3-tap report flow (PRODUCT_PRINCIPLES.md): source is already open,
  * so — tap a status, tap send. Comment stays optional and out of the way.
+ *
+ * Offline (ARCHITECTURE.md § Write path): when the network is unreachable
+ * the observation goes to the IndexedDB outbox with its client UUID and
+ * `observedAt` = now, and lib/offline/sync replays it later.
  */
 
 import { useState } from "react";
@@ -13,9 +17,10 @@ import {
 } from "@/lib/domain/constants";
 import { STATUS_COLORS } from "@/lib/domain/display";
 import { COMMENT_MAX_LENGTH } from "@/lib/domain/observation-input";
+import { enqueueOutbox } from "@/lib/offline/outbox";
 import { fr } from "@/lib/i18n/fr";
 
-type Phase = "idle" | "sending" | "saved" | "error";
+type Phase = "idle" | "sending" | "saved" | "queued" | "error";
 
 interface ObservationFormProps {
   sourceId: string;
@@ -34,26 +39,48 @@ export default function ObservationForm({
   const submit = async () => {
     if (!status) return;
     setPhase("sending");
+    const body = {
+      id: crypto.randomUUID(),
+      sourceId,
+      status,
+      comment: comment.trim() || undefined,
+      // When the hiker is at the source — distinct from server receipt time.
+      observedAt: new Date().toISOString(),
+    };
+    let res: Response;
     try {
-      const res = await fetch("/api/v1/observations", {
+      res = await fetch("/api/v1/observations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          id: crypto.randomUUID(),
-          sourceId,
-          status,
-          comment: comment.trim() || undefined,
-          observedAt: new Date().toISOString(),
-        }),
+        body: JSON.stringify(body),
       });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      setPhase("saved");
-      setStatus(null);
-      setComment("");
-      onSaved();
     } catch {
-      setPhase("error");
+      // Network unreachable → outbox; sync replays it (idempotent by UUID).
+      try {
+        await enqueueOutbox({
+          kind: "observation",
+          id: body.id,
+          enqueuedAt: new Date().toISOString(),
+          body,
+        });
+        setPhase("queued");
+        setStatus(null);
+        setComment("");
+      } catch {
+        setPhase("error");
+      }
+      return;
     }
+    if (!res.ok) {
+      // Server reached but refused (signed out, invalid…) — queueing
+      // wouldn't help; surface the failure.
+      setPhase("error");
+      return;
+    }
+    setPhase("saved");
+    setStatus(null);
+    setComment("");
+    onSaved();
   };
 
   return (
@@ -66,7 +93,7 @@ export default function ObservationForm({
             type="button"
             onClick={() => {
               setStatus(s);
-              if (phase === "saved" || phase === "error") setPhase("idle");
+              if (phase !== "idle" && phase !== "sending") setPhase("idle");
             }}
             aria-pressed={status === s}
             className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-sm ${
@@ -109,6 +136,11 @@ export default function ObservationForm({
       {phase === "saved" && (
         <p className="text-sm text-green-700 dark:text-green-400">
           {fr.observationSaved}
+        </p>
+      )}
+      {phase === "queued" && (
+        <p className="text-sm text-blue-700 dark:text-blue-300">
+          {fr.observationQueued}
         </p>
       )}
       {phase === "error" && (

@@ -92,6 +92,31 @@ export const fr = {
 
   elevation: (m: number) => `${m.toLocaleString("fr-FR")} m`,
 
+  // Offline (Phase 3) — honesty principle: always say when data is stale.
+  offlineDataAsOf: (iso: string, now?: Date) =>
+    `Hors ligne — données ${fr.timeAgo(iso, now).replace("à l’instant", "à jour")}`,
+  pendingContributions: (n: number) =>
+    n === 1 ? "1 contribution à envoyer" : `${n} contributions à envoyer`,
+  observationQueued:
+    "Enregistrée hors ligne — envoi automatique au retour du réseau.",
+  reactionQueued:
+    "Avis enregistré hors ligne — envoi automatique au retour du réseau.",
+
+  offlineMapButton: "Carte hors ligne",
+  offlineMapTitle: "Carte hors ligne",
+  offlineMapIntro: (size: string) =>
+    `Téléchargez le fond de carte du Vercors (${size}) pour l’afficher sans réseau. Les sources et leurs statuts sont déjà conservés automatiquement.`,
+  offlineMapDownload: (size: string) => `Télécharger (${size})`,
+  offlineMapDownloading: (pct: number) => `Téléchargement… ${pct} %`,
+  offlineMapReady: (size: string) =>
+    `Fond de carte disponible hors ligne (${size}).`,
+  offlineMapDelete: "Supprimer",
+  offlineMapNeedsNetwork:
+    "Connexion requise pour télécharger le fond de carte.",
+  offlineMapFailed: "Échec du téléchargement. Réessayez.",
+  megabytes: (bytes: number) =>
+    `${Math.max(1, Math.round(bytes / 1_000_000)).toLocaleString("fr-FR")} Mo`,
+
   /** Potability is a property of the source, never certified (DOMAIN.md). */
   potabilityDisclaimer:
     "La potabilité n’est jamais garantie — traitez l’eau en cas de doute.",

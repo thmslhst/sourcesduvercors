@@ -2,7 +2,7 @@
 
 Offline-first PWA helping hikers assess whether natural water sources in the Vercors are actually flowing. Community observations + confidence levels on a map. One question only: **"Can I trust this water source?"**
 
-**Status:** Phase 2 (observations & confidence) complete — magic-link auth (Better Auth), observation submit + confirm/dispute, derived status/confidence live on map and detail sheet, admin soft-delete. Next: Phase 3 (offline) of [ROADMAP.md](ROADMAP.md).
+**Status:** Phase 3 (offline) complete — the MVP: installable PWA, hand-rolled service worker (`public/sw.js`), IndexedDB snapshot + outbox with client-side sync triggers, offline confidence decay, downloadable PMTiles basemap, offline e2e (`npm run test:e2e`, kills a real `next start` to simulate airplane mode). Next: Phase 4 (polish & launch) of [ROADMAP.md](ROADMAP.md).
 
 ## Context documents
 

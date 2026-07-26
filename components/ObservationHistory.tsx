@@ -17,6 +17,8 @@ interface ObservationHistoryProps {
   canReact: boolean;
   onReact: (observationId: string, type: ReactionType) => void;
   reactionError: boolean;
+  /** True when the reaction went to the offline outbox instead of the API. */
+  reactionQueued: boolean;
 }
 
 export default function ObservationHistory({
@@ -24,6 +26,7 @@ export default function ObservationHistory({
   canReact,
   onReact,
   reactionError,
+  reactionQueued,
 }: ObservationHistoryProps) {
   if (observations.length === 0) return null;
 
@@ -92,6 +95,11 @@ export default function ObservationHistory({
             {i === 0 && reactionError && (
               <p className="mt-1 pl-[18px] text-xs text-red-600 dark:text-red-400">
                 {fr.reactionFailed}
+              </p>
+            )}
+            {i === 0 && reactionQueued && (
+              <p className="mt-1 pl-[18px] text-xs text-blue-700 dark:text-blue-300">
+                {fr.reactionQueued}
               </p>
             )}
           </li>

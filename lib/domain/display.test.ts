@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { deriveDisplayStatus, STATUS_COLORS } from "./display";
+import { decaySnapshotItem, deriveDisplayStatus, STATUS_COLORS } from "./display";
 import { CONFIDENCE_LEVELS, OBSERVATION_STATUSES } from "./constants";
+import type { SourceSnapshotItem } from "./snapshot";
 
 describe("deriveDisplayStatus", () => {
   it("returns unknown when there is no stored status", () => {
@@ -21,6 +22,46 @@ describe("deriveDisplayStatus", () => {
         expect(deriveDisplayStatus(status, confidence)).toBe(status);
       }
     }
+  });
+});
+
+describe("decaySnapshotItem", () => {
+  const base: SourceSnapshotItem = {
+    id: "3b0f8d2e-0000-4000-8000-000000000000",
+    name: "Fontaine de test",
+    type: "spring",
+    lat: 45,
+    lon: 5.4,
+    elevationM: 1200,
+    description: null,
+    status: "flowing",
+    confidence: "high",
+    lastObservedAt: null,
+    confirmationCount: 2,
+  };
+  const daysAgo = (now: Date, days: number) =>
+    new Date(now.getTime() - days * 24 * 60 * 60 * 1000).toISOString();
+
+  it("returns the item unchanged (same reference) while fresh", () => {
+    const now = new Date();
+    const item = { ...base, lastObservedAt: daysAgo(now, 3) };
+    expect(decaySnapshotItem(item, now)).toBe(item);
+  });
+
+  it("degrades a cached high once past the high window", () => {
+    const now = new Date();
+    const item = { ...base, lastObservedAt: daysAgo(now, 10) };
+    const decayed = decaySnapshotItem(item, now);
+    expect(decayed.confidence).toBe("medium");
+    expect(decayed.status).toBe("flowing"); // status survives, badge degrades
+  });
+
+  it("collapses the status to unknown once past the known window", () => {
+    const now = new Date();
+    const item = { ...base, lastObservedAt: daysAgo(now, 61) };
+    const decayed = decaySnapshotItem(item, now);
+    expect(decayed.confidence).toBe("unknown");
+    expect(decayed.status).toBe("unknown");
   });
 });
 

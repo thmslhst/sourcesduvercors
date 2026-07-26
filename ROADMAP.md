@@ -44,11 +44,11 @@ The community loop: report → confirm → trust.
 
 Everything works on the plateau with zero bars.
 
-- [ ] PWA: manifest, service worker, installable, app shell cached
-- [ ] Sources + statuses snapshot persisted to IndexedDB; "data as of <time>" indicator; age-based confidence decay offline
-- [ ] Offline outbox for observations/reactions; sync on reconnect/app-focus; idempotent replay (client UUIDs)
-- [ ] Downloadable Vercors basemap (PMTiles) with size shown before download
-- [ ] Playwright offline scenario: airplane mode → browse → submit → reconnect → synced
+- [x] PWA: manifest, service worker, installable, app shell cached
+- [x] Sources + statuses snapshot persisted to IndexedDB; "data as of <time>" indicator; age-based confidence decay offline
+- [x] Offline outbox for observations/reactions; sync on reconnect/app-focus; idempotent replay (client UUIDs)
+- [x] Downloadable Vercors basemap (PMTiles) with size shown before download
+- [x] Playwright offline scenario: airplane mode → browse → submit → reconnect → synced (`npm run test:e2e`)
 
 **Exit:** a phone in airplane mode can browse sources with statuses and queue an observation that syncs later. **This is the MVP.**
 

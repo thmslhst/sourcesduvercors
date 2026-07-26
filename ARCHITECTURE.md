@@ -53,7 +53,7 @@ Three layers of offline, in order of implementation:
 
 ### Write path offline: the outbox
 
-Observations/confirmations/disputes created offline are appended to an **outbox** in IndexedDB with a client-generated UUID and `observed_at` set to creation time, then replayed to the API when connectivity returns (Background Sync where available, on-app-focus fallback).
+Observations/confirmations/disputes created offline are appended to an **outbox** in IndexedDB with a client-generated UUID and `observed_at` set to creation time, then replayed to the API when connectivity returns. **(decided, Phase 3)** Replay is client-side only — triggered on `online`, window focus/visibility, and a slow interval — rather than the SW Background Sync API: iOS has no Background Sync, so the focus path had to exist anyway, and one code path beats two. Replay stops on 401 (needs sign-in) and network/5xx (retry later); terminal 4xx drops the item rather than wedging the queue.
 
 - The client UUID makes replay **idempotent** (server upserts by ID).
 - `observed_at` (when the hiker was at the source) is distinct from `created_at` (when the server received it) — critical for confidence computation.
@@ -78,6 +78,9 @@ No GraphQL, no realtime. Snapshot + poll is plenty at this scale.
 ## Cross-cutting decisions
 
 - **PWA, not native.** One codebase, no app-store friction. Accepted trade-offs: iOS PWA storage-eviction quirks and no reliable Background Sync on iOS (mitigation: sync on app focus; warn users not to delete the "installed" app).
+- **Hand-rolled service worker (decided, Phase 3):** `public/sw.js`, plain JS, no Workbox/next-pwa. Next hashes chunk URLs, so the install step discovers app-shell assets by parsing the served HTML (and its CSS for fonts) instead of a build-time manifest. The downloaded PMTiles archive lives whole in Cache Storage (`sdv-basemap-v1`, unversioned — SW updates must not discard a 40 MB download); the SW answers MapLibre's Range requests by slicing it. `/api/*` is never SW-cached — offline data comes from IndexedDB only, one staleness model.
+- **Offline session mirror (decided, Phase 3):** Better Auth's `useSession` needs the network, but a signed-in hiker offline must still see the report form. The last definitive session answer is mirrored to localStorage (`lib/offline/session.ts`) and used only when the session fetch errors; a definitive signed-out clears it. The outbox replay itself authenticates with the normal cookie.
+- **Offline e2e simulates airplane mode by killing the server (decided, Phase 3):** browser-level network emulation doesn't reliably apply to service-worker fetches, so the Playwright spec owns a real `next start` (port 3210, separate `.next-e2e` build via `NEXT_DIST_DIR`, magic link read from server stdout) and kills/restarts it. Test data hangs off one dedicated `.test`-domain user, hard-deleted before and after each run.
 - **i18n from day one (decided):** UI French-first; all user-facing strings live in a typed message catalog (`lib/i18n/fr.ts`), no i18n library for now. Revisit the library question when English is actually added.
 - **MapLibre pinned to v5:** maplibre-gl 6.0.0 (released 2026-07) silently fails to load any style in our setup (style stays unparsed, no errors emitted). Stay on ^5 until v6.x is verified working.
 - **Performance budgets:** initial JS < 300 KB gzipped (MapLibre dominates; code-split everything else); map interactive < 3 s on a mid-range phone over 4G.
