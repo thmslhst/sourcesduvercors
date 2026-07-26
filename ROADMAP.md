@@ -6,10 +6,10 @@ Phased delivery plan. Each phase produces something usable and de-risks the next
 
 Project scaffolding and data groundwork.
 
-- [ ] Next.js + TypeScript + Tailwind scaffold, deployed to Vercel (hello-world live)
-- [ ] Neon Postgres + PostGIS enabled; Prisma set up; initial migration ([DATABASE.md](DATABASE.md) schema)
-- [ ] OSM import script; Vercors catalog imported and sanity-checked ([DATA_SOURCES.md](DATA_SOURCES.md))
-- [ ] CI: typecheck, lint, unit tests on push
+- [x] Next.js + TypeScript + Tailwind scaffold, deployed to Vercel (hello-world live)
+- [x] Neon Postgres + PostGIS enabled; Prisma set up; initial migration ([DATABASE.md](DATABASE.md) schema)
+- [x] OSM import script; Vercors catalog imported and sanity-checked ([DATA_SOURCES.md](DATA_SOURCES.md)) — 657 sources
+- [x] CI: typecheck, lint, unit tests on push
 
 **Exit:** the full Vercors source catalog sits in the production database; the deployed app builds and loads.
 

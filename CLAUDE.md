@@ -2,7 +2,7 @@
 
 Offline-first PWA helping hikers assess whether natural water sources in the Vercors are actually flowing. Community observations + confidence levels on a map. One question only: **"Can I trust this water source?"**
 
-**Status:** pre-code. Documentation phase complete; implementation starts at Phase 0 of [ROADMAP.md](ROADMAP.md).
+**Status:** Phase 0 (foundations) complete — deployed scaffold, schema migrated on Neon, OSM catalog imported, CI. Next: Phase 1 (read-only map) of [ROADMAP.md](ROADMAP.md).
 
 ## Context documents
 
