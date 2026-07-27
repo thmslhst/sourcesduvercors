@@ -31,6 +31,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { SOURCE_TYPES, type SourceType } from "@/lib/domain/constants";
 import { STATUS_COLORS } from "@/lib/domain/display";
 import type { SourceSnapshotItem } from "@/lib/domain/snapshot";
+import { fr } from "@/lib/i18n/fr";
 
 /** Extract bbox of public/basemap/vercors.pmtiles — keep in sync. */
 const VERCORS_MAX_BOUNDS: [number, number, number, number] = [
@@ -140,8 +141,7 @@ export default function SourcesMap({
         protomaps: {
           type: "vector",
           url: `pmtiles://${window.location.origin}/basemap/vercors.pmtiles`,
-          attribution:
-            '<a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap</a> <a href="https://protomaps.com" target="_blank">Protomaps</a>',
+          attribution: fr.mapAttribution,
         },
       },
       layers: layers("protomaps", namedFlavor("light"), { lang: "fr" }),
@@ -155,7 +155,11 @@ export default function SourcesMap({
       maxBounds: VERCORS_MAX_BOUNDS,
       minZoom: 7,
       maxZoom: 17,
-      attributionControl: { compact: true },
+      // Not compact: the credit stays visible instead of collapsing behind
+      // an "(i)" toggle. The OSMF attribution guideline only allows hiding
+      // it when it remains reachable — always-on is simpler and honest.
+      // The full credit (Protomaps, ODbL, MIT) lives in the about card.
+      attributionControl: { compact: false },
     });
     mapRef.current = map;
     if (process.env.NODE_ENV !== "production") {

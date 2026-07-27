@@ -8,7 +8,7 @@
  * build-time manifest.
  */
 
-const VERSION = "v2";
+const VERSION = "v3";
 const SHELL_CACHE = `sdv-shell-${VERSION}`;
 /**
  * The explicitly downloaded PMTiles archive. Unversioned on purpose: a SW
@@ -51,6 +51,10 @@ async function precacheShell() {
     "/manifest.webmanifest",
     "/icons/icon-192.png",
     "/icons/icon-512.png",
+    // Header of the "À propos" card — not a /_next/static asset, so the
+    // regex below never picks it up; it must be listed by hand or the
+    // card renders without its wordmark offline.
+    "/logo-big.svg",
   ]);
   for (const m of html.matchAll(/\/_next\/static\/[^"'\s>\\]+/g)) {
     assets.add(m[0]);
@@ -94,7 +98,8 @@ self.addEventListener("fetch", (event) => {
     (url.origin === self.location.origin &&
       (url.pathname.startsWith("/_next/static/") ||
         url.pathname.startsWith("/icons/") ||
-        url.pathname === "/manifest.webmanifest")) ||
+        url.pathname === "/manifest.webmanifest" ||
+        url.pathname === "/logo-big.svg")) ||
     STATIC_HOSTS.includes(url.hostname);
   if (isShellAsset) {
     event.respondWith(cacheFirst(req));

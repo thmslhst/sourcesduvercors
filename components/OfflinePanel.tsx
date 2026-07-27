@@ -73,9 +73,11 @@ export default function OfflinePanel() {
   }, [refresh]);
 
   return (
-    <div className="absolute bottom-8 left-3 z-10 flex flex-col items-start gap-2">
+    // Positioning is the caller's business: the button sits in the shared
+    // bottom-left cluster, and the card floats above it.
+    <div className="relative">
       {open && (
-        <div className="w-64 rounded-xl border border-secondary bg-primary p-3 text-sm text-secondary shadow-lg">
+        <div className="absolute bottom-full left-0 mb-2 w-64 rounded-xl border border-secondary bg-primary p-3 text-sm text-secondary shadow-lg">
           <p className="font-semibold">{fr.offlineMapTitle}</p>
           {state === null && <p className="mt-1">…</p>}
 
@@ -161,39 +163,41 @@ export default function OfflinePanel() {
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        className="flex items-center gap-1.5 rounded-full border border-secondary/60 bg-primary px-3 py-1.5 text-xs font-medium text-secondary shadow"
+        aria-label={fr.offlineMapButton}
+        className="relative flex h-10 w-10 items-center justify-center rounded-full border border-secondary/60 bg-primary text-secondary shadow"
       >
-        {state?.phase === "idle" && state.downloaded ? (
-          // Already stored: a check instead of a download prompt.
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M9 3 3 5v16l6-2 6 2 6-2V3l-6 2-6-2Z" />
+          <path d="M9 3v16M15 5v16" />
+        </svg>
+        {/* The label is gone, so "already downloaded" needs its own mark. */}
+        {state?.phase === "idle" && state.downloaded && (
+          <span
             aria-hidden="true"
-            className="text-secondary"
+            className="absolute -bottom-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-secondary text-primary"
           >
-            <path
-              d="M5 13l4 4L19 7"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        ) : (
-          <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true">
-            <path
-              d="M12 3v10m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+            <svg width="10" height="10" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M5 13l4 4L19 7"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </span>
         )}
-        {fr.offlineMapButton}
       </button>
     </div>
   );

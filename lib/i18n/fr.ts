@@ -83,7 +83,7 @@ export const fr = {
   signInIntro:
     "Un e-mail avec un lien de connexion vous sera envoyé — pas de mot de passe.",
   emailPlaceholder: "Votre e-mail",
-  namePlaceholder: "Nom affiché (ex. « Rando26 »)",
+  namePlaceholder: "Nom affiché (ex. « Rando26 »)",
   sendMagicLink: "Recevoir le lien de connexion",
   magicLinkSent: "Lien envoyé ! Ouvrez l’e-mail sur cet appareil.",
   magicLinkFailed: "Impossible d’envoyer le lien. Vérifiez l’adresse.",
@@ -127,6 +127,44 @@ export const fr = {
   /** Potability is a property of the source, never certified (DOMAIN.md). */
   potabilityDisclaimer:
     "La potabilité n’est jamais garantie — traitez l’eau en cas de doute.",
+
+  aboutButton: "À propos",
+
+  aboutForWhoTitle: "Pour qui ?",
+  aboutForWho:
+    "Pour celles et ceux qui marchent dans le Vercors — randonnée à la journée, bivouac, trail — et qui doivent savoir si une source coule encore avant de compter dessus. L’app fonctionne sans réseau : c’est justement là-haut qu’on n’en a pas.",
+
+  aboutHowTitle: "Comment ça marche ?",
+  aboutHowSteps: [
+    "Touchez un point sur la carte pour voir l’état de la source, sa fiabilité et les dernières observations.",
+    "La couleur donne le débit constaté ; l’indice de confiance dit à quel point l’information est fraîche et corroborée. Un statut ancien perd automatiquement en confiance.",
+    "Sur place, signalez ce que vous voyez en deux touches. Confirmez ou contestez l’observation la plus récente si elle ne correspond plus.",
+    "Sans réseau, tout est enregistré sur le téléphone et part tout seul au retour de la connexion. Téléchargez le fond de carte avant de partir pour garder la carte lisible hors ligne.",
+  ],
+
+  aboutParticipateTitle: "Participer",
+  aboutParticipate:
+    "Le projet est open source et vit de ses contributions. Sur le terrain, chaque observation — même « à sec » — rend la carte plus utile pour la personne suivante. Côté code, les idées, retours et pull requests sont les bienvenus.",
+  aboutRepoLink: "Le projet sur GitHub",
+  aboutAuthor: "Développé et porté par Thomas Lhoest.",
+
+  aboutDataTitle: "Données & licences",
+  /**
+   * ODbL attribution, required on the map *and* on an about page
+   * (DATA_SOURCES.md § Licensing). The map keeps the short form; the full
+   * credit — including the basemap build — lives here.
+   */
+  aboutData:
+    "Les points d’eau proviennent d’OpenStreetMap, sous licence ODbL. Fond de carte construit par Protomaps à partir des mêmes données. Les observations des randonneurs sont publiées ouvertement. Code sous licence MIT.",
+  aboutOsmLink: "OpenStreetMap — droits d’auteur et licence",
+
+  /**
+   * Short always-visible credit in the map corner. The OSMF guideline asks
+   * for attribution to "OpenStreetMap" plus the ODbL mention — the longer
+   * "contributors" wording is one accepted form, not a requirement.
+   */
+  mapAttribution:
+    '<a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap</a> — ODbL',
 } as const;
 
 export type Messages = typeof fr;

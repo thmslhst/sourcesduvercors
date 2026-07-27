@@ -16,6 +16,7 @@ import { loadSnapshot, saveSnapshot } from "@/lib/offline/snapshot-cache";
 import { subscribeOutbox } from "@/lib/offline/outbox";
 import { startSyncTriggers } from "@/lib/offline/sync";
 import { fr } from "@/lib/i18n/fr";
+import AboutSheet from "./AboutSheet";
 import OfflinePanel from "./OfflinePanel";
 import SourceSheet from "./SourceSheet";
 
@@ -42,6 +43,7 @@ export default function MapShell() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [reloadKey, setReloadKey] = useState(0);
   const [pendingCount, setPendingCount] = useState(0);
+  const [aboutOpen, setAboutOpen] = useState(false);
   // Slow clock driving offline confidence decay while the app stays open.
   const [decayTick, setDecayTick] = useState(0);
 
@@ -236,7 +238,20 @@ export default function MapShell() {
         </div>
       )}
 
-      <OfflinePanel />
+      {/* Same 12px inset as the logo cluster and the MapLibre controls. */}
+      <div className="absolute bottom-3 left-3 z-10 flex items-end gap-2">
+        <OfflinePanel />
+        <button
+          type="button"
+          onClick={() => setAboutOpen(true)}
+          aria-label={fr.aboutButton}
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-secondary/60 bg-primary text-base font-semibold text-secondary shadow"
+        >
+          i
+        </button>
+      </div>
+
+      <AboutSheet open={aboutOpen} onClose={() => setAboutOpen(false)} />
 
       <SourceSheet
         source={selected}

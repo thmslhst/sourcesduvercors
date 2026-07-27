@@ -145,6 +145,21 @@ test("mode avion : consulter, signaler, reconnecter, synchroniser", async ({
     page.getByText(/Impossible d’actualiser — données/),
   ).toBeVisible();
 
+  // The about card is help content — it has to open with zero connectivity,
+  // wordmark included (the SVG is precached by hand in public/sw.js).
+  await page.getByRole("button", { name: fr.aboutButton }).click();
+  const wordmark = page
+    .getByRole("region", { name: fr.aboutButton })
+    .getByRole("img", { name: fr.appName });
+  await expect(wordmark).toBeVisible();
+  expect(
+    await wordmark.evaluate((el) => (el as HTMLImageElement).naturalWidth),
+  ).toBeGreaterThan(0);
+  await page
+    .getByRole("region", { name: fr.aboutButton })
+    .getByRole("button", { name: fr.close })
+    .click();
+
   // Browse offline, then queue an observation (form still there thanks to
   // the mirrored session).
   await selectSource(page, sourceId);
