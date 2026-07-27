@@ -93,8 +93,12 @@ export const fr = {
   elevation: (m: number) => `${m.toLocaleString("fr-FR")} m`,
 
   // Offline (Phase 3) — honesty principle: always say when data is stale.
+  dataAge: (iso: string, now?: Date) =>
+    fr.timeAgo(iso, now).replace("à l’instant", "à jour"),
   offlineDataAsOf: (iso: string, now?: Date) =>
-    `Hors ligne — données ${fr.timeAgo(iso, now).replace("à l’instant", "à jour")}`,
+    `Hors ligne — données ${fr.dataAge(iso, now)}`,
+  refreshFailedDataAsOf: (iso: string, now?: Date) =>
+    `Impossible d’actualiser — données ${fr.dataAge(iso, now)}`,
   pendingContributions: (n: number) =>
     n === 1 ? "1 contribution à envoyer" : `${n} contributions à envoyer`,
   observationQueued:
@@ -106,7 +110,10 @@ export const fr = {
   offlineMapTitle: "Carte hors ligne",
   offlineMapIntro: (size: string) =>
     `Téléchargez le fond de carte du Vercors (${size}) pour l’afficher sans réseau. Les sources et leurs statuts sont déjà conservés automatiquement.`,
+  offlineMapIntroNoSize:
+    "Téléchargez le fond de carte du Vercors pour l’afficher sans réseau. Les sources et leurs statuts sont déjà conservés automatiquement.",
   offlineMapDownload: (size: string) => `Télécharger (${size})`,
+  offlineMapDownloadNoSize: "Télécharger",
   offlineMapDownloading: (pct: number) => `Téléchargement… ${pct} %`,
   offlineMapReady: (size: string) =>
     `Fond de carte disponible hors ligne (${size}).`,

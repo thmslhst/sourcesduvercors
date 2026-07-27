@@ -29,8 +29,12 @@ type LoadState =
       snapshot: SourcesSnapshot;
       /** When the snapshot was fetched from the network (ISO). */
       fetchedAt: string;
-      /** True when showing cached data — drives the honesty indicator. */
-      stale: boolean;
+      /**
+       * Outcome of the network refresh — drives the honesty indicator.
+       * "pending" shows nothing: cached data with a refresh in flight is
+       * not "offline", and flashing an offline banner on every load lies.
+       */
+      refresh: "pending" | "ok" | "failed";
     };
 
 export default function MapShell() {
@@ -44,6 +48,10 @@ export default function MapShell() {
   useEffect(() => {
     let cancelled = false;
 
+    // Re-runs (mutation refresh, retry) keep the previous refresh outcome on
+    // screen: a "failed" banner must not flicker off while a retry is in
+    // flight, and only a settled fetch may change the verdict.
+
     // IndexedDB first: instant render, and the only source when offline.
     // Never overwrites data already on screen.
     void loadSnapshot().then((cached) => {
@@ -55,12 +63,16 @@ export default function MapShell() {
               phase: "ready",
               snapshot: cached.snapshot,
               fetchedAt: cached.fetchedAt,
-              stale: true,
+              // The network fetch may already have settled (dead server
+              // fails faster than the IDB read) — don't resurrect "pending".
+              refresh: prev.phase === "error" ? "failed" : "pending",
             },
       );
     });
 
-    fetch("/api/v1/sources")
+    // Bounded wait: past this, show the data-age banner instead of silently
+    // rendering old data (honesty principle); the retry triggers take over.
+    fetch("/api/v1/sources", { signal: AbortSignal.timeout(15_000) })
       .then((res) => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.json() as Promise<SourcesSnapshot>;
@@ -72,7 +84,7 @@ export default function MapShell() {
           phase: "ready",
           snapshot,
           fetchedAt: fetchedAt.toISOString(),
-          stale: false,
+          refresh: "ok",
         });
         void saveSnapshot(snapshot, fetchedAt);
       })
@@ -81,13 +93,33 @@ export default function MapShell() {
         // Keep the last good snapshot on screen but stop pretending it's
         // current (honesty principle).
         setState((prev) =>
-          prev.phase === "ready" ? { ...prev, stale: true } : { phase: "error" },
+          prev.phase === "ready"
+            ? { ...prev, refresh: "failed" }
+            : { phase: "error" },
         );
       });
     return () => {
       cancelled = true;
     };
   }, [reloadKey]);
+
+  // A failed refresh must not require a manual reload to clear: retry on
+  // reconnect, on return to the app, and on a slow interval.
+  useEffect(() => {
+    if (state.phase !== "ready" || state.refresh !== "failed") return;
+    const retry = () => setReloadKey((k) => k + 1);
+    const onVisible = () => {
+      if (document.visibilityState === "visible") retry();
+    };
+    window.addEventListener("online", retry);
+    document.addEventListener("visibilitychange", onVisible);
+    const interval = window.setInterval(retry, 60_000);
+    return () => {
+      window.removeEventListener("online", retry);
+      document.removeEventListener("visibilitychange", onVisible);
+      window.clearInterval(interval);
+    };
+  }, [state]);
 
   // After a write (observation/reaction/outbox sync) the derived statuses
   // changed server-side: re-fetch without dropping the rendered map data.
@@ -144,9 +176,13 @@ export default function MapShell() {
         <h1 className="rounded-full bg-white/90 px-3 py-1.5 text-sm font-semibold shadow dark:bg-neutral-900/90">
           {fr.appName}
         </h1>
-        {state.phase === "ready" && state.stale && (
+        {state.phase === "ready" && state.refresh === "failed" && (
           <p className="rounded-full bg-amber-100/95 px-3 py-1 text-xs font-medium text-amber-900 shadow dark:bg-amber-950/95 dark:text-amber-200">
-            {fr.offlineDataAsOf(state.fetchedAt)}
+            {/* "Hors ligne" only when the browser agrees — an unreachable
+                server while online is a different (honest) message. */}
+            {navigator.onLine === false
+              ? fr.offlineDataAsOf(state.fetchedAt)
+              : fr.refreshFailedDataAsOf(state.fetchedAt)}
           </p>
         )}
         {pendingCount > 0 && (

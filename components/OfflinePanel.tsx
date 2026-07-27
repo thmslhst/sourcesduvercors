@@ -25,8 +25,9 @@ export default function OfflinePanel() {
   const [state, setState] = useState<PanelState | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
 
+  // On mount too (not just on open): the toggle button shows whether the
+  // basemap is already stored, so the user knows without opening the card.
   useEffect(() => {
-    if (!open) return;
     let cancelled = false;
     void getBasemapState().then(({ downloaded, sizeBytes }) => {
       if (!cancelled) setState({ phase: "idle", downloaded, sizeBytes });
@@ -39,6 +40,14 @@ export default function OfflinePanel() {
   // Re-runs the effect above (it owns the state write).
   const refresh = useCallback(async () => {
     setRefreshKey((k) => k + 1);
+  }, []);
+
+  // The size probe fails without network; re-probe when connectivity returns
+  // so "Connexion requise" doesn't outlive the outage.
+  useEffect(() => {
+    const onOnline = () => setRefreshKey((k) => k + 1);
+    window.addEventListener("online", onOnline);
+    return () => window.removeEventListener("online", onOnline);
   }, []);
 
   const onDownload = useCallback(async () => {
@@ -89,18 +98,25 @@ export default function OfflinePanel() {
 
           {state?.phase === "idle" && !state.downloaded && (
             <>
+              {/* "Connexion requise" only when the browser is actually
+                  offline; a failed size probe while online still gets a
+                  download button — the download itself needs no size. */}
               <p className="mt-1 text-neutral-600 dark:text-neutral-400">
                 {state.sizeBytes !== null
                   ? fr.offlineMapIntro(fr.megabytes(state.sizeBytes))
-                  : fr.offlineMapNeedsNetwork}
+                  : navigator.onLine === false
+                    ? fr.offlineMapNeedsNetwork
+                    : fr.offlineMapIntroNoSize}
               </p>
-              {state.sizeBytes !== null && (
+              {(state.sizeBytes !== null || navigator.onLine !== false) && (
                 <button
                   type="button"
                   onClick={() => void onDownload()}
                   className="mt-2 rounded-lg bg-blue-600 px-3 py-1.5 text-sm font-semibold text-white"
                 >
-                  {fr.offlineMapDownload(fr.megabytes(state.sizeBytes))}
+                  {state.sizeBytes !== null
+                    ? fr.offlineMapDownload(fr.megabytes(state.sizeBytes))
+                    : fr.offlineMapDownloadNoSize}
                 </button>
               )}
             </>
@@ -147,16 +163,36 @@ export default function OfflinePanel() {
         aria-expanded={open}
         className="flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1.5 text-xs font-medium shadow dark:bg-neutral-900/90"
       >
-        <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true">
-          <path
-            d="M12 3v10m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+        {state?.phase === "idle" && state.downloaded ? (
+          // Already stored: a check instead of a download prompt.
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            className="text-green-600 dark:text-green-400"
+          >
+            <path
+              d="M5 13l4 4L19 7"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        ) : (
+          <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M12 3v10m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        )}
         {fr.offlineMapButton}
       </button>
     </div>

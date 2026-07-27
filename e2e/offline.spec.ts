@@ -132,9 +132,13 @@ test("mode avion : consulter, signaler, reconnecter, synchroniser", async ({
   });
   expect(rangeStatus).toBe(206);
 
-  // Shell and data render from cache — and say so honestly.
+  // Shell and data render from cache — and say so honestly. The killed
+  // server leaves navigator.onLine true, so the banner is the
+  // "unreachable while online" wording, not "Hors ligne".
   await expect(page.getByText("Sources du Vercors").first()).toBeVisible();
-  await expect(page.getByText(/Hors ligne — données/)).toBeVisible();
+  await expect(
+    page.getByText(/Impossible d’actualiser — données/),
+  ).toBeVisible();
 
   // Browse offline, then queue an observation (form still there thanks to
   // the mirrored session).
@@ -156,5 +160,5 @@ test("mode avion : consulter, signaler, reconnecter, synchroniser", async ({
   await selectSource(page, null);
   await selectSource(page, sourceId);
   await expect(page.getByText("votre observation")).toBeVisible();
-  await expect(page.getByText(/Hors ligne — données/)).toHaveCount(0);
+  await expect(page.getByText(/— données/)).toHaveCount(0);
 });
