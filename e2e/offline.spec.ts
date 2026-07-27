@@ -10,6 +10,7 @@
 
 import { test, expect, type Page } from "@playwright/test";
 
+import { fr } from "../lib/i18n/fr";
 import { cleanupE2eUser } from "./db";
 import { AppServer, loadDotEnv } from "./helpers";
 
@@ -135,7 +136,11 @@ test("mode avion : consulter, signaler, reconnecter, synchroniser", async ({
   // Shell and data render from cache — and say so honestly. The killed
   // server leaves navigator.onLine true, so the banner is the
   // "unreachable while online" wording, not "Hors ligne".
-  await expect(page.getByText("Sources du Vercors").first()).toBeVisible();
+  // The app name is the logo's accessible name, not page text — matching on
+  // text silently stopped finding anything when the <h1> became an SVG.
+  await expect(
+    page.getByRole("heading", { name: fr.appName, level: 1 }),
+  ).toBeVisible();
   await expect(
     page.getByText(/Impossible d’actualiser — données/),
   ).toBeVisible();
