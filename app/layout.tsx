@@ -1,11 +1,18 @@
 import type { Metadata, Viewport } from "next";
-import { Geist } from "next/font/google";
+import { Geist, Maname } from "next/font/google";
 import "./globals.css";
 
 import PWARegister from "@/components/PWARegister";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+// Main titles only (style guide) — Maname ships regular weight only.
+const maname = Maname({
+  variable: "--font-maname",
+  weight: "400",
   subsets: ["latin"],
 });
 
@@ -32,7 +39,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={`${geistSans.variable} h-full antialiased`}>
+    <html
+      lang="fr"
+      className={`${geistSans.variable} ${maname.variable} h-full antialiased`}
+    >
       <body className="min-h-full flex flex-col">
         <PWARegister />
         {children}

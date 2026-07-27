@@ -128,14 +128,14 @@ export default function SourceSheet({
   return (
     <section
       aria-label={source.name ?? fr.unnamedSource}
-      className="fixed inset-x-0 bottom-0 z-20 mx-auto flex max-h-[70dvh] max-w-lg flex-col gap-3 overflow-y-auto rounded-t-2xl border border-b-0 border-neutral-200 bg-white p-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-[0_-4px_24px_rgba(0,0,0,0.15)] dark:border-neutral-700 dark:bg-neutral-900"
+      className="fixed inset-x-0 bottom-0 z-20 mx-auto flex max-h-[70dvh] max-w-lg flex-col gap-3 overflow-y-auto rounded-t-2xl border border-b-0 border-secondary bg-primary p-4 pb-[max(1rem,env(safe-area-inset-bottom))] text-secondary shadow-[0_-4px_24px_rgba(0,0,0,0.15)]"
     >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <h2 className="truncate text-lg font-semibold">
+          <h2 className="truncate font-title text-xl">
             {source.name ?? fr.unnamedSource}
           </h2>
-          <p className="text-sm text-neutral-600 dark:text-neutral-400">
+          <p className="text-sm text-secondary/75">
             {fr.sourceType[source.type]}
             {source.elevationM !== null && (
               <> · {fr.elevation(source.elevationM)}</>
@@ -146,7 +146,7 @@ export default function SourceSheet({
           type="button"
           onClick={onClose}
           aria-label={fr.close}
-          className="shrink-0 rounded-full p-2 text-neutral-500 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+          className="shrink-0 rounded-full p-2 text-secondary/75 hover:bg-secondary/10"
         >
           <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
             <path
@@ -167,23 +167,23 @@ export default function SourceSheet({
             style={{ backgroundColor: STATUS_COLORS[current.status] }}
           />
           <span className="font-medium">{fr.status[current.status]}</span>
-          <span className="rounded-full bg-neutral-100 px-2 py-0.5 text-xs font-medium text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300">
+          <span className="rounded-full border border-secondary/40 bg-secondary/15 px-2 py-0.5 text-xs font-medium text-secondary">
             {fr.confidence[current.confidence]}
           </span>
         </div>
-        <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
+        <p className="mt-1 text-sm text-secondary/75">
           {facts.length > 0 ? facts.join(" · ") : fr.noObservationYet}
         </p>
       </div>
 
       {source.description && (
-        <p className="border-t border-neutral-200 pt-3 text-sm dark:border-neutral-700">
+        <p className="border-t border-secondary/30 pt-3 text-sm">
           {source.description}
         </p>
       )}
 
       {detail && detail.observations.length > 0 && (
-        <div className="border-t border-neutral-200 pt-3 dark:border-neutral-700">
+        <div className="border-t border-secondary/30 pt-3">
           <ObservationHistory
             observations={detail.observations}
             canReact={session !== null && session !== undefined}
@@ -194,7 +194,7 @@ export default function SourceSheet({
         </div>
       )}
 
-      <div className="border-t border-neutral-200 pt-3 dark:border-neutral-700">
+      <div className="border-t border-secondary/30 pt-3">
         {session ? (
           <ObservationForm sourceId={source.id} onSaved={onSaved} />
         ) : (
@@ -203,7 +203,7 @@ export default function SourceSheet({
       </div>
 
       {session && (
-        <p className="text-xs text-neutral-500">
+        <p className="text-xs text-secondary/75">
           {fr.signedInAs(session.user.name || session.user.email)}{" "}
           <button
             type="button"
@@ -215,7 +215,7 @@ export default function SourceSheet({
         </p>
       )}
 
-      <p className="text-xs text-neutral-500">{fr.potabilityDisclaimer}</p>
+      <p className="text-xs text-secondary/75">{fr.potabilityDisclaimer}</p>
     </section>
   );
 }

@@ -96,10 +96,10 @@ export default function ObservationForm({
               if (phase !== "idle" && phase !== "sending") setPhase("idle");
             }}
             aria-pressed={status === s}
-            className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-sm ${
+            className={`flex items-center gap-2 rounded-lg border border-secondary px-3 py-2 text-sm ${
               status === s
-                ? "border-neutral-900 bg-neutral-100 font-semibold dark:border-neutral-100 dark:bg-neutral-800"
-                : "border-neutral-300 dark:border-neutral-600"
+                ? "bg-secondary font-semibold text-primary"
+                : "border-secondary/50 text-secondary"
             }`}
           >
             <span
@@ -120,13 +120,13 @@ export default function ObservationForm({
             onChange={(e) => setComment(e.target.value)}
             placeholder={fr.commentPlaceholder}
             maxLength={COMMENT_MAX_LENGTH}
-            className="rounded-lg border border-neutral-300 bg-white px-3 py-2 text-sm dark:border-neutral-600 dark:bg-neutral-800"
+            className="rounded-lg border border-secondary/50 bg-transparent px-3 py-2 text-sm text-secondary placeholder:text-secondary/60"
           />
           <button
             type="button"
             onClick={submit}
             disabled={phase === "sending"}
-            className="rounded-lg bg-blue-600 px-3 py-2 text-sm font-semibold text-white disabled:opacity-50"
+            className="rounded-lg bg-secondary px-3 py-2 text-sm font-semibold text-primary disabled:opacity-50"
           >
             {phase === "sending" ? fr.sending : fr.send}
           </button>
@@ -134,17 +134,15 @@ export default function ObservationForm({
       )}
 
       {phase === "saved" && (
-        <p className="text-sm text-green-700 dark:text-green-400">
+        <p className="text-sm font-medium text-secondary">
           {fr.observationSaved}
         </p>
       )}
       {phase === "queued" && (
-        <p className="text-sm text-blue-700 dark:text-blue-300">
-          {fr.observationQueued}
-        </p>
+        <p className="text-sm text-secondary/80">{fr.observationQueued}</p>
       )}
       {phase === "error" && (
-        <p className="text-sm text-red-600 dark:text-red-400">
+        <p className="text-sm font-medium text-red-200">
           {fr.observationFailed}
         </p>
       )}

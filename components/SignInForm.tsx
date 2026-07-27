@@ -19,7 +19,7 @@ export default function SignInForm() {
 
   if (phase === "sent") {
     return (
-      <p className="rounded-lg bg-blue-50 p-3 text-sm text-blue-900 dark:bg-blue-950 dark:text-blue-200">
+      <p className="rounded-lg border border-secondary/40 bg-secondary/15 p-3 text-sm text-secondary">
         {fr.magicLinkSent}
       </p>
     );
@@ -40,9 +40,7 @@ export default function SignInForm() {
       }}
     >
       <p className="text-sm font-medium">{fr.signInTitle}</p>
-      <p className="text-xs text-neutral-600 dark:text-neutral-400">
-        {fr.signInIntro}
-      </p>
+      <p className="text-xs text-secondary/75">{fr.signInIntro}</p>
       <input
         type="email"
         required
@@ -50,7 +48,7 @@ export default function SignInForm() {
         onChange={(e) => setEmail(e.target.value)}
         placeholder={fr.emailPlaceholder}
         autoComplete="email"
-        className="rounded-lg border border-neutral-300 bg-white px-3 py-2 text-sm dark:border-neutral-600 dark:bg-neutral-800"
+        className="rounded-lg border border-secondary/50 bg-transparent px-3 py-2 text-sm text-secondary placeholder:text-secondary/60"
       />
       <input
         type="text"
@@ -58,17 +56,17 @@ export default function SignInForm() {
         onChange={(e) => setName(e.target.value)}
         placeholder={fr.namePlaceholder}
         maxLength={40}
-        className="rounded-lg border border-neutral-300 bg-white px-3 py-2 text-sm dark:border-neutral-600 dark:bg-neutral-800"
+        className="rounded-lg border border-secondary/50 bg-transparent px-3 py-2 text-sm text-secondary placeholder:text-secondary/60"
       />
       <button
         type="submit"
         disabled={phase === "sending"}
-        className="rounded-lg bg-blue-600 px-3 py-2 text-sm font-semibold text-white disabled:opacity-50"
+        className="rounded-lg bg-secondary px-3 py-2 text-sm font-semibold text-primary disabled:opacity-50"
       >
         {phase === "sending" ? fr.sending : fr.sendMagicLink}
       </button>
       {phase === "error" && (
-        <p className="text-sm text-red-600 dark:text-red-400">
+        <p className="text-sm font-medium text-red-200">
           {fr.magicLinkFailed}
         </p>
       )}

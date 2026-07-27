@@ -200,7 +200,7 @@ export default function MapShell() {
           </svg>
         </h1>
         {state.phase === "ready" && state.refresh === "failed" && (
-          <p className="rounded-full bg-amber-100/95 px-3 py-1 text-xs font-medium text-amber-900 shadow dark:bg-amber-950/95 dark:text-amber-200">
+          <p className="rounded-full border border-secondary bg-primary px-3 py-1 text-xs font-semibold text-secondary shadow">
             {/* "Hors ligne" only when the browser agrees — an unreachable
                 server while online is a different (honest) message. */}
             {navigator.onLine === false
@@ -209,19 +209,19 @@ export default function MapShell() {
           </p>
         )}
         {pendingCount > 0 && (
-          <p className="rounded-full bg-blue-100/95 px-3 py-1 text-xs font-medium text-blue-900 shadow dark:bg-blue-950/95 dark:text-blue-200">
+          <p className="rounded-full border border-secondary/60 bg-primary px-3 py-1 text-xs font-medium text-secondary shadow">
             {fr.pendingContributions(pendingCount)}
           </p>
         )}
       </div>
 
       {state.phase === "loading" && (
-        <p className="absolute inset-x-0 top-14 z-10 mx-auto w-fit rounded-full bg-white/90 px-3 py-1.5 text-sm shadow dark:bg-neutral-900/90">
+        <p className="absolute inset-x-0 top-14 z-10 mx-auto w-fit rounded-full border border-secondary/60 bg-primary px-3 py-1.5 text-sm text-secondary shadow">
           {fr.loadingSources}
         </p>
       )}
       {state.phase === "error" && (
-        <div className="absolute inset-x-0 top-14 z-10 mx-auto flex w-fit items-center gap-2 rounded-full bg-white/95 px-3 py-1.5 text-sm shadow dark:bg-neutral-900/95">
+        <div className="absolute inset-x-0 top-14 z-10 mx-auto flex w-fit items-center gap-2 rounded-full border border-secondary bg-primary px-3 py-1.5 text-sm text-secondary shadow">
           <span>{fr.loadError}</span>
           <button
             type="button"
@@ -229,7 +229,7 @@ export default function MapShell() {
               setState({ phase: "loading" });
               setReloadKey((k) => k + 1);
             }}
-            className="font-semibold text-blue-600 dark:text-blue-400"
+            className="font-semibold text-secondary underline"
           >
             {fr.retry}
           </button>

@@ -193,7 +193,7 @@ export default function SourcesMap({
             8, 8, 11, 13, 14, 17,
           ],
           "circle-color": "#00000000",
-          "circle-stroke-color": "#171717",
+          "circle-stroke-color": "#4D794E",
           "circle-stroke-width": 2.5,
         },
       });
@@ -208,7 +208,7 @@ export default function SourcesMap({
             8, 3.5, 11, 8, 14, 12,
           ],
           "circle-color": STATUS_COLOR_EXPRESSION,
-          "circle-stroke-color": "#ffffff",
+          "circle-stroke-color": "#FAFAFA",
           "circle-stroke-width": 1.5,
         },
       });

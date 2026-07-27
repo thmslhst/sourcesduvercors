@@ -43,18 +43,16 @@ export default function ObservationHistory({
                 style={{ backgroundColor: STATUS_COLORS[o.status] }}
               />
               <span className="font-medium">{fr.status[o.status]}</span>
-              <span className="text-neutral-600 dark:text-neutral-400">
+              <span className="text-secondary/75">
                 {fr.timeAgo(o.observedAt)} ·{" "}
                 {o.isMine ? fr.yourObservation : o.authorName}
               </span>
             </div>
             {o.comment && (
-              <p className="mt-0.5 pl-[18px] text-neutral-700 dark:text-neutral-300">
-                {o.comment}
-              </p>
+              <p className="mt-0.5 pl-[18px] text-secondary/90">{o.comment}</p>
             )}
             {(o.confirmationCount > 0 || o.disputeCount > 0) && (
-              <p className="mt-0.5 pl-[18px] text-xs text-neutral-600 dark:text-neutral-400">
+              <p className="mt-0.5 pl-[18px] text-xs text-secondary/75">
                 {[
                   o.confirmationCount > 0 &&
                     fr.confirmedBy(o.confirmationCount),
@@ -72,8 +70,8 @@ export default function ObservationHistory({
                   aria-pressed={o.myReaction === "confirm"}
                   className={`rounded-full border px-3 py-1 text-xs font-semibold ${
                     o.myReaction === "confirm"
-                      ? "border-green-700 bg-green-50 text-green-800 dark:border-green-500 dark:bg-green-950 dark:text-green-300"
-                      : "border-neutral-300 dark:border-neutral-600"
+                      ? "border-secondary bg-secondary text-primary"
+                      : "border-secondary/50 text-secondary"
                   }`}
                 >
                   ✓ {fr.confirm}
@@ -83,9 +81,11 @@ export default function ObservationHistory({
                   onClick={() => onReact(o.id, "dispute")}
                   aria-pressed={o.myReaction === "dispute"}
                   className={`rounded-full border px-3 py-1 text-xs font-semibold ${
+                    // Outlined-and-filled rather than solid, so an active
+                    // dispute never reads as an active confirm.
                     o.myReaction === "dispute"
-                      ? "border-orange-700 bg-orange-50 text-orange-800 dark:border-orange-500 dark:bg-orange-950 dark:text-orange-300"
-                      : "border-neutral-300 dark:border-neutral-600"
+                      ? "border-secondary bg-secondary/25 text-secondary"
+                      : "border-secondary/50 text-secondary"
                   }`}
                 >
                   ✕ {fr.dispute}
@@ -93,12 +93,12 @@ export default function ObservationHistory({
               </div>
             )}
             {i === 0 && reactionError && (
-              <p className="mt-1 pl-[18px] text-xs text-red-600 dark:text-red-400">
+              <p className="mt-1 pl-[18px] text-xs font-medium text-red-200">
                 {fr.reactionFailed}
               </p>
             )}
             {i === 0 && reactionQueued && (
-              <p className="mt-1 pl-[18px] text-xs text-blue-700 dark:text-blue-300">
+              <p className="mt-1 pl-[18px] text-xs text-secondary/80">
                 {fr.reactionQueued}
               </p>
             )}

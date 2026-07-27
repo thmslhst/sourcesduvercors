@@ -75,13 +75,13 @@ export default function OfflinePanel() {
   return (
     <div className="absolute bottom-8 left-3 z-10 flex flex-col items-start gap-2">
       {open && (
-        <div className="w-64 rounded-xl border border-neutral-200 bg-white/95 p-3 text-sm shadow-lg dark:border-neutral-700 dark:bg-neutral-900/95">
+        <div className="w-64 rounded-xl border border-secondary bg-primary p-3 text-sm text-secondary shadow-lg">
           <p className="font-semibold">{fr.offlineMapTitle}</p>
           {state === null && <p className="mt-1">…</p>}
 
           {state?.phase === "idle" && state.downloaded && (
             <>
-              <p className="mt-1 text-neutral-600 dark:text-neutral-400">
+              <p className="mt-1 text-secondary/75">
                 {fr.offlineMapReady(
                   state.sizeBytes !== null ? fr.megabytes(state.sizeBytes) : "",
                 )}
@@ -89,7 +89,7 @@ export default function OfflinePanel() {
               <button
                 type="button"
                 onClick={() => void onDelete()}
-                className="mt-2 text-xs font-semibold text-red-600 underline dark:text-red-400"
+                className="mt-2 text-xs font-semibold text-secondary underline"
               >
                 {fr.offlineMapDelete}
               </button>
@@ -101,7 +101,7 @@ export default function OfflinePanel() {
               {/* "Connexion requise" only when the browser is actually
                   offline; a failed size probe while online still gets a
                   download button — the download itself needs no size. */}
-              <p className="mt-1 text-neutral-600 dark:text-neutral-400">
+              <p className="mt-1 text-secondary/75">
                 {state.sizeBytes !== null
                   ? fr.offlineMapIntro(fr.megabytes(state.sizeBytes))
                   : navigator.onLine === false
@@ -112,7 +112,7 @@ export default function OfflinePanel() {
                 <button
                   type="button"
                   onClick={() => void onDownload()}
-                  className="mt-2 rounded-lg bg-blue-600 px-3 py-1.5 text-sm font-semibold text-white"
+                  className="mt-2 rounded-lg bg-secondary px-3 py-1.5 text-sm font-semibold text-primary"
                 >
                   {state.sizeBytes !== null
                     ? fr.offlineMapDownload(fr.megabytes(state.sizeBytes))
@@ -130,10 +130,10 @@ export default function OfflinePanel() {
                 aria-valuenow={state.pct}
                 aria-valuemin={0}
                 aria-valuemax={100}
-                className="mt-1 h-1.5 overflow-hidden rounded-full bg-neutral-200 dark:bg-neutral-700"
+                className="mt-1 h-1.5 overflow-hidden rounded-full bg-secondary/25"
               >
                 <div
-                  className="h-full bg-blue-600 transition-[width]"
+                  className="h-full bg-secondary transition-[width]"
                   style={{ width: `${state.pct}%` }}
                 />
               </div>
@@ -142,13 +142,13 @@ export default function OfflinePanel() {
 
           {state?.phase === "error" && (
             <>
-              <p className="mt-1 text-red-600 dark:text-red-400">
+              <p className="mt-1 font-medium text-red-200">
                 {fr.offlineMapFailed}
               </p>
               <button
                 type="button"
                 onClick={() => void onDownload()}
-                className="mt-2 text-xs font-semibold underline"
+                className="mt-2 text-xs font-semibold text-secondary underline"
               >
                 {fr.retry}
               </button>
@@ -161,7 +161,7 @@ export default function OfflinePanel() {
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        className="flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1.5 text-xs font-medium shadow dark:bg-neutral-900/90"
+        className="flex items-center gap-1.5 rounded-full border border-secondary/60 bg-primary px-3 py-1.5 text-xs font-medium text-secondary shadow"
       >
         {state?.phase === "idle" && state.downloaded ? (
           // Already stored: a check instead of a download prompt.
@@ -170,7 +170,7 @@ export default function OfflinePanel() {
             height="14"
             viewBox="0 0 24 24"
             aria-hidden="true"
-            className="text-green-600 dark:text-green-400"
+            className="text-secondary"
           >
             <path
               d="M5 13l4 4L19 7"
