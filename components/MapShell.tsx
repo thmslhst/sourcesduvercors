@@ -173,8 +173,31 @@ export default function MapShell() {
       />
 
       <div className="pointer-events-none absolute left-3 top-3 z-10 flex flex-col items-start gap-1.5">
-        <h1 className="rounded-full bg-white/90 px-3 py-1.5 text-sm font-semibold shadow dark:bg-neutral-900/90">
-          {fr.appName}
+        <h1>
+          <svg
+            viewBox="0 0 501 501"
+            role="img"
+            aria-label={fr.appName}
+            className="h-10 w-10 rounded-full shadow"
+          >
+            <circle cx="250.5" cy="250.5" r="250.5" fill="#4D794E" />
+            <path
+              d="M250.5 392.543C185.607 392.543 133 339.936 133 275.043C133 210.149 185.607 374.638 250.5 374.638C315.393 374.638 368 210.149 368 275.043C368 339.936 315.393 392.543 250.5 392.543Z"
+              fill="#C4ECFF"
+            />
+            <path
+              d="M249.381 343C198.702 343 157.619 290.635 157.619 226.04C157.619 161.444 198.702 325.177 249.381 325.177C300.06 325.177 341.143 161.444 341.143 226.04C341.143 290.635 300.06 343 249.381 343Z"
+              fill="#C4ECFF"
+            />
+            <path
+              d="M250.5 293.762C214.036 293.762 184.476 241.397 184.476 176.802C184.476 112.206 214.036 275.939 250.5 275.939C286.964 275.939 316.524 112.206 316.524 176.802C316.524 241.397 286.964 293.762 250.5 293.762Z"
+              fill="#C4ECFF"
+            />
+            <path
+              d="M213.572 172.905C213.572 152.51 235.5 108 250.5 108C265.5 108 287.429 152.51 287.429 172.905C287.429 193.3 270.895 209.833 250.5 209.833C230.105 209.833 213.572 193.3 213.572 172.905Z"
+              fill="#C4ECFF"
+            />
+          </svg>
         </h1>
         {state.phase === "ready" && state.refresh === "failed" && (
           <p className="rounded-full bg-amber-100/95 px-3 py-1 text-xs font-medium text-amber-900 shadow dark:bg-amber-950/95 dark:text-amber-200">

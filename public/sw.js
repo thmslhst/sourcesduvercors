@@ -8,7 +8,7 @@
  * build-time manifest.
  */
 
-const VERSION = "v1";
+const VERSION = "v2";
 const SHELL_CACHE = `sdv-shell-${VERSION}`;
 /**
  * The explicitly downloaded PMTiles archive. Unversioned on purpose: a SW
