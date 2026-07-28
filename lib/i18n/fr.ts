@@ -67,6 +67,7 @@ export const fr = {
     n === 1 ? "contesté par 1 randonneur" : `contesté par ${n} randonneurs`,
 
   recentObservations: "Observations récentes",
+  loadingObservations: "Chargement des observations…",
   yourObservation: "votre observation",
   confirm: "Confirmer",
   dispute: "Signaler obsolète",

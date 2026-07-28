@@ -21,6 +21,13 @@ import ObservationForm from "./ObservationForm";
 import ObservationHistory from "./ObservationHistory";
 import SignInForm from "./SignInForm";
 
+/**
+ * A fast detail call resolves well under this, so the placeholder never
+ * flashes for the common case — it only appears when the wait is long
+ * enough to be worth acknowledging.
+ */
+const PLACEHOLDER_DELAY_MS = 400;
+
 interface SourceSheetProps {
   source: SourceSnapshotItem | null;
   onClose: () => void;
@@ -42,6 +49,12 @@ export default function SourceSheet({
     sourceId: string;
     detail: SourceDetail;
   } | null>(null);
+  // Source id whose detail call has settled (loaded or failed) — lets the
+  // history section show a placeholder while in flight without mistaking
+  // "no observations" or "offline" for "still loading".
+  const [settledFor, setSettledFor] = useState<string | null>(null);
+  // …and the id whose call has been in flight long enough to deserve one.
+  const [slowFor, setSlowFor] = useState<string | null>(null);
   const [reactionErrorFor, setReactionErrorFor] = useState<string | null>(null);
   const [reactionQueuedFor, setReactionQueuedFor] = useState<string | null>(
     null,
@@ -62,6 +75,9 @@ export default function SourceSheet({
       })
       .catch(() => {
         // Sheet falls back to the snapshot data already on screen.
+      })
+      .finally(() => {
+        setSettledFor(sourceId);
       });
   }, [sourceId]);
 
@@ -69,6 +85,17 @@ export default function SourceSheet({
     void fetchDetail();
     // Re-fetch when the session appears: history gains isMine/myReaction.
   }, [fetchDetail, sessionUserId]);
+
+  const detailPending =
+    sourceId !== null &&
+    detailFor?.sourceId !== sourceId &&
+    settledFor !== sourceId;
+
+  useEffect(() => {
+    if (!detailPending || sourceId === null) return;
+    const timer = setTimeout(() => setSlowFor(sourceId), PLACEHOLDER_DELAY_MS);
+    return () => clearTimeout(timer);
+  }, [detailPending, sourceId]);
 
   const onReact = useCallback(
     async (observationId: string, type: ReactionType) => {
@@ -114,6 +141,7 @@ export default function SourceSheet({
   if (!source) return null;
 
   const detail = detailFor?.sourceId === source.id ? detailFor.detail : null;
+  const loadingObservations = detailPending && slowFor === source.id;
   const reactionError = reactionErrorFor === source.id;
   const reactionQueued = reactionQueuedFor === source.id;
 
@@ -182,16 +210,32 @@ export default function SourceSheet({
         </p>
       )}
 
-      {detail && detail.observations.length > 0 && (
-        <div className="border-t border-secondary/30 pt-3">
-          <ObservationHistory
-            observations={detail.observations}
-            canReact={session !== null && session !== undefined}
-            onReact={onReact}
-            reactionError={reactionError}
-            reactionQueued={reactionQueued}
-          />
+      {loadingObservations ? (
+        <div
+          role="status"
+          aria-label={fr.loadingObservations}
+          className="animate-pulse border-t border-secondary/30 pt-3"
+        >
+          <div className="h-3.5 w-40 rounded bg-secondary/20" />
+          <div className="mt-3 flex items-center gap-2">
+            <div className="h-2.5 w-2.5 shrink-0 rounded-full bg-secondary/20" />
+            <div className="h-3 w-56 rounded bg-secondary/15" />
+          </div>
+          <div className="mt-2 ml-[18px] h-3 w-2/3 rounded bg-secondary/10" />
         </div>
+      ) : (
+        detail &&
+        detail.observations.length > 0 && (
+          <div className="border-t border-secondary/30 pt-3">
+            <ObservationHistory
+              observations={detail.observations}
+              canReact={session !== null && session !== undefined}
+              onReact={onReact}
+              reactionError={reactionError}
+              reactionQueued={reactionQueued}
+            />
+          </div>
+        )
       )}
 
       <div className="border-t border-secondary/30 pt-3">
