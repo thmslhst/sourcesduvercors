@@ -204,12 +204,6 @@ export default function SourceSheet({
         </p>
       </div>
 
-      {source.description && (
-        <p className="border-t border-secondary/30 pt-3 text-sm">
-          {source.description}
-        </p>
-      )}
-
       {loadingObservations ? (
         <div
           role="status"

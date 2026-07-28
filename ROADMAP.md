@@ -19,7 +19,7 @@ A hiker can *see* every water source in the Vercors.
 
 - [x] MapLibre map, PMTiles/Protomaps basemap, centered on the Vercors
 - [x] Sources rendered with status colors (all `unknown` gray at this point) and type icons
-- [x] Source detail sheet: name, type, elevation, description, status placeholder
+- [x] Source detail sheet: name, type, elevation, status placeholder
 - [x] Geolocation: center-on-me
 - [x] `GET /api/v1/sources` snapshot endpoint
 - [x] Mobile-first layout, OSM attribution

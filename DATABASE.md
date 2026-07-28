@@ -27,7 +27,6 @@ CREATE TABLE water_sources (
   type          source_type NOT NULL,
   geom          geometry(Point, 4326) NOT NULL,
   elevation_m   integer,                    -- from OSM ele=* or DEM lookup
-  description   text,                       -- curated notes: access, reliability folklore
   osm_type      text,                       -- 'node' | 'way' (nullable: manually added sources)
   osm_id        bigint,
   is_active     boolean NOT NULL DEFAULT true,  -- false = delisted (destroyed, private, wrong)
@@ -75,6 +74,7 @@ CREATE TABLE observation_reactions (
 - **One reaction per user per observation** (`UNIQUE`) prevents trivial self-inflation; a user can change confirm→dispute by updating their reaction (the one permitted update, it's an opinion not a fact).
 - **`is_active` on sources** rather than deletion: hikers' history should survive a source being delisted.
 - **Elevation** is denormalized onto the source; no DEM at runtime.
+- **No free-text column on sources.** A source row carries identity and location only. Everything about the water — how it flows, whether it can be trusted — comes from observations, so there is nowhere for undated third-party claims to sit next to them ([PRODUCT_PRINCIPLES.md](PRODUCT_PRINCIPLES.md) § honesty about uncertainty). A `description` column existed until July 2026 and was dropped for this reason.
 
 ## Derived status view
 

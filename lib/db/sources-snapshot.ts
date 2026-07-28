@@ -21,7 +21,6 @@ interface SnapshotRow {
   lat: number;
   lon: number;
   elevation_m: number | null;
-  description: string | null;
   status: ObservationStatus | null;
   confidence: Confidence;
   last_observed_at: Date | null;
@@ -37,7 +36,6 @@ async function querySnapshot(where: Prisma.Sql): Promise<SourceSnapshotItem[]> {
       ST_Y(s.geom)        AS lat,
       ST_X(s.geom)        AS lon,
       s.elevation_m,
-      s.description,
       cs.status::text     AS status,
       cs.confidence,
       cs.last_observed_at,
@@ -55,7 +53,6 @@ async function querySnapshot(where: Prisma.Sql): Promise<SourceSnapshotItem[]> {
     lat: r.lat,
     lon: r.lon,
     elevationM: r.elevation_m,
-    description: r.description,
     status: deriveDisplayStatus(r.status, r.confidence),
     confidence: r.confidence,
     lastObservedAt: r.last_observed_at?.toISOString() ?? null,

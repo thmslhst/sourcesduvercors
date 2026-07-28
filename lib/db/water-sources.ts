@@ -12,20 +12,19 @@ export type UpsertResult = "inserted" | "updated";
 /**
  * Upsert an OSM-imported source keyed on (osm_type, osm_id) — DATA_SOURCES.md.
  * On conflict only geometry and updated_at are refreshed: curated fields
- * (name fixes, description, is_active) are never overwritten on re-import.
+ * (name fixes, is_active) are never overwritten on re-import.
  */
 export async function upsertOsmSource(
   s: CatalogSource,
 ): Promise<UpsertResult> {
   const rows = await prisma.$queryRaw<{ inserted: boolean }[]>`
     INSERT INTO water_sources
-      (type, geom, name, elevation_m, description, osm_type, osm_id)
+      (type, geom, name, elevation_m, osm_type, osm_id)
     VALUES (
       ${s.type}::source_type,
       ST_SetSRID(ST_MakePoint(${s.lon}, ${s.lat}), 4326),
       ${s.name},
       ${s.elevationM},
-      ${s.description},
       ${s.osmType},
       ${s.osmId}
     )

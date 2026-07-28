@@ -54,7 +54,6 @@ model WaterSource {
   type        SourceType
   geom        Unsupported("geometry(Point, 4326)")
   elevationM  Int?                                  @map("elevation_m")
-  description String?
   osmType     String?                               @map("osm_type")
   osmId       BigInt?                               @map("osm_id")
   isActive    Boolean                               @default(true) @map("is_active")

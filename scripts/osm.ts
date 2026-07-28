@@ -1,6 +1,12 @@
 /**
  * Pure OSM → catalog mapping logic for the import script (DATA_SOURCES.md).
  * No IO here — keeps the tag mapping unit-testable.
+ *
+ * Only identity and location are imported (type, name, elevation, geometry).
+ * Tags describing how the water behaves — `description`, `note`, `seasonal`,
+ * `intermittent` — are deliberately ignored: this app answers "can I trust
+ * this source?" from its own observations alone, and undated OSM claims
+ * alongside them would blur where that answer comes from.
  */
 
 import type { SourceType } from "../lib/domain/constants";
@@ -35,7 +41,6 @@ export interface CatalogSource {
   type: SourceType;
   name: string | null;
   elevationM: number | null;
-  description: string | null;
 }
 
 /**
@@ -62,24 +67,6 @@ export function parseElevation(ele: string | undefined): number | null {
   return Math.round(parseFloat(match[0]));
 }
 
-/**
- * Seed the curated description from OSM description/note tags, plus
- * seasonal/intermittent context when present (DATA_SOURCES.md).
- * Curated edits are never overwritten on re-import.
- */
-export function buildDescription(
-  tags: Record<string, string>,
-): string | null {
-  const parts: string[] = [];
-  if (tags.description) parts.push(tags.description);
-  if (tags.note && tags.note !== tags.description) parts.push(tags.note);
-  const flags = ["seasonal", "intermittent"]
-    .filter((k) => tags[k])
-    .map((k) => `${k}=${tags[k]}`);
-  if (flags.length > 0) parts.push(`OSM: ${flags.join(", ")}`);
-  return parts.length > 0 ? parts.join(" — ") : null;
-}
-
 /** Map one Overpass element to a catalog row; null when not importable. */
 export function mapElement(el: OverpassElement): CatalogSource | null {
   if (el.type !== "node" || el.lat === undefined || el.lon === undefined) {
@@ -96,6 +83,5 @@ export function mapElement(el: OverpassElement): CatalogSource | null {
     type,
     name: tags.name ?? null,
     elevationM: parseElevation(tags.ele),
-    description: buildDescription(tags),
   };
 }

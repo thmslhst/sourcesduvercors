@@ -37,7 +37,9 @@ Expected scale: a few hundred nodes. Streams (`waterway=stream`) are **not** bul
 | `man_made=water_tap` | `drinking_water` |
 | `man_made=water_well` | `other` |
 
-Also captured when present: `name`, `ele` → `elevation_m`, `description`/`note` → seed for curated `description`, `seasonal`/`intermittent` tags → useful context in description.
+Also captured when present: `name` and `ele` → `elevation_m`. That is the whole of it.
+
+**Nothing OSM says about the water itself is imported** — not `description`, `note`, `seasonal`, `intermittent`, nor the `drinking_water=*` family. OSM tells us *where* a source is; whether it can be trusted today is answered by hikers' observations and by nothing else. Mixing in undated, unattributed claims would leave a reader unable to tell which part of the card the app stands behind (see [PRODUCT_PRINCIPLES.md](PRODUCT_PRINCIPLES.md)). These tags remain available upstream in OSM for anyone who wants them.
 
 ## Import & refresh workflow
 
@@ -45,7 +47,7 @@ Script lives in `/scripts` (see repo layout in [ARCHITECTURE.md](ARCHITECTURE.md
 
 1. Fetch Overpass result for the boundary.
 2. Upsert into `water_sources` keyed on `(osm_type, osm_id)` — see [DATABASE.md](DATABASE.md).
-3. Never overwrite curated fields (`description`, `is_active`, manual `name` fixes) on re-import; only geometry, tags-derived fields on new rows, and flag disappeared OSM elements for manual review (don't auto-deactivate — observations may prove the source still exists).
+3. Never overwrite curated fields (`is_active`, manual `name` fixes) on re-import; only geometry, tags-derived fields on new rows, and flag disappeared OSM elements for manual review (don't auto-deactivate — observations may prove the source still exists).
 4. Run manually at first; later a monthly scheduled job.
 
 Manual additions (sources known to locals but missing from OSM) get `osm_type = NULL`. Ideally they are *also* contributed upstream to OSM — good citizenship and keeps the catalog convergent.

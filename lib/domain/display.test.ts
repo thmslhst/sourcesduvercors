@@ -33,7 +33,6 @@ describe("decaySnapshotItem", () => {
     lat: 45,
     lon: 5.4,
     elevationM: 1200,
-    description: null,
     status: "flowing",
     confidence: "high",
     lastObservedAt: null,

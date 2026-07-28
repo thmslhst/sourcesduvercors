@@ -1,10 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  buildDescription,
-  mapElement,
-  mapTagsToType,
-  parseElevation,
-} from "./osm";
+import { mapElement, mapTagsToType, parseElevation } from "./osm";
 
 // Locks the tag → source_type mapping from DATA_SOURCES.md.
 describe("mapTagsToType", () => {
@@ -43,26 +38,6 @@ describe("parseElevation", () => {
   });
 });
 
-describe("buildDescription", () => {
-  it("combines description, note and seasonal flags", () => {
-    expect(
-      buildDescription({
-        description: "Abreuvoir",
-        note: "10 min hors sentier",
-        seasonal: "yes",
-      }),
-    ).toBe("Abreuvoir — 10 min hors sentier — OSM: seasonal=yes");
-  });
-
-  it("deduplicates identical description/note", () => {
-    expect(buildDescription({ description: "x", note: "x" })).toBe("x");
-  });
-
-  it("returns null when nothing useful", () => {
-    expect(buildDescription({})).toBeNull();
-  });
-});
-
 describe("mapElement", () => {
   it("maps a spring node", () => {
     expect(
@@ -71,7 +46,14 @@ describe("mapElement", () => {
         id: 123,
         lat: 44.9,
         lon: 5.4,
-        tags: { natural: "spring", name: "Fontaine de Chaumailloux", ele: "1580" },
+        tags: {
+          natural: "spring",
+          name: "Fontaine de Chaumailloux",
+          ele: "1580",
+          // Flow/quality tags are never imported (DATA_SOURCES.md).
+          description: "Coule toute l’année",
+          intermittent: "yes",
+        },
       }),
     ).toEqual({
       osmType: "node",
@@ -81,7 +63,6 @@ describe("mapElement", () => {
       type: "spring",
       name: "Fontaine de Chaumailloux",
       elevationM: 1580,
-      description: null,
     });
   });
 

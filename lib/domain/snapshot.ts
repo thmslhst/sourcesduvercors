@@ -13,7 +13,6 @@ export interface SourceSnapshotItem {
   lat: number;
   lon: number;
   elevationM: number | null;
-  description: string | null;
   /** Already collapsed to `unknown` when confidence is `unknown`. */
   status: DisplayStatus;
   confidence: Confidence;
