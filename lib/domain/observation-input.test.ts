@@ -1,8 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  COMMENT_MAX_LENGTH,
-  parseObservationInput,
-} from "./observation-input";
+import { parseObservationInput } from "./observation-input";
 
 const NOW = new Date("2026-07-26T12:00:00.000Z");
 const VALID = {
@@ -14,14 +11,14 @@ const VALID = {
 
 describe("parseObservationInput", () => {
   it("accepts a valid submission and lowercases UUIDs", () => {
-    const r = parseObservationInput({ ...VALID, comment: "  Coule fort  " }, NOW);
+    const r = parseObservationInput({ ...VALID, tags: ["cloudy_water"] }, NOW);
     expect(r).toMatchObject({
       ok: true,
       value: {
         id: VALID.id,
         sourceId: VALID.sourceId.toLowerCase(),
         status: "flowing",
-        comment: "Coule fort",
+        tags: ["cloudy_water"],
         observedAt: new Date(VALID.observedAt),
       },
     });
@@ -54,16 +51,37 @@ describe("parseObservationInput", () => {
     }
   });
 
-  it("caps comment length and collapses empty comments to null", () => {
-    expect(
-      parseObservationInput(
-        { ...VALID, comment: "x".repeat(COMMENT_MAX_LENGTH + 1) },
-        NOW,
-      ),
-    ).toEqual({ ok: false, error: "comment_too_long" });
+  it("treats absent, null and empty tags alike", () => {
+    for (const tags of [undefined, null, []]) {
+      const r = parseObservationInput({ ...VALID, tags }, NOW);
+      expect(r.ok && r.value.tags).toEqual([]);
+    }
+  });
 
-    const r = parseObservationInput({ ...VALID, comment: "   " }, NOW);
-    expect(r.ok && r.value.comment).toBe(null);
+  it("rejects tags outside the closed vocabulary", () => {
+    for (const tags of [
+      ["not_a_tag"],
+      ["cloudy_water", "not_a_tag"],
+      [3],
+      "cloudy_water",
+      {},
+    ]) {
+      expect(parseObservationInput({ ...VALID, tags }, NOW)).toEqual({
+        ok: false,
+        error: "invalid_tags",
+      });
+    }
+  });
+
+  it("deduplicates tags into vocabulary order, not tap order", () => {
+    const r = parseObservationInput(
+      {
+        ...VALID,
+        tags: ["broken_fixture", "cloudy_water", "broken_fixture"],
+      },
+      NOW,
+    );
+    expect(r.ok && r.value.tags).toEqual(["cloudy_water", "broken_fixture"]);
   });
 
   it("clamps a future observed_at to now (client clock skew)", () => {

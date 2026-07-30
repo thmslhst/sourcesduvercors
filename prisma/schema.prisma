@@ -41,6 +41,17 @@ enum ReactionType {
   @@map("reaction_type")
 }
 
+// Optional details on an observation — descriptive only, never an input to
+// the derived status or confidence (DOMAIN.md § Observation).
+enum ObservationTag {
+  cloudy_water
+  hard_access
+  wrong_location
+  broken_fixture
+
+  @@map("observation_tag")
+}
+
 // ---------------------------------------------------------------------------
 // Water sources (imported from OSM + curated) — see DATABASE.md
 // geom is PostGIS; all spatial reads/writes go through lib/db (raw SQL).
@@ -76,7 +87,7 @@ model Observation {
   sourceId   String            @map("source_id") @db.Uuid
   userId     String            @map("user_id")
   status     ObservationStatus
-  comment    String?
+  tags       ObservationTag[]
   photoUrl   String?           @map("photo_url")
   observedAt DateTime          @map("observed_at") @db.Timestamptz(6)
   createdAt  DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)

@@ -33,6 +33,23 @@ export type Confidence = (typeof CONFIDENCE_LEVELS)[number];
 export const REACTION_TYPES = ["confirm", "dispute"] as const;
 export type ReactionType = (typeof REACTION_TYPES)[number];
 
+/**
+ * Closed vocabulary of optional details on an observation (DOMAIN.md
+ * § Observation). A 4-value status can't say *why*, and for a fountain or a
+ * cistern "dry" may mean a broken tap rather than a dry spring.
+ *
+ * These are descriptive only: **no tag feeds the confidence model.** Trust is
+ * derived from age, confirmations and disputes and nothing else — keep it
+ * that way (§ Confidence model, and the `source_current_status` view).
+ */
+export const OBSERVATION_TAGS = [
+  "cloudy_water",
+  "hard_access",
+  "wrong_location",
+  "broken_fixture",
+] as const;
+export type ObservationTag = (typeof OBSERVATION_TAGS)[number];
+
 /** Age windows in days (DOMAIN.md § Confidence model, v1). */
 export const CONFIDENCE_WINDOWS_DAYS = {
   /** high requires age ≤ this AND ≥ 1 confirmation AND no disputes */

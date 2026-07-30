@@ -5,7 +5,11 @@
  * UUID makes replay idempotent — re-sending is always safe.
  */
 
-import type { ObservationStatus, ReactionType } from "@/lib/domain/constants";
+import type {
+  ObservationStatus,
+  ObservationTag,
+  ReactionType,
+} from "@/lib/domain/constants";
 import { OUTBOX_STORE, idbDelete, idbGetAll, idbPut } from "./idb";
 
 export interface QueuedObservation {
@@ -17,7 +21,7 @@ export interface QueuedObservation {
     id: string;
     sourceId: string;
     status: ObservationStatus;
-    comment?: string;
+    tags?: ObservationTag[];
     /** When the hiker was at the source (queue time), not sync time. */
     observedAt: string;
   };

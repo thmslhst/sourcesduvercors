@@ -8,10 +8,11 @@
 
 import {
   OBSERVATION_STATUSES,
+  OBSERVATION_TAGS,
   type ObservationStatus,
+  type ObservationTag,
 } from "./constants";
 
-export const COMMENT_MAX_LENGTH = 500;
 /** How far in the past an observation may claim to have happened. */
 export const OBSERVED_AT_MAX_PAST_DAYS = 7;
 
@@ -23,7 +24,8 @@ export interface ObservationInput {
   id: string;
   sourceId: string;
   status: ObservationStatus;
-  comment: string | null;
+  /** Optional details, deduplicated; descriptive only (never trust inputs). */
+  tags: ObservationTag[];
   /** Clamped into [now − 7 days, now]. */
   observedAt: Date;
 }
@@ -54,15 +56,21 @@ export function parseObservationInput(
     return { ok: false, error: "invalid_status" };
   }
 
-  let comment: string | null = null;
-  if (b.comment != null) {
-    if (typeof b.comment !== "string") {
-      return { ok: false, error: "invalid_comment" };
+  // Absent and empty mean the same thing — tags are entirely optional. The
+  // vocabulary is closed, so an unknown value is a bug or a forged body, not
+  // something to silently drop.
+  let tags: ObservationTag[] = [];
+  if (b.tags != null) {
+    const raw: unknown = b.tags;
+    if (!Array.isArray(raw)) {
+      return { ok: false, error: "invalid_tags" };
     }
-    comment = b.comment.trim() || null;
-    if (comment !== null && comment.length > COMMENT_MAX_LENGTH) {
-      return { ok: false, error: "comment_too_long" };
+    const known = OBSERVATION_TAGS as readonly string[];
+    if (raw.some((t) => typeof t !== "string" || !known.includes(t))) {
+      return { ok: false, error: "invalid_tags" };
     }
+    // Deduplicate in vocabulary order, so storage doesn't depend on tap order.
+    tags = OBSERVATION_TAGS.filter((t) => raw.includes(t));
   }
 
   const observedAtMs =
@@ -81,7 +89,7 @@ export function parseObservationInput(
       id: b.id.toLowerCase(),
       sourceId: b.sourceId.toLowerCase(),
       status: b.status as ObservationStatus,
-      comment,
+      tags,
       observedAt,
     },
   };

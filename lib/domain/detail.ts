@@ -4,13 +4,18 @@
  * detail sheet renders ("flowing well — 3 days ago, confirmed by 2").
  */
 
-import type { ObservationStatus, ReactionType } from "./constants";
+import type {
+  ObservationStatus,
+  ObservationTag,
+  ReactionType,
+} from "./constants";
 import type { SourceSnapshotItem } from "./snapshot";
 
 export interface ObservationHistoryItem {
   id: string;
   status: ObservationStatus;
-  comment: string | null;
+  /** Optional details; empty when the hiker just tapped a status. */
+  tags: ObservationTag[];
   /** ISO timestamp — when the hiker was at the source. */
   observedAt: string;
   confirmationCount: number;

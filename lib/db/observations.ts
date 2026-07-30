@@ -49,7 +49,7 @@ export async function createObservation(
         sourceId: input.sourceId,
         userId,
         status: input.status,
-        comment: input.comment,
+        tags: input.tags,
         observedAt: input.observedAt,
       },
     });
@@ -125,7 +125,7 @@ export async function listObservationHistory(
   return observations.map((o) => ({
     id: o.id,
     status: o.status,
-    comment: o.comment,
+    tags: o.tags,
     observedAt: o.observedAt.toISOString(),
     confirmationCount: o.reactions.filter((r) => r.type === "confirm").length,
     disputeCount: o.reactions.filter((r) => r.type === "dispute").length,

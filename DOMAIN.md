@@ -17,15 +17,26 @@ A physical point where a hiker might obtain water. Types (initial set, mapped fr
 | `stream` | Reliable stream crossing worth mapping | `waterway=stream` (curated, not bulk-imported) |
 | `other` | Anything else worth knowing about | — |
 
-A source has a fixed location (point geometry), a name when known (e.g., "Fontaine de Chaumailloux"), an elevation, and optional notes (e.g., "10 min off-trail, follow cairns").
+A source has a fixed location (point geometry), a name when known (e.g., "Fontaine de Chaumailloux"), and an elevation. It carries no free text: everything about the water comes from observations ([DATABASE.md](DATABASE.md) § Notes on choices).
 
-**Potability is not a status.** Whether water is treated/potable is a property of the source (`drinking_water` type or notes), while **flow** is what observations track. The app never certifies potability.
+**Potability is not a status.** Whether water is treated/potable is a property of the source (its `drinking_water` type), while **flow** is what observations track. The app never certifies potability.
 
 ### Observation
 
 A single report by a user about a source at a moment in time. The atomic unit of value in the system.
 
-Fields: source, author, **status**, observed-at timestamp, optional comment, optional photo (post-MVP).
+Fields: source, author, **status**, observed-at timestamp, optional tags, optional photo (post-MVP).
+
+**Tags** are a closed vocabulary — never free text. A four-value status can't say *why*, and for a `fountain`, `drinking_water` or `cistern` a dry reading may mean a broken tap rather than a dry spring:
+
+| Tag | FR label |
+|---|---|
+| `cloudy_water` | Eau trouble |
+| `hard_access` | Accès difficile |
+| `wrong_location` | Point mal placé |
+| `broken_fixture` | Installation cassée |
+
+Tags are **descriptive only — they never affect the derived status or confidence.** Trust comes from age, confirmations and disputes and nothing else (see § Confidence model). A closed list also means nothing needs moderating, nothing needs editing, and the labels live in `lib/i18n` like every other string. Free-text comments existed until July 2026 and were replaced by this list.
 
 ### Confirmation
 

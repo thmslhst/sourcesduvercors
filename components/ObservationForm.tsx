@@ -2,7 +2,8 @@
 
 /**
  * The ≤3-tap report flow (PRODUCT_PRINCIPLES.md): source is already open,
- * so — tap a status, tap send. Comment stays optional and out of the way.
+ * so — tap a status, tap send. Tags are optional extra taps that appear
+ * only once a status is chosen, so the happy path keeps its budget.
  *
  * Offline (ARCHITECTURE.md § Write path): when the network is unreachable
  * the observation goes to the IndexedDB outbox with its client UUID and
@@ -13,10 +14,11 @@ import { useState } from "react";
 
 import {
   OBSERVATION_STATUSES,
+  OBSERVATION_TAGS,
   type ObservationStatus,
+  type ObservationTag,
 } from "@/lib/domain/constants";
 import { STATUS_COLORS } from "@/lib/domain/display";
-import { COMMENT_MAX_LENGTH } from "@/lib/domain/observation-input";
 import { enqueueOutbox } from "@/lib/offline/outbox";
 import { fr } from "@/lib/i18n/fr";
 
@@ -33,8 +35,15 @@ export default function ObservationForm({
   onSaved,
 }: ObservationFormProps) {
   const [status, setStatus] = useState<ObservationStatus | null>(null);
-  const [comment, setComment] = useState("");
+  const [tags, setTags] = useState<ObservationTag[]>([]);
   const [phase, setPhase] = useState<Phase>("idle");
+
+  const toggleTag = (tag: ObservationTag) =>
+    setTags((current) =>
+      current.includes(tag)
+        ? current.filter((t) => t !== tag)
+        : [...current, tag],
+    );
 
   const submit = async () => {
     if (!status) return;
@@ -43,7 +52,7 @@ export default function ObservationForm({
       id: crypto.randomUUID(),
       sourceId,
       status,
-      comment: comment.trim() || undefined,
+      tags,
       // When the hiker is at the source — distinct from server receipt time.
       observedAt: new Date().toISOString(),
     };
@@ -65,7 +74,7 @@ export default function ObservationForm({
         });
         setPhase("queued");
         setStatus(null);
-        setComment("");
+        setTags([]);
       } catch {
         setPhase("error");
       }
@@ -79,7 +88,7 @@ export default function ObservationForm({
     }
     setPhase("saved");
     setStatus(null);
-    setComment("");
+    setTags([]);
     onSaved();
   };
 
@@ -114,14 +123,28 @@ export default function ObservationForm({
 
       {status !== null && (
         <>
-          <input
-            type="text"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            placeholder={fr.commentPlaceholder}
-            maxLength={COMMENT_MAX_LENGTH}
-            className="rounded-lg border border-secondary/50 bg-transparent px-3 py-2 text-sm text-secondary placeholder:text-secondary/60"
-          />
+          <fieldset className="flex flex-col gap-1.5">
+            <legend className="text-xs text-secondary/75">
+              {fr.tagsTitle}
+            </legend>
+            <div className="flex flex-wrap gap-2">
+              {OBSERVATION_TAGS.map((t) => (
+                <button
+                  key={t}
+                  type="button"
+                  onClick={() => toggleTag(t)}
+                  aria-pressed={tags.includes(t)}
+                  className={`rounded-full border px-3 py-1 text-xs font-semibold ${
+                    tags.includes(t)
+                      ? "border-secondary bg-secondary text-primary"
+                      : "border-secondary/50 text-secondary"
+                  }`}
+                >
+                  {fr.tag[t]}
+                </button>
+              ))}
+            </div>
+          </fieldset>
           <button
             type="button"
             onClick={submit}

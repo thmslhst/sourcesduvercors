@@ -18,6 +18,8 @@ CREATE TYPE source_type AS ENUM
 CREATE TYPE observation_status AS ENUM
   ('flowing', 'low_flow', 'dripping', 'dry');   -- 'unknown' is derived, never stored
 CREATE TYPE reaction_type AS ENUM ('confirm', 'dispute');
+CREATE TYPE observation_tag AS ENUM       -- optional details; never trust inputs
+  ('cloudy_water', 'hard_access', 'wrong_location', 'broken_fixture');
 
 -- Water sources (imported from OSM + curated)
 CREATE TABLE water_sources (
@@ -48,11 +50,11 @@ CREATE TABLE observations (
   source_id    uuid NOT NULL REFERENCES water_sources(id),
   user_id      text NOT NULL REFERENCES "user"(id),
   status       observation_status NOT NULL,
-  comment      text,                        -- length-capped in app layer (~500 chars)
+  tags         observation_tag[] NOT NULL DEFAULT '{}',  -- closed vocabulary, never free text
   photo_url    text,                        -- post-MVP, nullable from day one
   observed_at  timestamptz NOT NULL,        -- when the hiker was at the source (client clock)
   created_at   timestamptz NOT NULL DEFAULT now(),  -- server receive time
-  deleted_at   timestamptz                  -- moderation soft-delete
+  deleted_at   timestamptz                  -- soft-delete: admin moderation or author retraction
 );
 CREATE INDEX observations_source_latest_idx
   ON observations (source_id, observed_at DESC) WHERE deleted_at IS NULL;
@@ -75,6 +77,7 @@ CREATE TABLE observation_reactions (
 - **One reaction per user per observation** (`UNIQUE`) prevents trivial self-inflation; a user can change confirm→dispute by updating their reaction (the one permitted update, it's an opinion not a fact).
 - **`is_active` on sources** rather than deletion: hikers' history should survive a source being delisted.
 - **Elevation** is denormalized onto the source; no DEM at runtime.
+- **No free text anywhere.** Observations carry `tags` from a fixed `observation_tag` enum instead of a comment. The status enum can't express *why* a fountain reads dry, but the answers worth having fit a list — and a closed list needs no moderation, no editing (which append-only forbids anyway), and no translation pass. Tags are descriptive: they are **not** inputs to `source_current_status`. A `comment` column existed until July 2026; it was replaced, for the same reason as the next entry.
 - **No free-text column on sources.** A source row carries identity and location only. Everything about the water — how it flows, whether it can be trusted — comes from observations, so there is nowhere for undated third-party claims to sit next to them ([PRODUCT_PRINCIPLES.md](PRODUCT_PRINCIPLES.md) § honesty about uncertainty). A `description` column existed until July 2026 and was dropped for this reason.
 
 ## Derived status view

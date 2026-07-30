@@ -48,8 +48,17 @@ export default function ObservationHistory({
                 {o.isMine && <> · {fr.yourObservation}</>}
               </span>
             </div>
-            {o.comment && (
-              <p className="mt-0.5 pl-[18px] text-secondary/90">{o.comment}</p>
+            {o.tags.length > 0 && (
+              <ul className="mt-1 flex flex-wrap gap-1.5 pl-[18px]">
+                {o.tags.map((t) => (
+                  <li
+                    key={t}
+                    className="rounded-full border border-secondary/40 px-2 py-0.5 text-xs text-secondary/90"
+                  >
+                    {fr.tag[t]}
+                  </li>
+                ))}
+              </ul>
             )}
             {(o.confirmationCount > 0 || o.disputeCount > 0) && (
               <p className="mt-0.5 pl-[18px] text-xs text-secondary/75">

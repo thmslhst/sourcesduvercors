@@ -8,6 +8,7 @@
 import type {
   Confidence,
   DisplayStatus,
+  ObservationTag,
   SourceType,
 } from "../domain/constants";
 
@@ -35,6 +36,17 @@ export const fr = {
     dry: "À sec",
     unknown: "Statut inconnu",
   } satisfies Record<DisplayStatus, string>,
+
+  /**
+   * Closed vocabulary of observation details (DOMAIN.md § Observation).
+   * Descriptive only — none of these affect the confidence model.
+   */
+  tag: {
+    cloudy_water: "Eau trouble",
+    hard_access: "Accès difficile",
+    wrong_location: "Point mal placé",
+    broken_fixture: "Installation cassée",
+  } satisfies Record<ObservationTag, string>,
 
   noObservationYet:
     "Aucune observation pour le moment. Soyez la première personne à signaler l’état de cette source.",
@@ -74,7 +86,7 @@ export const fr = {
   reactionFailed: "Impossible d’enregistrer votre avis. Réessayez.",
 
   reportTitle: "Signaler l’état actuel",
-  commentPlaceholder: "Commentaire (facultatif)",
+  tagsTitle: "Précisions (facultatif)",
   send: "Envoyer",
   sending: "Envoi…",
   observationSaved: "Merci ! Observation enregistrée.",
