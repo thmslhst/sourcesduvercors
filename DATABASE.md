@@ -4,7 +4,7 @@ PostgreSQL + PostGIS. Prisma for migrations and non-geo queries; geo queries in 
 
 ## Design tenets
 
-- **Observations are append-only facts.** Never updated, never hard-deleted (soft-delete flag for moderation). All display state is derived.
+- **Observations are append-only facts.** Never updated, never hard-deleted. The soft-delete flag has two actors: an admin removing abuse, and an author retracting their own observation. All display state is derived, so a retraction needs no other bookkeeping — the previous observation becomes the answer again.
 - **Derivation lives in the database** (a view), so the API, import scripts, and any future consumer see identical statuses.
 - **Region-agnostic schema, Vercors-only data.** A `region` column exists from day one; no other multi-region machinery.
 - **OSM provenance is preserved** (`osm_type`/`osm_id`) so re-imports can reconcile instead of duplicate, and ODbL obligations can be honored ([DATA_SOURCES.md](DATA_SOURCES.md)).

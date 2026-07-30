@@ -4,7 +4,13 @@
  * Recent observation list. Confirm / dispute only apply to the latest
  * observation — that is the one the derived status is computed from
  * (DOMAIN.md § Source display state).
+ *
+ * Your own entries can be retracted: a mis-tapped "à sec" is otherwise the
+ * map's answer for weeks and only an admin could take it back. Confirming
+ * is inline, in two taps, rather than window.confirm.
  */
+
+import { useState } from "react";
 
 import type { ReactionType } from "@/lib/domain/constants";
 import { STATUS_COLORS } from "@/lib/domain/display";
@@ -19,6 +25,9 @@ interface ObservationHistoryProps {
   reactionError: boolean;
   /** True when the reaction went to the offline outbox instead of the API. */
   reactionQueued: boolean;
+  onRetract: (observationId: string) => void;
+  /** Observation whose retraction failed, if any. */
+  retractErrorFor: string | null;
 }
 
 export default function ObservationHistory({
@@ -27,7 +36,13 @@ export default function ObservationHistory({
   onReact,
   reactionError,
   reactionQueued,
+  onRetract,
+  retractErrorFor,
 }: ObservationHistoryProps) {
+  const [confirmingRetract, setConfirmingRetract] = useState<string | null>(
+    null,
+  );
+
   if (observations.length === 0) return null;
 
   return (
@@ -100,6 +115,47 @@ export default function ObservationHistory({
                   ✕ {fr.dispute}
                 </button>
               </div>
+            )}
+            {canReact && o.isMine && (
+              <div className="mt-1.5 pl-[18px] text-xs">
+                {confirmingRetract === o.id ? (
+                  <span className="flex flex-wrap items-center gap-2">
+                    <span className="text-secondary/75">
+                      {fr.retractConfirmQuestion}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setConfirmingRetract(null);
+                        onRetract(o.id);
+                      }}
+                      className="rounded-full border border-secondary/50 px-3 py-1 font-semibold text-secondary"
+                    >
+                      {fr.retractConfirm}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setConfirmingRetract(null)}
+                      className="underline text-secondary/75"
+                    >
+                      {fr.cancel}
+                    </button>
+                  </span>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => setConfirmingRetract(o.id)}
+                    className="underline text-secondary/75"
+                  >
+                    {fr.retract}
+                  </button>
+                )}
+              </div>
+            )}
+            {retractErrorFor === o.id && (
+              <p className="mt-1 pl-[18px] text-xs font-medium text-red-200">
+                {fr.retractFailed}
+              </p>
             )}
             {i === 0 && reactionError && (
               <p className="mt-1 pl-[18px] text-xs font-medium text-red-200">

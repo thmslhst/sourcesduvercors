@@ -85,6 +85,13 @@ export const fr = {
   dispute: "Signaler obsolète",
   reactionFailed: "Impossible d’enregistrer votre avis. Réessayez.",
 
+  /** Author retraction of their own observation (soft-delete, never an edit). */
+  retract: "Retirer",
+  retractConfirmQuestion: "Retirer cette observation ?",
+  retractConfirm: "Retirer",
+  retractFailed:
+    "Impossible de retirer l’observation. Une connexion est nécessaire.",
+
   reportTitle: "Signaler l’état actuel",
   tagsTitle: "Précisions (facultatif)",
   send: "Envoyer",

@@ -57,8 +57,8 @@ the observations stay on the map under an opaque id. Observations are
 append-only, so they are never erased with the account.
 
 Moderation: promote an account by setting `role = 'admin'` on its `user` row
-(manual SQL by design — no UI). Admins can soft-delete abusive observations
-via `DELETE /api/v1/observations/:id`.
+(manual SQL by design — no UI). `DELETE /api/v1/observations/:id` soft-deletes
+an observation — any of them for an admin, your own for everyone else.
 
 ## Importing the OSM catalog
 

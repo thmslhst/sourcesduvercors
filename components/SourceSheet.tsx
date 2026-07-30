@@ -59,6 +59,8 @@ export default function SourceSheet({
   const [reactionQueuedFor, setReactionQueuedFor] = useState<string | null>(
     null,
   );
+  // Keyed by observation id, not source id — the failure belongs to the row.
+  const [retractErrorFor, setRetractErrorFor] = useState<string | null>(null);
 
   const sourceId = source?.id ?? null;
   const sessionUserId = session?.user.id ?? null;
@@ -131,6 +133,34 @@ export default function SourceSheet({
       onMutated();
     },
     [fetchDetail, onMutated, sourceId],
+  );
+
+  /**
+   * Retraction needs the network: it corrects server state, and the outbox
+   * is for field observations — a queued delete would have to be ordered
+   * against a still-pending create, for a case the UI can't even reach
+   * (history renders server data, so an outboxed observation isn't listed).
+   */
+  const onRetract = useCallback(
+    async (observationId: string) => {
+      setRetractErrorFor(null);
+      let res: Response;
+      try {
+        res = await fetch(`/api/v1/observations/${observationId}`, {
+          method: "DELETE",
+        });
+      } catch {
+        setRetractErrorFor(observationId);
+        return;
+      }
+      if (!res.ok) {
+        setRetractErrorFor(observationId);
+        return;
+      }
+      await fetchDetail();
+      onMutated();
+    },
+    [fetchDetail, onMutated],
   );
 
   const onSaved = useCallback(() => {
@@ -227,6 +257,8 @@ export default function SourceSheet({
               onReact={onReact}
               reactionError={reactionError}
               reactionQueued={reactionQueued}
+              onRetract={onRetract}
+              retractErrorFor={retractErrorFor}
             />
           </div>
         )

@@ -1,7 +1,9 @@
 /**
  * Observation & reaction persistence. Observations are append-only facts:
- * create + soft-delete only. A reaction is the one editable record — a
- * user may change their mind (confirm ⇄ dispute) on the same observation.
+ * create + soft-delete only. Soft-delete has two actors — an admin removing
+ * abuse, and an author retracting their own mis-tap — and neither rewrites
+ * the record. A reaction is the one editable record: a user may change
+ * their mind (confirm ⇄ dispute) on the same observation.
  */
 
 import { Prisma } from "@prisma/client";
@@ -144,4 +146,30 @@ export async function softDeleteObservation(id: string): Promise<boolean> {
     data: { deletedAt: new Date() },
   });
   return count > 0;
+}
+
+export type RetractResult = "ok" | "not_found" | "forbidden";
+
+/**
+ * Author retraction: withdrawing your own observation after a mis-tap.
+ * Still a soft-delete, so the record is never rewritten — and because the
+ * derived status reads the latest *non-deleted* observation, retracting the
+ * newest one simply revives the previous answer with no extra work.
+ */
+export async function softDeleteOwnObservation(
+  id: string,
+  userId: string,
+): Promise<RetractResult> {
+  const observation = await prisma.observation.findUnique({
+    where: { id },
+    select: { userId: true, deletedAt: true },
+  });
+  if (!observation || observation.deletedAt !== null) return "not_found";
+  if (observation.userId !== userId) return "forbidden";
+
+  await prisma.observation.update({
+    where: { id },
+    data: { deletedAt: new Date() },
+  });
+  return "ok";
 }
