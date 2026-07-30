@@ -24,6 +24,12 @@ export const auth = betterAuth({
         defaultValue: "user",
         input: false, // never settable from the client
       },
+      /** Stamped by lib/db/users.ts when an account is anonymised. */
+      deletedAt: {
+        type: "date",
+        required: false,
+        input: false,
+      },
     },
   },
   plugins: [

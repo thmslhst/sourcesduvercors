@@ -85,6 +85,7 @@ For each source the app derives: `(status, confidence, last_observed_at, confirm
 - No reputation scores, badges, or levels in the MVP.
 - No public identity at all: an account is an email address and nothing else. Observations are attributed internally (`user_id` — needed for one-reaction-per-user, "your observation", and moderation) but never published under a name. Corroboration is credited anonymously and in aggregate: "confirmé par 2 randonneurs". A stable pseudonym attached to timestamped, geolocated observations is a movement trace, and the confidence model never reads identity anyway (see § Confidence model).
 - Moderation MVP: soft-delete of abusive content by an admin flag; nothing fancier.
+- An account can be deleted by its owner, which means **anonymised**: the email is overwritten with an unusable address and every session dropped, while the observations stay on the map under an opaque id. Hard deletion is not offered — observations are append-only and other people's reactions and the derived status depend on them, so erasing a contributor would degrade the answer for everyone else. Nothing personal is published in the first place, so nothing personal survives.
 
 ## Glossary (FR ⇄ EN)
 

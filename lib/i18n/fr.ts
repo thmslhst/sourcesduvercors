@@ -90,6 +90,16 @@ export const fr = {
   /** Shown to the signed-in person only — observations are published anonymously. */
   signedInAs: (email: string) => `Connecté·e : ${email}`,
   signOut: "Se déconnecter",
+  cancel: "Annuler",
+
+  deleteAccount: "Supprimer mon compte",
+  /** Honesty principle: say exactly what goes and what stays. */
+  deleteAccountExplainer:
+    "Votre adresse e-mail sera effacée et vous serez déconnecté·e de tous vos appareils. Les observations que vous avez déjà envoyées restent sur la carte, sans aucun lien avec vous.",
+  deleteAccountConfirm: "Supprimer définitivement",
+  deleteAccountPending: "Suppression…",
+  deleteAccountFailed:
+    "Impossible de supprimer le compte. Vérifiez votre connexion et réessayez.",
 
   elevation: (m: number) => `${m.toLocaleString("fr-FR")} m`,
 

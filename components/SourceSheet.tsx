@@ -9,7 +9,6 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-import { signOut } from "@/lib/auth-client";
 import { useOfflineSession } from "@/lib/offline/session";
 import type { ReactionType } from "@/lib/domain/constants";
 import type { SourceDetail } from "@/lib/domain/detail";
@@ -17,6 +16,7 @@ import { STATUS_COLORS } from "@/lib/domain/display";
 import type { SourceSnapshotItem } from "@/lib/domain/snapshot";
 import { enqueueOutbox } from "@/lib/offline/outbox";
 import { fr } from "@/lib/i18n/fr";
+import AccountActions from "./AccountActions";
 import ObservationForm from "./ObservationForm";
 import ObservationHistory from "./ObservationHistory";
 import SignInForm from "./SignInForm";
@@ -240,18 +240,7 @@ export default function SourceSheet({
         )}
       </div>
 
-      {session && (
-        <p className="text-xs text-secondary/75">
-          {fr.signedInAs(session.user.email)}{" "}
-          <button
-            type="button"
-            onClick={() => void signOut()}
-            className="font-semibold underline"
-          >
-            {fr.signOut}
-          </button>
-        </p>
-      )}
+      {session && <AccountActions email={session.user.email} />}
 
       <p className="text-xs text-secondary/75">{fr.potabilityDisclaimer}</p>
     </section>

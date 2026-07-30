@@ -21,6 +21,19 @@ export interface OfflineSessionUser {
   email: string;
 }
 
+/**
+ * Drop the mirrored session immediately, without waiting for a definitive
+ * signed-out answer — used when the client already knows the account is gone
+ * (account deletion), so a network hiccup can't resurrect it offline.
+ */
+export function clearSessionMirror(): void {
+  try {
+    localStorage.removeItem(SESSION_MIRROR_KEY);
+  } catch {
+    // localStorage unavailable — nothing was mirrored either.
+  }
+}
+
 function readMirror(): { user: OfflineSessionUser } | null {
   try {
     const raw = localStorage.getItem(SESSION_MIRROR_KEY);

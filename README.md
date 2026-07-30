@@ -48,6 +48,14 @@ Sign-in is passwordless: the app emails a magic link. Configuration lives in
 - `RESEND_API_KEY` — optional; without it (local dev) the magic link is
   printed to the server console instead of being emailed.
 
+An account is an email address and nothing else — no display name is collected
+or shown, and observations are published anonymously.
+
+`DELETE /api/v1/account` lets the signed-in user delete their own account,
+which anonymises it: the email is overwritten, all sessions are dropped, and
+the observations stay on the map under an opaque id. Observations are
+append-only, so they are never erased with the account.
+
 Moderation: promote an account by setting `role = 'admin'` on its `user` row
 (manual SQL by design — no UI). Admins can soft-delete abusive observations
 via `DELETE /api/v1/observations/:id`.
