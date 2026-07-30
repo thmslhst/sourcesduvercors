@@ -107,7 +107,8 @@ model ObservationReaction {
 // ---------------------------------------------------------------------------
 // Better Auth core tables (user, session, account, verification).
 // Owned by Better Auth — verify against `npx @better-auth/cli generate`
-// when auth is wired up in Phase 2. `name` doubles as the display name.
+// when auth is wired up in Phase 2. `name` is a core column the app never
+// reads: there is no public display name (DOMAIN.md § Users & trust).
 // ---------------------------------------------------------------------------
 
 model User {

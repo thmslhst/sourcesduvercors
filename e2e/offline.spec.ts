@@ -91,8 +91,8 @@ test("mode avion : consulter, signaler, reconnecter, synchroniser", async ({
 
   // --- Magic-link sign-in; without RESEND_API_KEY the link goes to stdout.
   await selectSource(page, sourceId);
+  // Email is the only field — no display name is collected or stored.
   await page.getByPlaceholder("Votre e-mail").fill(E2E_EMAIL);
-  await page.getByPlaceholder(/Nom affiché/).fill("E2E hors ligne");
   await page.getByRole("button", { name: /Recevoir le lien/ }).click();
   const link = await server.waitForLog(
     /Lien de connexion pour \S+ : (http\S+)/,

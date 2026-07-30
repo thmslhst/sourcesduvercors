@@ -113,7 +113,8 @@ export async function listObservationHistory(
     orderBy: { observedAt: "desc" },
     take: limit,
     include: {
-      user: { select: { name: true } },
+      // No author join: observations are attributable internally (userId),
+      // never published under a name — DOMAIN.md § Users & trust.
       reactions: {
         where: { deletedAt: null },
         select: { userId: true, type: true },
@@ -126,7 +127,6 @@ export async function listObservationHistory(
     status: o.status,
     comment: o.comment,
     observedAt: o.observedAt.toISOString(),
-    authorName: o.user.name,
     confirmationCount: o.reactions.filter((r) => r.type === "confirm").length,
     disputeCount: o.reactions.filter((r) => r.type === "dispute").length,
     isMine: o.userId === viewerUserId,

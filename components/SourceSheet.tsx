@@ -242,7 +242,7 @@ export default function SourceSheet({
 
       {session && (
         <p className="text-xs text-secondary/75">
-          {fr.signedInAs(session.user.name || session.user.email)}{" "}
+          {fr.signedInAs(session.user.email)}{" "}
           <button
             type="button"
             onClick={() => void signOut()}

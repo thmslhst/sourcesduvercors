@@ -1,8 +1,11 @@
 /**
  * Better Auth server instance (ARCHITECTURE.md — auth). Magic-link only:
  * no passwords to manage. The Better Auth core tables live in
- * prisma/schema.prisma; `user.name` doubles as the public display name,
- * `user.role` ('user' | 'admin') gates moderation (DOMAIN.md § Users & trust).
+ * prisma/schema.prisma; `user.role` ('user' | 'admin') gates moderation
+ * (DOMAIN.md § Users & trust).
+ *
+ * `user.name` is a Better Auth core column the app never reads or shows —
+ * sign-up leaves it "". Observations are attributed by id, never by name.
  */
 
 import { betterAuth } from "better-auth";

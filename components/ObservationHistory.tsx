@@ -44,8 +44,8 @@ export default function ObservationHistory({
               />
               <span className="font-medium">{fr.status[o.status]}</span>
               <span className="text-secondary/75">
-                {fr.timeAgo(o.observedAt)} ·{" "}
-                {o.isMine ? fr.yourObservation : o.authorName}
+                {fr.timeAgo(o.observedAt)}
+                {o.isMine && <> · {fr.yourObservation}</>}
               </span>
             </div>
             {o.comment && (

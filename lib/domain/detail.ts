@@ -13,7 +13,6 @@ export interface ObservationHistoryItem {
   comment: string | null;
   /** ISO timestamp — when the hiker was at the source. */
   observedAt: string;
-  authorName: string;
   confirmationCount: number;
   disputeCount: number;
   /** True when the viewer wrote this observation (can't react to it). */

@@ -17,7 +17,7 @@ const SESSION_MIRROR_KEY = "sdv-session-user";
 
 export interface OfflineSessionUser {
   id: string;
-  name: string;
+  /** Shown back to the signed-in user only — never published (DOMAIN.md). */
   email: string;
 }
 
@@ -45,7 +45,6 @@ export function useOfflineSession(): { user: OfflineSessionUser } | null {
       if (data) {
         const user: OfflineSessionUser = {
           id: data.user.id,
-          name: data.user.name,
           email: data.user.email,
         };
         localStorage.setItem(SESSION_MIRROR_KEY, JSON.stringify(user));

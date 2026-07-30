@@ -1,8 +1,9 @@
 "use client";
 
 /**
- * Magic-link sign-in, inline in the source sheet: email (+ display name for
- * first-time accounts) → link lands in the inbox. No passwords (ARCHITECTURE.md).
+ * Magic-link sign-in, inline in the source sheet: email → link lands in the
+ * inbox. No passwords (ARCHITECTURE.md), and no display name — attribution
+ * is internal only (DOMAIN.md § Users & trust).
  */
 
 import { useState } from "react";
@@ -14,7 +15,6 @@ type Phase = "idle" | "sending" | "sent" | "error";
 
 export default function SignInForm() {
   const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
   const [phase, setPhase] = useState<Phase>("idle");
 
   if (phase === "sent") {
@@ -33,7 +33,6 @@ export default function SignInForm() {
         setPhase("sending");
         const { error } = await authClient.signIn.magicLink({
           email: email.trim(),
-          name: name.trim() || undefined,
           callbackURL: "/",
         });
         setPhase(error ? "error" : "sent");
@@ -48,14 +47,6 @@ export default function SignInForm() {
         onChange={(e) => setEmail(e.target.value)}
         placeholder={fr.emailPlaceholder}
         autoComplete="email"
-        className="rounded-lg border border-secondary/50 bg-transparent px-3 py-2 text-sm text-secondary placeholder:text-secondary/60"
-      />
-      <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder={fr.namePlaceholder}
-        maxLength={40}
         className="rounded-lg border border-secondary/50 bg-transparent px-3 py-2 text-sm text-secondary placeholder:text-secondary/60"
       />
       <button

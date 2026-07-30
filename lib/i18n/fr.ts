@@ -84,11 +84,11 @@ export const fr = {
   signInIntro:
     "Un e-mail avec un lien de connexion vous sera envoyé — pas de mot de passe.",
   emailPlaceholder: "Votre e-mail",
-  namePlaceholder: "Nom affiché (ex. « Rando26 »)",
   sendMagicLink: "Recevoir le lien de connexion",
   magicLinkSent: "Lien envoyé ! Ouvrez l’e-mail sur cet appareil.",
   magicLinkFailed: "Impossible d’envoyer le lien. Vérifiez l’adresse.",
-  signedInAs: (name: string) => `Connecté·e : ${name}`,
+  /** Shown to the signed-in person only — observations are published anonymously. */
+  signedInAs: (email: string) => `Connecté·e : ${email}`,
   signOut: "Se déconnecter",
 
   elevation: (m: number) => `${m.toLocaleString("fr-FR")} m`,

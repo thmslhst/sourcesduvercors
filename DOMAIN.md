@@ -82,7 +82,8 @@ For each source the app derives: `(status, confidence, last_observed_at, confirm
 
 - Reading requires no account.
 - Contributing requires a minimal account (see [ARCHITECTURE.md](ARCHITECTURE.md) — auth) so observations are attributable and abuse is manageable.
-- No reputation scores, badges, or levels in the MVP. An author's display name and observation history are enough.
+- No reputation scores, badges, or levels in the MVP.
+- No public identity at all: an account is an email address and nothing else. Observations are attributed internally (`user_id` — needed for one-reaction-per-user, "your observation", and moderation) but never published under a name. Corroboration is credited anonymously and in aggregate: "confirmé par 2 randonneurs". A stable pseudonym attached to timestamped, geolocated observations is a movement trace, and the confidence model never reads identity anyway (see § Confidence model).
 - Moderation MVP: soft-delete of abusive content by an admin flag; nothing fancier.
 
 ## Glossary (FR ⇄ EN)

@@ -30,7 +30,7 @@ A hiker can *see* every water source in the Vercors.
 
 The community loop: report → confirm → trust.
 
-- [x] Better Auth with magic-link email; minimal account (display name)
+- [x] Better Auth with magic-link email; minimal account (email only — no display name)
 - [x] Submit observation flow (≤ 3 taps: source → status → send; optional comment)
 - [x] Confirm / dispute on the latest observation
 - [x] `source_current_status` view wired through API; map colors + confidence badges go live
