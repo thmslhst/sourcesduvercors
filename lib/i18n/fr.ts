@@ -82,6 +82,12 @@ export const fr = {
   loadingObservations: "Chargement des observations…",
   yourObservation: "votre observation",
   confirm: "Confirmer",
+  /** Confirm-first CTA above the report form (components/ConfirmPrompt.tsx). */
+  confirmPromptTitle: "Toujours d’accord ?",
+  confirmPromptClaim: (status: string, when: string) =>
+    `Dernière observation : ${status}, ${when}.`,
+  confirmPromptAlternative:
+    "Si ce n’est plus le cas, signalez l’état actuel ci-dessous.",
   dispute: "Signaler obsolète",
   reactionFailed: "Impossible d’enregistrer votre avis. Réessayez.",
 

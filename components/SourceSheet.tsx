@@ -11,12 +11,16 @@ import { useCallback, useEffect, useState } from "react";
 
 import { useOfflineSession } from "@/lib/offline/session";
 import type { ReactionType } from "@/lib/domain/constants";
-import type { SourceDetail } from "@/lib/domain/detail";
+import {
+  isConfirmWorthPromoting,
+  type SourceDetail,
+} from "@/lib/domain/detail";
 import { STATUS_COLORS } from "@/lib/domain/display";
 import type { SourceSnapshotItem } from "@/lib/domain/snapshot";
 import { enqueueOutbox } from "@/lib/offline/outbox";
 import { fr } from "@/lib/i18n/fr";
 import AccountActions from "./AccountActions";
+import ConfirmPrompt from "./ConfirmPrompt";
 import ObservationForm from "./ObservationForm";
 import ObservationHistory from "./ObservationHistory";
 import SignInForm from "./SignInForm";
@@ -178,6 +182,13 @@ export default function SourceSheet({
   // Fresher-than-snapshot facts once the detail call lands.
   const current = detail?.source ?? source;
 
+  // Promote the one-tap confirm only when it would actually move confidence
+  // (isConfirmWorthPromoting); otherwise the pill stays in the history list,
+  // where it reads as the minor action it is.
+  const latest = detail?.observations[0] ?? null;
+  const hoistedConfirm =
+    session && latest && isConfirmWorthPromoting(latest) ? latest : null;
+
   const facts = [
     current.lastObservedAt !== null && fr.timeAgo(current.lastObservedAt),
     current.confirmationCount > 0 && fr.confirmedBy(current.confirmationCount),
@@ -259,12 +270,19 @@ export default function SourceSheet({
               reactionQueued={reactionQueued}
               onRetract={onRetract}
               retractErrorFor={retractErrorFor}
+              hoistedConfirmFor={hoistedConfirm?.id ?? null}
             />
           </div>
         )
       )}
 
-      <div className="border-t border-secondary/30 pt-3">
+      <div className="flex flex-col gap-3 border-t border-secondary/30 pt-3">
+        {hoistedConfirm && (
+          <ConfirmPrompt
+            observation={hoistedConfirm}
+            onConfirm={() => void onReact(hoistedConfirm.id, "confirm")}
+          />
+        )}
         {session ? (
           <ObservationForm sourceId={source.id} onSaved={onSaved} />
         ) : (

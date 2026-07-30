@@ -4,11 +4,13 @@
  * detail sheet renders ("flowing well — 3 days ago, confirmed by 2").
  */
 
-import type {
-  ObservationStatus,
-  ObservationTag,
-  ReactionType,
+import {
+  CONFIDENCE_WINDOWS_DAYS,
+  type ObservationStatus,
+  type ObservationTag,
+  type ReactionType,
 } from "./constants";
+import { ageInDays } from "./display";
 import type { SourceSnapshotItem } from "./snapshot";
 
 export interface ObservationHistoryItem {
@@ -30,4 +32,25 @@ export interface SourceDetail {
   source: SourceSnapshotItem;
   /** Latest first; the first entry is the one confirm/dispute act on. */
   observations: ObservationHistoryItem[];
+}
+
+/**
+ * Is confirming this observation worth offering as the primary action?
+ *
+ * A confirmation only ever changes the derived confidence inside the `high`
+ * window (see `deriveConfidence`) — beyond it, tapping "Confirmer" moves
+ * nothing. Leading with a button that does nothing would be exactly the kind
+ * of false reassurance PRODUCT_PRINCIPLES.md § honesty about uncertainty
+ * rules out, so the CTA is gated on the same constant the derivation uses.
+ * Keep the two in step.
+ */
+export function isConfirmWorthPromoting(
+  observation: ObservationHistoryItem,
+  now: Date = new Date(),
+): boolean {
+  if (observation.isMine) return false; // self-inflation; refused server-side
+  if (observation.myReaction !== null) return false; // already had their say
+  return (
+    ageInDays(observation.observedAt, now) <= CONFIDENCE_WINDOWS_DAYS.high
+  );
 }

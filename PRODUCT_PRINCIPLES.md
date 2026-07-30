@@ -26,6 +26,7 @@ A tired hiker with cold fingers and 8% battery is the design target.
 
 - Core answers (nearest source, its status, its confidence) reachable in ≤ 2 taps.
 - Submitting an observation: ≤ 3 taps for the happy path (pick source → pick status → send).
+- Confirming the latest observation: ≤ 2 taps (pick source → confirm). It is the cheapest useful contribution and the only one that can lift a source to high confidence, so it gets a primary slot above the status grid — which stays expanded, since collapsing it would cost the report path a fourth tap. The prompt appears only while a confirmation would actually change confidence (see § 5); past that window it stays a minor pill in the history list.
 - Fast initial load, tiny payloads, no splash screens, no onboarding walls.
 
 ## 5. Honest about uncertainty

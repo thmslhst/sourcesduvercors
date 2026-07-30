@@ -42,6 +42,8 @@ Tags are **descriptive only — they never affect the derived status or confiden
 
 A lightweight "+1" on an existing recent observation: "I was there, it's still like this." Cheaper to give than a full observation, and it raises confidence. Modeled as its own record pointing at the observation it confirms.
 
+Because it is the cheapest useful contribution — and the only one that can lift a source to high confidence — it is the **promoted action** in the sheet, above the report form. It is offered only while a confirmation would still change the derived confidence (inside the `high` age window); past that, a fresh observation is the useful contribution, not a "+1" on a stale one.
+
 ### Dispute (report outdated)
 
 The inverse of a confirmation: "this no longer matches what I saw." A dispute lowers confidence and prompts for a fresh observation. It never deletes data.

@@ -20,6 +20,11 @@ export function deriveDisplayStatus(
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
+/** Age of an ISO timestamp in fractional days. */
+export function ageInDays(iso: string, now: Date = new Date()): number {
+  return (now.getTime() - Date.parse(iso)) / MS_PER_DAY;
+}
+
 /**
  * Re-bucket a cached snapshot item against the current clock: a source
  * cached as high confidence days ago must degrade while offline

@@ -28,6 +28,14 @@ interface ObservationHistoryProps {
   onRetract: (observationId: string) => void;
   /** Observation whose retraction failed, if any. */
   retractErrorFor: string | null;
+  /**
+   * Observation whose confirm button is shown above the report form
+   * (ConfirmPrompt) — suppressed here so the action isn't offered twice.
+   * Dispute always stays in the list: when the source has changed, the
+   * better contribution is a fresh observation, not a dispute, and the
+   * status grid right below the prompt already is that path.
+   */
+  hoistedConfirmFor: string | null;
 }
 
 export default function ObservationHistory({
@@ -38,6 +46,7 @@ export default function ObservationHistory({
   reactionQueued,
   onRetract,
   retractErrorFor,
+  hoistedConfirmFor,
 }: ObservationHistoryProps) {
   const [confirmingRetract, setConfirmingRetract] = useState<string | null>(
     null,
@@ -88,18 +97,20 @@ export default function ObservationHistory({
             )}
             {i === 0 && canReact && !o.isMine && (
               <div className="mt-1.5 flex gap-2 pl-[18px]">
-                <button
-                  type="button"
-                  onClick={() => onReact(o.id, "confirm")}
-                  aria-pressed={o.myReaction === "confirm"}
-                  className={`rounded-full border px-3 py-1 text-xs font-semibold ${
-                    o.myReaction === "confirm"
-                      ? "border-secondary bg-secondary text-primary"
-                      : "border-secondary/50 text-secondary"
-                  }`}
-                >
-                  ✓ {fr.confirm}
-                </button>
+                {hoistedConfirmFor !== o.id && (
+                  <button
+                    type="button"
+                    onClick={() => onReact(o.id, "confirm")}
+                    aria-pressed={o.myReaction === "confirm"}
+                    className={`rounded-full border px-3 py-1 text-xs font-semibold ${
+                      o.myReaction === "confirm"
+                        ? "border-secondary bg-secondary text-primary"
+                        : "border-secondary/50 text-secondary"
+                    }`}
+                  >
+                    ✓ {fr.confirm}
+                  </button>
+                )}
                 <button
                   type="button"
                   onClick={() => onReact(o.id, "dispute")}
