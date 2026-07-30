@@ -88,7 +88,7 @@ export const fr = {
   /** Author retraction of their own observation (soft-delete, never an edit). */
   retract: "Retirer",
   retractConfirmQuestion: "Retirer cette observation ?",
-  retractConfirm: "Retirer",
+  retractConfirm: "Oui, retirer",
   retractFailed:
     "Impossible de retirer l’observation. Une connexion est nécessaire.",
 

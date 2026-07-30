@@ -187,4 +187,10 @@ test("mode avion : consulter, signaler, reconnecter, synchroniser", async ({
     page.getByText(fr.tag.hard_access, { exact: true }),
   ).toBeVisible();
   await expect(page.getByText(/— données/)).toHaveCount(0);
+
+  // --- Retract it again: the author can undo their own mis-tap (the network
+  // is back, which retraction requires).
+  await page.getByRole("button", { name: fr.retract, exact: true }).click();
+  await page.getByRole("button", { name: fr.retractConfirm }).click();
+  await expect(page.getByText("votre observation")).toHaveCount(0);
 });
