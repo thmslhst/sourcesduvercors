@@ -176,6 +176,12 @@ export default function SourcesMap({
         showUserLocation: true,
       }),
     );
+    // Compass last so it sits under zoom and locate. Added separately rather
+    // than via the zoom control so the order reads +/−, locate, then north.
+    // visualizePitch makes one tap flatten both rotation and tilt.
+    map.addControl(
+      new NavigationControl({ showZoom: false, visualizePitch: true }),
+    );
 
     map.on("load", async () => {
       await loadTypeIcons(map);
