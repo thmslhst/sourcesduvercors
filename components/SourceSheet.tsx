@@ -92,16 +92,24 @@ export default function SourceSheet({
     // Re-fetch when the session appears: history gains isMine/myReaction.
   }, [fetchDetail, sessionUserId]);
 
-  const detailPending =
+  // A source the snapshot has never seen observed has no history coming: the
+  // detail call can only answer "no observations", so a placeholder would be
+  // a pure height jump. Gate on the fact rather than on the derived `unknown`
+  // status — a source whose confidence has decayed to `unknown` still has old
+  // observations to list, and those are worth waiting for.
+  const expectsHistory = source !== null && source.lastObservedAt !== null;
+
+  const historyPending =
+    expectsHistory &&
     sourceId !== null &&
     detailFor?.sourceId !== sourceId &&
     settledFor !== sourceId;
 
   useEffect(() => {
-    if (!detailPending || sourceId === null) return;
+    if (!historyPending || sourceId === null) return;
     const timer = setTimeout(() => setSlowFor(sourceId), PLACEHOLDER_DELAY_MS);
     return () => clearTimeout(timer);
-  }, [detailPending, sourceId]);
+  }, [historyPending, sourceId]);
 
   const onReact = useCallback(
     async (observationId: string, type: ReactionType) => {
@@ -175,7 +183,7 @@ export default function SourceSheet({
   if (!source) return null;
 
   const detail = detailFor?.sourceId === source.id ? detailFor.detail : null;
-  const loadingObservations = detailPending && slowFor === source.id;
+  const loadingObservations = historyPending && slowFor === source.id;
   const reactionError = reactionErrorFor === source.id;
   const reactionQueued = reactionQueuedFor === source.id;
 
