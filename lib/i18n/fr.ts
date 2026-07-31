@@ -42,10 +42,10 @@ export const fr = {
    * Descriptive only — none of these affect the confidence model.
    */
   tag: {
+    hard_to_find: "Difficile à trouver",
+    hard_to_fill: "Écoulement peu accessible",
+    out_of_order: "Hors service",
     cloudy_water: "Eau trouble",
-    hard_access: "Accès difficile",
-    wrong_location: "Point mal placé",
-    broken_fixture: "Installation cassée",
   } satisfies Record<ObservationTag, string>,
 
   noObservationYet:

@@ -44,10 +44,10 @@ enum ReactionType {
 // Optional details on an observation — descriptive only, never an input to
 // the derived status or confidence (DOMAIN.md § Observation).
 enum ObservationTag {
+  hard_to_find
+  hard_to_fill
+  out_of_order
   cloudy_water
-  hard_access
-  wrong_location
-  broken_fixture
 
   @@map("observation_tag")
 }

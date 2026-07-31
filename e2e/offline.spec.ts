@@ -165,7 +165,7 @@ test("mode avion : consulter, signaler, reconnecter, synchroniser", async ({
   await selectSource(page, sourceId);
   await page.getByRole("button", { name: "Coule bien" }).click();
   // Tags ride in the same outbox body — assert one survives the round trip.
-  await page.getByRole("button", { name: fr.tag.hard_access }).click();
+  await page.getByRole("button", { name: fr.tag.hard_to_find }).click();
   await page.getByRole("button", { name: "Envoyer", exact: true }).click();
   await expect(page.getByText(/Enregistrée hors ligne/)).toBeVisible();
   await expect(page.getByText("1 contribution à envoyer")).toBeVisible();
@@ -184,7 +184,7 @@ test("mode avion : consulter, signaler, reconnecter, synchroniser", async ({
   await expect(page.getByText("votre observation")).toBeVisible();
   // The chip itself, not the observation row that contains its text.
   await expect(
-    page.getByText(fr.tag.hard_access, { exact: true }),
+    page.getByText(fr.tag.hard_to_find, { exact: true }),
   ).toBeVisible();
   await expect(page.getByText(/— données/)).toHaveCount(0);
 

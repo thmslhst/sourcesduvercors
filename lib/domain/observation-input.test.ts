@@ -77,11 +77,22 @@ describe("parseObservationInput", () => {
     const r = parseObservationInput(
       {
         ...VALID,
-        tags: ["broken_fixture", "cloudy_water", "broken_fixture"],
+        tags: ["cloudy_water", "hard_to_find", "cloudy_water"],
       },
       NOW,
     );
-    expect(r.ok && r.value.tags).toEqual(["cloudy_water", "broken_fixture"]);
+    expect(r.ok && r.value.tags).toEqual(["hard_to_find", "cloudy_water"]);
+  });
+
+  it("rejects the retired July vocabulary outright", () => {
+    // hard_access / wrong_location / broken_fixture were replaced, not
+    // aliased: nothing shipped that could still be holding them.
+    for (const tag of ["hard_access", "wrong_location", "broken_fixture"]) {
+      expect(parseObservationInput({ ...VALID, tags: [tag] }, NOW)).toEqual({
+        ok: false,
+        error: "invalid_tags",
+      });
+    }
   });
 
   it("clamps a future observed_at to now (client clock skew)", () => {

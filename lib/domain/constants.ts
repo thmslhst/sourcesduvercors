@@ -35,18 +35,28 @@ export type ReactionType = (typeof REACTION_TYPES)[number];
 
 /**
  * Closed vocabulary of optional details on an observation (DOMAIN.md
- * § Observation). A 4-value status can't say *why*, and for a fountain or a
- * cistern "dry" may mean a broken tap rather than a dry spring.
+ * § Observation). A 4-value status can't say *why*: for a fountain or a
+ * cistern "dry" may mean a broken tap rather than a dry spring, and a source
+ * can flow perfectly while being impossible to fill a bottle from.
+ *
+ * A tag exists only if a reader would *act* differently for it, which is why
+ * there is nothing here for terrain difficulty or pin accuracy. Ordered as the
+ * hiker meets the source — find it, fill it, then judge it — since this array
+ * drives both the pill order and the dedup order in `parseObservationInput`.
+ *
+ * `hard_to_fill` is about geometry, never slowness: no spout, no clearance, a
+ * seep with nothing to hold a bottle under. Slowness is what `low_flow` and
+ * `dripping` already say.
  *
  * These are descriptive only: **no tag feeds the confidence model.** Trust is
  * derived from age, confirmations and disputes and nothing else — keep it
  * that way (§ Confidence model, and the `source_current_status` view).
  */
 export const OBSERVATION_TAGS = [
+  "hard_to_find",
+  "hard_to_fill",
+  "out_of_order",
   "cloudy_water",
-  "hard_access",
-  "wrong_location",
-  "broken_fixture",
 ] as const;
 export type ObservationTag = (typeof OBSERVATION_TAGS)[number];
 

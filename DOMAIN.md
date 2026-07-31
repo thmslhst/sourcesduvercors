@@ -27,16 +27,24 @@ A single report by a user about a source at a moment in time. The atomic unit of
 
 Fields: source, author, **status**, observed-at timestamp, optional tags, optional photo (post-MVP).
 
-**Tags** are a closed vocabulary — never free text. A four-value status can't say *why*, and for a `fountain`, `drinking_water` or `cistern` a dry reading may mean a broken tap rather than a dry spring:
+**Tags** are a closed vocabulary — never free text. A four-value status can't say *why*: for a `fountain`, `drinking_water` or `cistern` a dry reading may mean a broken tap rather than a dry spring, and a source can flow perfectly while being impossible to fill a bottle from.
 
-| Tag | FR label |
-|---|---|
-| `cloudy_water` | Eau trouble |
-| `hard_access` | Accès difficile |
-| `wrong_location` | Point mal placé |
-| `broken_fixture` | Installation cassée |
+Listed in the order a hiker meets the source — find it, fill it, then judge it:
 
-Tags are **descriptive only — they never affect the derived status or confidence.** Trust comes from age, confirmations and disputes and nothing else (see § Confidence model). A closed list also means nothing needs moderating, nothing needs editing, and the labels live in `lib/i18n` like every other string. Free-text comments existed until July 2026 and were replaced by this list.
+| Tag | FR label | What the reader does about it |
+|---|---|---|
+| `hard_to_find` | Difficile à trouver | Budget time, look around |
+| `hard_to_fill` | Écoulement peu accessible | Bring a cup; don't plan a 3 L refill |
+| `out_of_order` | Hors service | Don't count on it at all |
+| `cloudy_water` | Eau trouble | Filter or treat it, or skip |
+
+That last column is the admission test: **a tag exists only if a reader would act differently for it.** Tags are exception reports — no tag means an ordinary source, which is what keeps the happy path at zero extra taps ([PRODUCT_PRINCIPLES.md](PRODUCT_PRINCIPLES.md) § 6). Two deliberate omissions follow from it: *terrain difficulty*, which is a routing statement and belongs to the navigation app the hiker already carries; and *pin accuracy*, which was a maintenance report filed into a product with no maintenance path — the app can't move a pin, and whoever reports it has already found the source. Both are absorbed by `hard_to_find`, which says the only thing the next person can use.
+
+`hard_to_fill` means **geometry, not slowness** — no spout, no clearance, a seep with nothing to hold a bottle under. Slowness is what `low_flow` and `dripping` already say.
+
+Tags are **descriptive only — they never affect the derived status or confidence.** Trust comes from age, confirmations and disputes and nothing else (see § Confidence model). A closed list also means nothing needs moderating, nothing needs editing, and the labels live in `lib/i18n` like every other string. Free-text comments existed until July 2026 and were replaced by this list; the list itself was reworked at the end of that month.
+
+Known limitation: `hard_to_find` is really a property of the *source*, not of a visit, so it gets re-reported identically forever and history shows it dated. Acceptable while it is also how we learn which sources deserve it; post-MVP it may graduate to a source-level badge once enough observations agree.
 
 ### Confirmation
 
