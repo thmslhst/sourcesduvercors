@@ -43,7 +43,7 @@ export const fr = {
    */
   tag: {
     hard_to_find: "Difficile à trouver",
-    hard_to_fill: "Écoulement peu accessible",
+    hard_to_fill: "Difficile à remplir",
     out_of_order: "Hors service",
     cloudy_water: "Eau trouble",
   } satisfies Record<ObservationTag, string>,
