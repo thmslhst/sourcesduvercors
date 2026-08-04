@@ -168,15 +168,15 @@ export const fr = {
 
   aboutForWhoTitle: "Pour qui ?",
   aboutForWho:
-    "Pour celles et ceux qui marchent dans le Vercors — randonnée, trek en itinérance, thru-hike, trail — et pour qui connaître l'état d'une source à l'avance est stratégique. En effet, le Vercors est un massif karstique et il n'est pas rare l'été de tomber sur une source à sec.",
+    "Pour celles et ceux qui marchent dans le Vercors — randonnée, trek, thru-hike, trail — et qui souhaitent connaître l'état d'une source. En effet, le Vercors est un massif karstique et il n'est pas rare l'été de tomber sur une source à sec. Lorsqu'on fait de l'itinérance sur plusieurs jours, savoir sur quels points d'eau on peut compter avant le départ (et une fois sur le terrain) est alors stratégique et vital.",
 
   aboutHowTitle: "Comment ça marche ?",
   aboutHowSteps: [
-    "Touchez un point sur la carte pour voir l’état de la source et certaines observations additionnelles («source difficile à trouver», «remplissage de la gourde peu pratique», etc).",
+    "Touchez un point sur la carte pour voir l’état de la source et certaines observations additionnelles («difficile à trouver», «difficile à remplir», etc).",
     "La couleur donne le débit constaté. L’indice de confiance, quand à lui, dit à quel point l’information est fraîche et corroborée. Un statut ancien perd automatiquement en confiance.",
     "Sur place, signalez ce que vous voyez en deux touches. Confirmez ou contestez l’observation la plus récente si elle ne correspond plus.",
     "Si vous n'avez pas de réseau, aucun problème, vos observations sont enregistrées sur votre téléphone et sont synchronisées automatiquement au retour de la connexion.",
-    "D'ailleurs, on se retrouve souvent sans réseau sur les Hauts-Plateaux. Pour y pallier, l'app intègre un mode hors-ligne, pensez à l'activer avant de partir!",
+    "D'ailleurs, on se retrouve souvent sans réseau sur les Hauts-Plateaux. Pour y pallier, l'app intègre un mode hors-ligne, pensez à l'activer avant de partir !",
   ],
 
   aboutParticipateTitle: "Participer",
@@ -194,8 +194,8 @@ export const fr = {
    * than concurrent — the park is the reference, this app is the field view.
    */
   aboutPark:
-    "Le Parc naturel régional du Vercors publie et met à jour l’état de quelques sources dans un tableau officiel. C’est une source de référence, vérifiée, mais limitée à quelques points et mise à jour ponctuellement. Cette app la complète : elle couvre toutes les sources du massif, en temps quasi réel, à partir de ce que les randonneurs constatent sur le terrain. Consultez les deux avant de partir.",
-  aboutParkLink: "Le tableau des sources du Parc du Vercors",
+    "Le Parc naturel régional du Vercors publie et met à jour l’état de quelques sources dans un tableau officiel. C’est une source de référence, vérifiée, mais limitée à quelques points et mise à jour ponctuellement. Cette app la complète : elle couvre toutes les sources du massif, en temps quasi réel, à partir de ce que les randonneurs constatent sur le terrain.",
+  aboutParkLink: "Le site officiel du Parc du Vercors",
 
   aboutDataTitle: "Données & licences",
   /**
