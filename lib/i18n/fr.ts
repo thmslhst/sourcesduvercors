@@ -185,6 +185,18 @@ export const fr = {
   aboutRepoLink: "Le projet sur GitHub",
   aboutAuthor: "Développé et porté par Thomas Lhoest.",
 
+  aboutMoreTitle: "Informations complémentaires",
+  aboutContact:
+    "Une question, une correction, une source manquante ? Écrivez-nous.",
+  /**
+   * The park publishes a hand-maintained table for a handful of sources.
+   * Say plainly what each covers so the two read as complementary rather
+   * than concurrent — the park is the reference, this app is the field view.
+   */
+  aboutPark:
+    "Le Parc naturel régional du Vercors publie et met à jour l’état de quelques sources dans un tableau officiel. C’est une source de référence, vérifiée, mais limitée à quelques points et mise à jour ponctuellement. Cette app la complète : elle couvre toutes les sources du massif, en temps quasi réel, à partir de ce que les randonneurs constatent sur le terrain. Consultez les deux avant de partir.",
+  aboutParkLink: "Le tableau des sources du Parc du Vercors",
+
   aboutDataTitle: "Données & licences",
   /**
    * ODbL attribution, required on the map *and* on an about page

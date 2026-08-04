@@ -6,15 +6,18 @@
  * corner carries the short form).
  *
  * Offline: entirely static — strings from the catalog and a precached
- * wordmark (public/sw.js), so it opens with zero connectivity. The GitHub
- * and OpenStreetMap links are the only parts that need a network, and
- * they degrade to dead links rather than breaking the card.
+ * wordmark (public/sw.js), so it opens with zero connectivity. The outbound
+ * links (GitHub, the Vercors park page, OpenStreetMap) and the mailto: are
+ * the only parts that need a network, and they degrade to dead links rather
+ * than breaking the card.
  */
 
 import { fr } from "@/lib/i18n/fr";
 
 const REPO_URL = "https://github.com/thmslhst/sourcesduvercors";
 const OSM_COPYRIGHT_URL = "https://www.openstreetmap.org/copyright";
+const CONTACT_EMAIL = "info@sourcesduvercors.fr";
+const PARK_SOURCES_URL = "https://www.parc-du-vercors.fr/info-sources";
 
 interface AboutSheetProps {
   open: boolean;
@@ -99,6 +102,26 @@ export default function AboutSheet({ open, onClose }: AboutSheetProps) {
           {fr.aboutRepoLink}
         </a>
         <p className="mt-2 text-sm text-secondary/90">{fr.aboutAuthor}</p>
+      </section>
+
+      <section className="border-t border-secondary/30 pt-3">
+        <h3 className="text-sm font-semibold">{fr.aboutMoreTitle}</h3>
+        <p className="mt-1 text-sm text-secondary/90">{fr.aboutContact}</p>
+        <a
+          href={`mailto:${CONTACT_EMAIL}`}
+          className="mt-1 inline-block text-sm font-semibold text-secondary underline"
+        >
+          {CONTACT_EMAIL}
+        </a>
+        <p className="mt-3 text-sm text-secondary/90">{fr.aboutPark}</p>
+        <a
+          href={PARK_SOURCES_URL}
+          target="_blank"
+          rel="noreferrer"
+          className="mt-1 inline-block text-sm font-semibold text-secondary underline"
+        >
+          {fr.aboutParkLink}
+        </a>
       </section>
 
       <section className="border-t border-secondary/30 pt-3">
