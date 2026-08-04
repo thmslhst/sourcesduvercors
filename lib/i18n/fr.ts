@@ -168,19 +168,20 @@ export const fr = {
 
   aboutForWhoTitle: "Pour qui ?",
   aboutForWho:
-    "Pour celles et ceux qui marchent dans le Vercors — randonnée à la journée, bivouac, trail — et qui doivent savoir si une source coule encore avant de compter dessus. L’app fonctionne sans réseau : c’est justement là-haut qu’on n’en a pas.",
+    "Pour celles et ceux qui marchent dans le Vercors — randonnée, trek en itinérance, thru-hike, trail — et pour qui connaître l'état d'une source à l'avance est stratégique. En effet, le Vercors est un massif karstique et il n'est pas rare l'été de tomber sur une source à sec.",
 
   aboutHowTitle: "Comment ça marche ?",
   aboutHowSteps: [
-    "Touchez un point sur la carte pour voir l’état de la source, sa fiabilité et les dernières observations.",
-    "La couleur donne le débit constaté ; l’indice de confiance dit à quel point l’information est fraîche et corroborée. Un statut ancien perd automatiquement en confiance.",
+    "Touchez un point sur la carte pour voir l’état de la source et certaines observations additionnelles («source difficile à trouver», «remplissage de la gourde peu pratique», etc).",
+    "La couleur donne le débit constaté. L’indice de confiance, quand à lui, dit à quel point l’information est fraîche et corroborée. Un statut ancien perd automatiquement en confiance.",
     "Sur place, signalez ce que vous voyez en deux touches. Confirmez ou contestez l’observation la plus récente si elle ne correspond plus.",
-    "Sans réseau, tout est enregistré sur le téléphone et part tout seul au retour de la connexion. Téléchargez le fond de carte avant de partir pour garder la carte lisible hors ligne.",
+    "Si vous n'avez pas de réseau, aucun problème, vos observations sont enregistrées sur votre téléphone et sont synchronisées automatiquement au retour de la connexion.",
+    "D'ailleurs, on se retrouve souvent sans réseau sur les Hauts-Plateaux. Pour y pallier, l'app intègre un mode hors-ligne, pensez à l'activer avant de partir!",
   ],
 
   aboutParticipateTitle: "Participer",
   aboutParticipate:
-    "Le projet est open source et vit de ses contributions. Sur le terrain, chaque observation — même « à sec » — rend la carte plus utile pour la personne suivante. Côté code, les idées, retours et pull requests sont les bienvenus.",
+    "Le projet est open source et vit de ses contributions. Sur le terrain, chaque observation — même (et surtout) «à sec» — rend la carte plus utile pour la personne suivante. Côté code, les idées, retours et pull requests sont les bienvenus.",
   aboutRepoLink: "Le projet sur GitHub",
   aboutAuthor: "Développé et porté par Thomas Lhoest.",
 
