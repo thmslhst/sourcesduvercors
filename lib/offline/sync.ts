@@ -44,12 +44,21 @@ function requestFor(item: OutboxItem): { url: string; body: unknown } {
     return { url: "/api/v1/observations", body: item.body };
   }
   return {
-    url: `/api/v1/observations/${item.observationId}/${item.type}`,
+    url: `/api/v1/observations/${item.observationId}/confirm`,
     // `?? item.id` covers items queued before the key/payload split, whose
     // own id *was* the reaction UUID; the server generates one if neither is
     // a UUID, so a stale item can never wedge the queue.
     body: { id: item.reactionId ?? item.id },
   };
+}
+
+/**
+ * A dispute queued before the reaction was retired (DOMAIN.md § Confirmation).
+ * There is no endpoint left to deliver it to, and the one remaining endpoint
+ * means the opposite, so the item is dropped and reported rather than sent.
+ */
+function isRetiredDispute(item: OutboxItem): boolean {
+  return item.kind === "reaction" && item.type === "dispute";
 }
 
 type ReplayOutcome =
@@ -61,6 +70,10 @@ type ReplayOutcome =
   | { kind: "blocked"; reason: BlockedReason };
 
 async function replayItem(item: OutboxItem): Promise<ReplayOutcome> {
+  if (isRetiredDispute(item)) {
+    console.warn(`[outbox] dropping retired dispute ${item.id}`);
+    return { kind: "dropped", reason: "other" };
+  }
   const { url, body } = requestFor(item);
   let res: Response;
   try {

@@ -75,8 +75,6 @@ export const fr = {
 
   confirmedBy: (n: number) =>
     n === 1 ? "confirmé par 1 randonneur" : `confirmé par ${n} randonneurs`,
-  disputedBy: (n: number) =>
-    n === 1 ? "contesté par 1 randonneur" : `contesté par ${n} randonneurs`,
 
   recentObservations: "Observations récentes",
   loadingObservations: "Chargement des observations…",
@@ -88,7 +86,6 @@ export const fr = {
     `Dernière observation : ${status}, ${when}.`,
   confirmPromptAlternative:
     "Si ce n’est plus le cas, signalez l’état actuel ci-dessous.",
-  dispute: "Signaler obsolète",
   reactionFailed: "Impossible d’enregistrer votre avis. Réessayez.",
 
   /** Author retraction of their own observation (soft-delete, never an edit). */
@@ -206,7 +203,7 @@ export const fr = {
   aboutHowSteps: [
     "Touchez un point sur la carte pour voir l’état de la source et certaines observations additionnelles («difficile à trouver», «difficile à remplir», etc).",
     "La couleur donne le débit constaté. L’indice de confiance, quand à lui, dit à quel point l’information est fraîche et corroborée. Un statut ancien perd automatiquement en confiance.",
-    "Sur place, signalez ce que vous voyez en deux touches. Confirmez ou contestez l’observation la plus récente si elle ne correspond plus.",
+    "Sur place, signalez ce que vous voyez en deux touches. Confirmez l’observation la plus récente si elle correspond toujours — et si ce n’est plus le cas, signalez simplement l’état actuel.",
     "Si vous n'avez pas de réseau, aucun problème, vos observations sont enregistrées sur votre téléphone et sont synchronisées automatiquement au retour de la connexion.",
     "D'ailleurs, on se retrouve souvent sans réseau sur les Hauts-Plateaux. Pour y pallier, l'app intègre un mode hors-ligne, pensez à l'activer avant de partir !",
   ],

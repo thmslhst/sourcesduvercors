@@ -17,7 +17,7 @@ CREATE TYPE source_type AS ENUM
   ('spring', 'fountain', 'drinking_water', 'cistern', 'stream', 'other');
 CREATE TYPE observation_status AS ENUM
   ('flowing', 'low_flow', 'dripping', 'dry');   -- 'unknown' is derived, never stored
-CREATE TYPE reaction_type AS ENUM ('confirm', 'dispute');
+CREATE TYPE reaction_type AS ENUM ('confirm', 'dispute');  -- 'dispute' retired Aug 2026; see notes
 CREATE TYPE observation_tag AS ENUM       -- optional details; never trust inputs
   ('hard_to_find', 'hard_to_fill', 'out_of_order', 'cloudy_water');
 
@@ -59,7 +59,7 @@ CREATE TABLE observations (
 CREATE INDEX observations_source_latest_idx
   ON observations (source_id, observed_at DESC) WHERE deleted_at IS NULL;
 
--- Confirmations & disputes on a specific observation
+-- Confirmations of a specific observation
 CREATE TABLE observation_reactions (
   id              uuid PRIMARY KEY,          -- client-generated UUID
   observation_id  uuid NOT NULL REFERENCES observations(id),
@@ -74,7 +74,7 @@ CREATE TABLE observation_reactions (
 ### Notes on choices
 
 - **`observed_at` vs `created_at`:** confidence uses `observed_at` (truth about the spring), sync/debugging uses `created_at`. Client clock skew is accepted; server clamps `observed_at` to `<= now()` and to a sane past window (e.g., 7 days) on insert.
-- **One reaction per user per observation** (`UNIQUE`) prevents trivial self-inflation; a user can change confirm→dispute by updating their reaction (the one permitted update, it's an opinion not a fact).
+- **One reaction per user per observation** (`UNIQUE`) prevents trivial self-inflation. Updating that row is the one permitted update in the schema — it's an opinion, not a fact — and it now only ever revives a soft-deleted confirmation. `reaction_type` still carries `'dispute'`, retired in August 2026 ([DOMAIN.md](DOMAIN.md) § Confirmation): the rows are historical record, no code writes or counts them, and dropping an enum value would mean recreating the type on a database shared with production for no gain.
 - **`is_active` on sources** rather than deletion: hikers' history should survive a source being delisted.
 - **Elevation** is denormalized onto the source; no DEM at runtime.
 - **No free text anywhere.** Observations carry `tags` from a fixed `observation_tag` enum instead of a comment. The status enum can't express *why* a fountain reads dry, but the answers worth having fit a list — and a closed list needs no moderation, no editing (which append-only forbids anyway), and no translation pass. Tags are descriptive: they are **not** inputs to `source_current_status`. A `comment` column existed until July 2026; it was replaced, for the same reason as the next entry. The enum was reworked days later (see [DOMAIN.md](DOMAIN.md) § Observation for which tags earn a slot and why two were dropped) — since the view no longer depends on `tags`, that swap was a self-contained type change.
@@ -91,10 +91,8 @@ SELECT
   o.status,                                   -- NULL → 'unknown' in API layer
   o.observed_at AS last_observed_at,
   COALESCE(r.confirms, 0)  AS confirmation_count,
-  COALESCE(r.disputes, 0)  AS dispute_count,
   CASE
     WHEN o.id IS NULL OR o.observed_at < now() - interval '60 days' THEN 'unknown'
-    WHEN COALESCE(r.disputes, 0) > 0                                THEN 'low'
     WHEN o.observed_at >= now() - interval '7 days'
          AND COALESCE(r.confirms, 0) >= 1                           THEN 'high'
     WHEN o.observed_at >= now() - interval '21 days'                THEN 'medium'
@@ -108,12 +106,13 @@ LEFT JOIN LATERAL (
 ) o ON true
 LEFT JOIN LATERAL (
   SELECT
-    count(*) FILTER (WHERE type = 'confirm' AND deleted_at IS NULL) AS confirms,
-    count(*) FILTER (WHERE type = 'dispute' AND deleted_at IS NULL) AS disputes
+    count(*) FILTER (WHERE type = 'confirm' AND deleted_at IS NULL) AS confirms
   FROM observation_reactions WHERE observation_id = o.id
 ) r ON true
 WHERE s.is_active;
 ```
+
+Because the view is the whole trust model, it is dropped and recreated in full by any migration that changes it — see `20260805120000_remove_dispute_reaction` for the version that removed the `dispute_count` column and the dispute branch of the `CASE`. `lib/domain/confidence.ts` mirrors this `CASE` exactly and is locked to it by unit tests.
 
 At Vercors scale (hundreds of sources, thousands of observations) this view needs no materialization. Revisit if `GET /api/v1/sources` exceeds ~100 ms.
 

@@ -1,13 +1,13 @@
 /**
- * Shared handler behind POST /api/v1/observations/:id/confirm and /dispute
- * — identical flow, opposite `type`.
+ * Handler behind POST /api/v1/observations/:id/confirm. Confirmation is the
+ * only reaction: the dispute half was retired in August 2026 (DOMAIN.md
+ * § Confirmation), leaving this as the one shape of "+1".
  */
 
 import { randomUUID } from "node:crypto";
 
 import { getSession } from "@/lib/auth";
 import { reactToObservation } from "@/lib/db/observations";
-import type { ReactionType } from "@/lib/domain/constants";
 
 const UUID_RE =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -15,7 +15,6 @@ const UUID_RE =
 export async function handleReaction(
   request: Request,
   observationId: string,
-  type: ReactionType,
 ): Promise<Response> {
   const session = await getSession(request);
   if (!session) {
@@ -38,7 +37,6 @@ export async function handleReaction(
     reactionId,
     observationId.toLowerCase(),
     session.user.id,
-    type,
   );
   switch (result.outcome) {
     case "ok":

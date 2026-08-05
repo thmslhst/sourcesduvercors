@@ -30,9 +30,6 @@ export type DisplayStatus = ObservationStatus | "unknown";
 export const CONFIDENCE_LEVELS = ["high", "medium", "low", "unknown"] as const;
 export type Confidence = (typeof CONFIDENCE_LEVELS)[number];
 
-export const REACTION_TYPES = ["confirm", "dispute"] as const;
-export type ReactionType = (typeof REACTION_TYPES)[number];
-
 /**
  * Closed vocabulary of optional details on an observation (DOMAIN.md
  * § Observation). A 4-value status can't say *why*: for a fountain or a
@@ -49,8 +46,8 @@ export type ReactionType = (typeof REACTION_TYPES)[number];
  * `dripping` already say.
  *
  * These are descriptive only: **no tag feeds the confidence model.** Trust is
- * derived from age, confirmations and disputes and nothing else — keep it
- * that way (§ Confidence model, and the `source_current_status` view).
+ * derived from age and confirmations and nothing else — keep it that way
+ * (§ Confidence model, and the `source_current_status` view).
  */
 export const OBSERVATION_TAGS = [
   "hard_to_find",
@@ -62,9 +59,9 @@ export type ObservationTag = (typeof OBSERVATION_TAGS)[number];
 
 /** Age windows in days (DOMAIN.md § Confidence model, v1). */
 export const CONFIDENCE_WINDOWS_DAYS = {
-  /** high requires age ≤ this AND ≥ 1 confirmation AND no disputes */
+  /** high requires age ≤ this AND ≥ 1 confirmation */
   high: 7,
-  /** medium requires age ≤ this AND no disputes */
+  /** medium requires age ≤ this */
   medium: 21,
   /** beyond this the source is `unknown` regardless of anything else */
   known: 60,

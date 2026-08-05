@@ -53,10 +53,10 @@ Three layers of offline, in order of implementation:
 
 ### Write path offline: the outbox
 
-Observations/confirmations/disputes created offline are appended to an **outbox** in IndexedDB with a client-generated UUID and `observed_at` set to creation time, then replayed to the API when connectivity returns. **(decided, Phase 3)** Replay is client-side only — triggered on `online`, window focus/visibility, and a slow interval — rather than the SW Background Sync API: iOS has no Background Sync, so the focus path had to exist anyway, and one code path beats two. Replay stops on 401 (needs sign-in) and network/5xx (retry later); terminal 4xx drops the item rather than wedging the queue.
+Observations and confirmations created offline are appended to an **outbox** in IndexedDB with a client-generated UUID and `observed_at` set to creation time, then replayed to the API when connectivity returns. **(decided, Phase 3)** Replay is client-side only — triggered on `online`, window focus/visibility, and a slow interval — rather than the SW Background Sync API: iOS has no Background Sync, so the focus path had to exist anyway, and one code path beats two. Replay stops on 401 (needs sign-in) and network/5xx (retry later); terminal 4xx drops the item rather than wedging the queue.
 
 - The client UUID makes replay **idempotent** (server upserts by ID).
-- **One queued reaction per observation.** Observations are keyed in the outbox by their own UUID — each is a distinct append-only fact, so several may queue for one source. A reaction is keyed by its *observation* instead (`reaction:<observationId>`), carrying its UUID in a separate field: the server upserts on (observation, user) and treats confirm ⇄ dispute as an edit, so only the last tap can ever apply. Without the derived key, re-tapping stacked superseded writes and inflated the pending count.
+- **One queued reaction per observation.** Observations are keyed in the outbox by their own UUID — each is a distinct append-only fact, so several may queue for one source. A reaction is keyed by its *observation* instead (`reaction:<observationId>`), carrying its UUID in a separate field: the server upserts on (observation, user), so only the last tap can ever apply. Without the derived key, re-tapping stacked superseded writes and inflated the pending count. A reaction queued as a `dispute` before that half was retired is dropped on replay rather than delivered to the confirm endpoint, which would invert it.
 - `observed_at` (when the hiker was at the source) is distinct from `created_at` (when the server received it) — critical for confidence computation. An `observed_at` older than the 7-day window is **refused, not clamped** (`lib/domain/observation-input.ts`): a queued observation can sit for days, and silently redating it to the floor would publish a stale reading as a fresh-ish one.
 - Conflicts are a non-problem by design: observations are append-only facts; there is nothing to merge.
 
@@ -64,7 +64,7 @@ Observations/confirmations/disputes created offline are appended to an **outbox*
 
 ## Data flow: source statuses
 
-Derived state `(status, confidence, last_observed_at, confirmations)` is computed **server-side** in one place (SQL view or query — see [DATABASE.md](DATABASE.md)) and shipped to clients as part of the snapshot. Clients never re-derive confidence with different rules; offline they may only re-bucket **age-based decay** (a source cached as High confidence 10 days ago must degrade), using the same constants exported from a shared module.
+Derived state `(status, confidence, last_observed_at, confirmations)` is computed **server-side** in one place (the `source_current_status` view — see [DATABASE.md](DATABASE.md)) and shipped to clients as part of the snapshot. Offline, the client re-derives it against its own clock so a source cached as High confidence 10 days ago degrades — running the *same* rule, not a variant of it: `deriveConfidence` (`lib/domain/confidence.ts`) takes exactly the two inputs the snapshot carries (`lastObservedAt`, `confirmationCount`), and unit tests hold it identical to the view's `CASE`. This became possible when the dispute reaction was retired in August 2026 ([DOMAIN.md](DOMAIN.md) § Confirmation); before that the snapshot lacked dispute counts and the client had to approximate the rule with a monotonic age cap.
 
 ## API sketch (v1)
 
@@ -74,7 +74,6 @@ Small, boring, versioned:
 - `GET  /api/v1/sources/:id` — source detail + recent observation history
 - `POST /api/v1/observations` — create (idempotent by client UUID; auth required)
 - `POST /api/v1/observations/:id/confirm` — confirm (auth required)
-- `POST /api/v1/observations/:id/dispute` — report outdated (auth required)
 
 No GraphQL, no realtime. Snapshot + poll is plenty at this scale.
 

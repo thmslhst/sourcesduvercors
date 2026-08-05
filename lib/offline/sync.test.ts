@@ -155,7 +155,7 @@ describe("flushOutbox", () => {
       id: "66666666-6666-4666-8666-666666666666",
       enqueuedAt: "2026-08-01T10:00:00.000Z",
       observationId: "44444444-4444-4444-8444-444444444444",
-      type: "dispute",
+      type: "confirm",
     } as unknown as OutboxItem; // no reactionId — persisted by an older build
     vi.mocked(listOutbox).mockResolvedValue([legacy]);
     const fetchMock = vi.fn<(url: string, init: RequestInit) => Promise<Response>>(
@@ -167,6 +167,34 @@ describe("flushOutbox", () => {
 
     const [, init] = fetchMock.mock.calls[0];
     expect(JSON.parse(init.body as string)).toEqual({ id: legacy.id });
+  });
+
+  /**
+   * The dispute reaction was retired (DOMAIN.md § Confirmation) while items
+   * could already be sitting in someone's outbox. Delivering one to the only
+   * remaining endpoint would turn "this is wrong" into "+1", so it is dropped
+   * and reported instead — the loss is visible, never silently inverted.
+   */
+  it("drops a dispute queued before the reaction was retired", async () => {
+    const retired = {
+      kind: "reaction",
+      id: reactionOutboxKey("44444444-4444-4444-8444-444444444444"),
+      reactionId: "88888888-8888-4888-8888-888888888888",
+      enqueuedAt: "2026-08-01T10:00:00.000Z",
+      observationId: "44444444-4444-4444-8444-444444444444",
+      type: "dispute",
+    } as unknown as OutboxItem;
+    vi.mocked(listOutbox).mockResolvedValue([retired]);
+    const fetchMock = vi.fn(async () => respond(200, { ok: true }));
+    vi.stubGlobal("fetch", fetchMock);
+    vi.spyOn(console, "warn").mockImplementation(() => {});
+
+    const result = await flushOutbox();
+
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect(result.sent).toBe(0);
+    expect(result.dropped).toEqual(["other"]);
+    expect(removeOutboxItem).toHaveBeenCalledWith(retired.id);
   });
 
   it("gives one observation exactly one reaction slot", () => {

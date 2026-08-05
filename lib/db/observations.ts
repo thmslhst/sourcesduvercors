@@ -2,14 +2,13 @@
  * Observation & reaction persistence. Observations are append-only facts:
  * create + soft-delete only. Soft-delete has two actors — an admin removing
  * abuse, and an author retracting their own mis-tap — and neither rewrites
- * the record. A reaction is the one editable record: a user may change
- * their mind (confirm ⇄ dispute) on the same observation.
+ * the record. A reaction is the one editable record: re-confirming revives a
+ * moderation-deleted confirmation rather than inserting a second one.
  */
 
 import { Prisma } from "@prisma/client";
 
 import { prisma } from "./client";
-import type { ReactionType } from "../domain/constants";
 import type { ObservationHistoryItem } from "../domain/detail";
 import type { ObservationInput } from "../domain/observation-input";
 
@@ -73,15 +72,14 @@ export type ReactResult =
   | { outcome: "observation_not_found" | "own_observation" };
 
 /**
- * Upsert the viewer's reaction on an observation (one per user per
- * observation — UNIQUE in DATABASE.md). Reacting to your own observation
+ * Upsert the viewer's confirmation of an observation (one per user per
+ * observation — UNIQUE in DATABASE.md). Confirming your own observation
  * would be self-inflation; refused.
  */
 export async function reactToObservation(
   reactionId: string,
   observationId: string,
   userId: string,
-  type: ReactionType,
 ): Promise<ReactResult> {
   const observation = await prisma.observation.findUnique({
     where: { id: observationId },
@@ -96,10 +94,12 @@ export async function reactToObservation(
 
   await prisma.observationReaction.upsert({
     where: { observationId_userId: { observationId, userId } },
-    create: { id: reactionId, observationId, userId, type },
-    // Changing confirm ⇄ dispute is the one permitted update; a re-reaction
-    // also revives a moderation-deleted one (the user re-stated an opinion).
-    update: { type, deletedAt: null },
+    create: { id: reactionId, observationId, userId, type: "confirm" },
+    // The one permitted update: re-confirming revives a moderation-deleted
+    // reaction (the user re-stated an opinion), and promotes a legacy
+    // `dispute` row — the retired half of the enum — to the confirmation the
+    // user just gave.
+    update: { type: "confirm", deletedAt: null },
   });
   return { outcome: "ok" };
 }
@@ -117,9 +117,11 @@ export async function listObservationHistory(
     include: {
       // No author join: observations are attributable internally (userId),
       // never published under a name — DOMAIN.md § Users & trust.
+      // `type: "confirm"` filters out legacy dispute rows, which the enum
+      // still holds but nothing counts any more.
       reactions: {
-        where: { deletedAt: null },
-        select: { userId: true, type: true },
+        where: { deletedAt: null, type: "confirm" },
+        select: { userId: true },
       },
     },
   });
@@ -129,13 +131,11 @@ export async function listObservationHistory(
     status: o.status,
     tags: o.tags,
     observedAt: o.observedAt.toISOString(),
-    confirmationCount: o.reactions.filter((r) => r.type === "confirm").length,
-    disputeCount: o.reactions.filter((r) => r.type === "dispute").length,
+    confirmationCount: o.reactions.length,
     isMine: o.userId === viewerUserId,
-    myReaction:
-      viewerUserId === null
-        ? null
-        : (o.reactions.find((r) => r.userId === viewerUserId)?.type ?? null),
+    myConfirmation:
+      viewerUserId !== null &&
+      o.reactions.some((r) => r.userId === viewerUserId),
   }));
 }
 

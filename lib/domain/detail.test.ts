@@ -20,9 +20,8 @@ function observation(
     tags: [],
     observedAt: daysAgo(1),
     confirmationCount: 0,
-    disputeCount: 0,
     isMine: false,
-    myReaction: null,
+    myConfirmation: false,
     ...over,
   };
 }
@@ -38,12 +37,10 @@ describe("isConfirmWorthPromoting", () => {
     );
   });
 
-  it("never promotes when the viewer already reacted", () => {
-    for (const myReaction of ["confirm", "dispute"] as const) {
-      expect(isConfirmWorthPromoting(observation({ myReaction }), NOW)).toBe(
-        false,
-      );
-    }
+  it("never promotes when the viewer already confirmed", () => {
+    expect(
+      isConfirmWorthPromoting(observation({ myConfirmation: true }), NOW),
+    ).toBe(false);
   });
 
   it("stops at the edge of the high window", () => {
@@ -67,16 +64,8 @@ describe("isConfirmWorthPromoting", () => {
    */
   it("is promoted exactly when a confirmation could raise confidence", () => {
     for (const ageDays of [0, 1, 6.9, 7, 7.1, 20, 59]) {
-      const withoutConfirm = deriveConfidence({
-        ageDays,
-        confirmations: 0,
-        disputes: 0,
-      });
-      const withConfirm = deriveConfidence({
-        ageDays,
-        confirmations: 1,
-        disputes: 0,
-      });
+      const withoutConfirm = deriveConfidence({ ageDays, confirmations: 0 });
+      const withConfirm = deriveConfidence({ ageDays, confirmations: 1 });
       const changesConfidence = withoutConfirm !== withConfirm;
       expect(
         isConfirmWorthPromoting(

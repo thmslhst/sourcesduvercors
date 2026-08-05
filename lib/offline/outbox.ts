@@ -8,7 +8,6 @@
 import type {
   ObservationStatus,
   ObservationTag,
-  ReactionType,
 } from "@/lib/domain/constants";
 import { OUTBOX_STORE, idbDelete, idbGetAll, idbPut } from "./idb";
 
@@ -31,19 +30,24 @@ export interface QueuedReaction {
   kind: "reaction";
   /**
    * Outbox key — derived from the observation, not random, so re-tapping
-   * confirm/dispute *replaces* the queued reaction instead of stacking a new
-   * one. The server upserts on (observation, user) and treats confirm ⇄
-   * dispute as an edit, so only the last tap could ever apply; queueing the
-   * earlier ones would inflate the pending count with writes that are
-   * already superseded. Observations are the opposite — each is a distinct
-   * append-only fact — so they keep their own UUID as the key.
+   * confirm *replaces* the queued reaction instead of stacking a new one.
+   * The server upserts on (observation, user), so only the last tap could
+   * ever apply; queueing the earlier ones would inflate the pending count
+   * with writes that are already superseded. Observations are the opposite
+   * — each is a distinct append-only fact — so they keep their own UUID as
+   * the key.
    */
   id: string;
   /** Client UUID of the reaction row itself (idempotent replay). */
   reactionId: string;
   enqueuedAt: string;
   observationId: string;
-  type: ReactionType;
+  /**
+   * Retired: items queued before the dispute reaction was removed may still
+   * carry `type: "dispute"`. sync.ts drops those rather than delivering them
+   * as confirmations, which would invert what the hiker meant.
+   */
+  type?: "confirm" | "dispute";
 }
 
 /** The one outbox slot a given observation's reaction may occupy. */

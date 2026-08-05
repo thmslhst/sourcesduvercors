@@ -7,7 +7,7 @@
  */
 
 import type { Confidence, DisplayStatus, ObservationStatus } from "./constants";
-import { decayConfidence } from "./confidence";
+import { deriveConfidence } from "./confidence";
 import type { SourceSnapshotItem } from "./snapshot";
 
 export function deriveDisplayStatus(
@@ -26,9 +26,13 @@ export function ageInDays(iso: string, now: Date = new Date()): number {
 }
 
 /**
- * Re-bucket a cached snapshot item against the current clock: a source
- * cached as high confidence days ago must degrade while offline
- * (ARCHITECTURE.md § Data flow). Fresh data passes through unchanged.
+ * Re-derive a cached snapshot item against the current clock: a source cached
+ * as high confidence days ago must degrade while offline (ARCHITECTURE.md
+ * § Data flow). Fresh data passes through unchanged.
+ *
+ * This runs the real rule, not an approximation of it — the snapshot carries
+ * both of `deriveConfidence`'s inputs, so the offline client reaches exactly
+ * the value the server would. Time only ever moves the result downward.
  */
 export function decaySnapshotItem(
   item: SourceSnapshotItem,
@@ -38,7 +42,10 @@ export function decaySnapshotItem(
     item.lastObservedAt === null
       ? null
       : (now.getTime() - Date.parse(item.lastObservedAt)) / MS_PER_DAY;
-  const confidence = decayConfidence(item.confidence, ageDays);
+  const confidence = deriveConfidence({
+    ageDays,
+    confirmations: item.confirmationCount,
+  });
   if (confidence === item.confidence) return item;
   return {
     ...item,

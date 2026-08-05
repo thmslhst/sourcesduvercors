@@ -32,7 +32,7 @@ The community loop: report → confirm → trust.
 
 - [x] Better Auth with magic-link email; minimal account (email only — no display name)
 - [x] Submit observation flow (≤ 3 taps: source → status → send; optional tags)
-- [x] Confirm / dispute on the latest observation
+- [x] Confirm the latest observation (a matching "dispute" shipped here too; retired in Phase 4 — [DOMAIN.md](DOMAIN.md) § Confirmation)
 - [x] `source_current_status` view wired through API; map colors + confidence badges go live
 - [x] Source detail shows observation history ("flowing well — 3 days ago, confirmed by 2")
 - [x] Admin soft-delete for abusive content
@@ -59,6 +59,7 @@ Make it trustworthy and known.
 - [ ] French UI pass (French-first, English secondary)
 - [ ] Empty/edge states, safety disclaimer copy, about page (licensing, how confidence works)
 - [x] Contribute flow polish: confirm-first CTA on a fresh observation, structured tags instead of free-text comments, author retraction
+- [x] Retire the dispute reaction: confirmation is the only "+1", the useful answer to a changed source is a fresh observation, and server and offline client now run one identical derivation ([DOMAIN.md](DOMAIN.md) § Confirmation)
 - [x] Offline contribution without a session: capture into the outbox, claim it with a sign-in on reconnect (auth gates the flush, not the capture)
 - [ ] Performance pass against budgets in [ARCHITECTURE.md](ARCHITECTURE.md)
 - [ ] Seed real data: contributors observe sources on actual Vercors outings

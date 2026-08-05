@@ -4,7 +4,7 @@
  * Bottom sheet with the details of the selected source: identity, live
  * status + confidence with the underlying facts (honesty principle —
  * DOMAIN.md), observation history, and the contribute flow (report /
- * confirm / dispute).
+ * confirm).
  *
  * Contributing is never gated on a session: the form is the default view for
  * everyone, and a missing session is resolved at send time (the write is
@@ -16,7 +16,6 @@
 import { useCallback, useEffect, useState } from "react";
 
 import { useOfflineSession } from "@/lib/offline/session";
-import type { ReactionType } from "@/lib/domain/constants";
 import {
   isConfirmWorthPromoting,
   type SourceDetail,
@@ -104,7 +103,7 @@ export default function SourceSheet({
 
   useEffect(() => {
     void fetchDetail();
-    // Re-fetch when the session appears: history gains isMine/myReaction.
+    // Re-fetch when the session appears: history gains isMine/myConfirmation.
   }, [fetchDetail, sessionUserId]);
 
   // A source the snapshot has never seen observed has no history coming: the
@@ -127,7 +126,7 @@ export default function SourceSheet({
   }, [historyPending, sourceId]);
 
   const onReact = useCallback(
-    async (observationId: string, type: ReactionType) => {
+    async (observationId: string) => {
       setReactionErrorFor(null);
       setReactionQueuedFor(null);
 
@@ -137,14 +136,13 @@ export default function SourceSheet({
         try {
           await enqueueOutbox({
             kind: "reaction",
-            // Keyed by the observation: tapping confirm then dispute (or the
-            // same one twice) replaces the queued reaction rather than
-            // stacking another pending contribution.
+            // Keyed by the observation: tapping confirm twice replaces the
+            // queued reaction rather than stacking another pending
+            // contribution.
             id: reactionOutboxKey(observationId),
             reactionId: crypto.randomUUID(),
             enqueuedAt: new Date().toISOString(),
             observationId,
-            type,
           });
           setReactionQueuedFor(sourceId);
           if (needsSignIn) onNeedsSignIn();
@@ -155,7 +153,7 @@ export default function SourceSheet({
 
       let res: Response;
       try {
-        res = await fetch(`/api/v1/observations/${observationId}/${type}`, {
+        res = await fetch(`/api/v1/observations/${observationId}/confirm`, {
           method: "POST",
         });
       } catch {
@@ -306,7 +304,7 @@ export default function SourceSheet({
           <div className="border-t border-secondary/30 pt-3">
             <ObservationHistory
               observations={detail.observations}
-              // Confirm/dispute is the cheapest useful contribution
+              // Confirming is the cheapest useful contribution
               // (PRODUCT_PRINCIPLES § 4), so it follows the same rule as the
               // report form: no session still queues.
               canReact={sessionState.status !== "pending"}
@@ -325,7 +323,7 @@ export default function SourceSheet({
         {hoistedConfirm && (
           <ConfirmPrompt
             observation={hoistedConfirm}
-            onConfirm={() => void onReact(hoistedConfirm.id, "confirm")}
+            onConfirm={() => void onReact(hoistedConfirm.id)}
           />
         )}
         {/* The form is the default view for everyone. "pending" alone renders

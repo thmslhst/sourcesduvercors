@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Recent observation list. Confirm / dispute only apply to the latest
+ * Recent observation list. A confirmation only applies to the latest
  * observation — that is the one the derived status is computed from
  * (DOMAIN.md § Source display state).
  *
@@ -12,18 +12,17 @@
 
 import { useState } from "react";
 
-import type { ReactionType } from "@/lib/domain/constants";
 import { STATUS_COLORS } from "@/lib/domain/display";
 import type { ObservationHistoryItem } from "@/lib/domain/detail";
 import { fr } from "@/lib/i18n/fr";
 
 interface ObservationHistoryProps {
   observations: ObservationHistoryItem[];
-  /** Signed-in? Reaction buttons render only when true. */
+  /** Signed-in? The confirm button renders only when true. */
   canReact: boolean;
-  onReact: (observationId: string, type: ReactionType) => void;
+  onReact: (observationId: string) => void;
   reactionError: boolean;
-  /** True when the reaction went to the offline outbox instead of the API. */
+  /** True when the confirmation went to the offline outbox instead of the API. */
   reactionQueued: boolean;
   onRetract: (observationId: string) => void;
   /** Observation whose retraction failed, if any. */
@@ -31,9 +30,9 @@ interface ObservationHistoryProps {
   /**
    * Observation whose confirm button is shown above the report form
    * (ConfirmPrompt) — suppressed here so the action isn't offered twice.
-   * Dispute always stays in the list: when the source has changed, the
-   * better contribution is a fresh observation, not a dispute, and the
-   * status grid right below the prompt already is that path.
+   * Confirming is now the only reaction, so this hides the row outright:
+   * when the source has changed, the useful contribution is a fresh
+   * observation, and the status grid below the prompt already is that path.
    */
   hoistedConfirmFor: string | null;
 }
@@ -84,46 +83,24 @@ export default function ObservationHistory({
                 ))}
               </ul>
             )}
-            {(o.confirmationCount > 0 || o.disputeCount > 0) && (
+            {o.confirmationCount > 0 && (
               <p className="mt-0.5 pl-[18px] text-xs text-secondary/75">
-                {[
-                  o.confirmationCount > 0 &&
-                    fr.confirmedBy(o.confirmationCount),
-                  o.disputeCount > 0 && fr.disputedBy(o.disputeCount),
-                ]
-                  .filter(Boolean)
-                  .join(" · ")}
+                {fr.confirmedBy(o.confirmationCount)}
               </p>
             )}
-            {i === 0 && canReact && !o.isMine && (
-              <div className="mt-1.5 flex gap-2 pl-[18px]">
-                {hoistedConfirmFor !== o.id && (
-                  <button
-                    type="button"
-                    onClick={() => onReact(o.id, "confirm")}
-                    aria-pressed={o.myReaction === "confirm"}
-                    className={`rounded-full border px-3 py-1 text-xs font-semibold ${
-                      o.myReaction === "confirm"
-                        ? "border-secondary bg-secondary text-primary"
-                        : "border-secondary/50 text-secondary"
-                    }`}
-                  >
-                    ✓ {fr.confirm}
-                  </button>
-                )}
+            {i === 0 && canReact && !o.isMine && hoistedConfirmFor !== o.id && (
+              <div className="mt-1.5 pl-[18px]">
                 <button
                   type="button"
-                  onClick={() => onReact(o.id, "dispute")}
-                  aria-pressed={o.myReaction === "dispute"}
+                  onClick={() => onReact(o.id)}
+                  aria-pressed={o.myConfirmation}
                   className={`rounded-full border px-3 py-1 text-xs font-semibold ${
-                    // Outlined-and-filled rather than solid, so an active
-                    // dispute never reads as an active confirm.
-                    o.myReaction === "dispute"
-                      ? "border-secondary bg-secondary/25 text-secondary"
+                    o.myConfirmation
+                      ? "border-secondary bg-secondary text-primary"
                       : "border-secondary/50 text-secondary"
                   }`}
                 >
-                  ✕ {fr.dispute}
+                  ✓ {fr.confirm}
                 </button>
               </div>
             )}

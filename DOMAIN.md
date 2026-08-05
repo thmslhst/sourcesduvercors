@@ -42,7 +42,7 @@ That last column is the admission test: **a tag exists only if a reader would ac
 
 `hard_to_fill` means **geometry, not slowness** — no spout, no clearance, a seep with nothing to hold a bottle under. Slowness is what `low_flow` and `dripping` already say.
 
-Tags are **descriptive only — they never affect the derived status or confidence.** Trust comes from age, confirmations and disputes and nothing else (see § Confidence model). A closed list also means nothing needs moderating, nothing needs editing, and the labels live in `lib/i18n` like every other string. Free-text comments existed until July 2026 and were replaced by this list; the list itself was reworked at the end of that month.
+Tags are **descriptive only — they never affect the derived status or confidence.** Trust comes from age and confirmations and nothing else (see § Confidence model). A closed list also means nothing needs moderating, nothing needs editing, and the labels live in `lib/i18n` like every other string. Free-text comments existed until July 2026 and were replaced by this list; the list itself was reworked at the end of that month.
 
 Known limitation: `hard_to_find` is really a property of the *source*, not of a visit, so it gets re-reported identically forever and history shows it dated. Acceptable while it is also how we learn which sources deserve it; post-MVP it may graduate to a source-level badge once enough observations agree.
 
@@ -52,9 +52,13 @@ A lightweight "+1" on an existing recent observation: "I was there, it's still l
 
 Because it is the cheapest useful contribution — and the only one that can lift a source to high confidence — it is the **promoted action** in the sheet, above the report form. It is offered only while a confirmation would still change the derived confidence (inside the `high` age window); past that, a fresh observation is the useful contribution, not a "+1" on a stale one.
 
-### Dispute (report outdated)
+Confirmation is the **only** reaction. A `dispute` ("Signaler obsolète") existed until August 2026 and capped confidence at `low`; it was removed. Three reasons, in order of weight:
 
-The inverse of a confirmation: "this no longer matches what I saw." A dispute lowers confidence and prompts for a fresh observation. It never deletes data.
+- **A dispute is a weaker version of an act the app already asks for.** Whoever can tell that a source has changed is standing at it, and a fresh observation says what is actually there instead of only that the old answer is wrong. The sheet said as much in the dispute's own copy.
+- **It was the one trust signal that did not survive offline.** The map snapshot never carried dispute counts, so a disputed source kept showing its cached, higher confidence to a hiker with no network — the exact moment the warning mattered.
+- **It was the only reason "one derivation" was not literally true.** Because the client could not see disputes, it approximated the rule with an age cap. Age and confirmations are both in the snapshot, so server and offline client now run the same function (`lib/domain/confidence.ts`).
+
+What this gives up, knowingly: a dispute was the only *remote* negative signal — no location, no status. The remaining path is to report the current state, which is also the only claim anyone can vouch for. Existing dispute rows stay in the database as historical record (observations are append-only) but no longer count toward anything.
 
 ## Status scale
 
@@ -77,27 +81,27 @@ Confidence answers: **"How much should I trust the displayed status?"** It is de
 Inputs:
 
 - `age` — days since the latest observation,
-- `confirmations` — count of confirmations on that observation,
-- `disputes` — count of disputes on that observation.
+- `confirmations` — count of confirmations on that observation.
 
 Initial rules (v1 — deliberately simple, tunable constants in one place in code):
 
 | Confidence | Rule (v1) |
 |---|---|
-| **High** | age ≤ 7 days AND confirmations ≥ 1 AND disputes = 0 |
-| **Medium** | age ≤ 21 days AND disputes = 0 |
-| **Low** | age ≤ 60 days, OR any disputes on a newer-than-60-days observation |
+| **High** | age ≤ 7 days AND confirmations ≥ 1 |
+| **Medium** | age ≤ 21 days |
+| **Low** | age ≤ 60 days |
 | **Unknown** | no observation in the last 60 days |
 
 Additional rules:
 
-- A dispute on the latest observation immediately caps confidence at **Low** until a newer observation arrives.
+- The rules are evaluated top to bottom; the first match wins. An unconfirmed observation is therefore **Medium** at best, from the moment it is posted.
+- Confidence is **monotonic in age**: for fixed inputs it only ever falls as time passes. That is what lets the offline client re-run the rule against its own clock without a source ever appearing to regain trust.
 - Seasonality matters (a March "flowing" says little about August): time windows may later become season-aware. v1 ignores this — documented limitation.
 - The UI always shows the underlying facts alongside the label: "*flowing well — observed 3 days ago, confirmed by 2 hikers*".
 
 ## Source display state (what the map shows)
 
-For each source the app derives: `(status, confidence, last_observed_at, confirmation_count)` from the latest non-disputed observation, falling back to `unknown`. This derivation should live in **one** shared function/query used by API and offline cache alike.
+For each source the app derives: `(status, confidence, last_observed_at, confirmation_count)` from the latest non-deleted observation, falling back to `unknown`. This derivation lives in **one** rule, expressed twice and kept identical by tests: the `source_current_status` SQL view (the server's only source of truth) and `deriveConfidence` in `lib/domain/confidence.ts`, which the offline cache re-runs over the snapshot.
 
 ## Users & trust (MVP scope)
 
@@ -128,4 +132,3 @@ The audience is largely French; UI will likely be French-first with English supp
 | à sec / tarie | dry | `dry` |
 | observation / relevé | observation | `observation` |
 | confirmation | confirmation | `confirmation` |
-| signalement obsolète | outdated report / dispute | `dispute` |

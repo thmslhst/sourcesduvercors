@@ -8,7 +8,6 @@ import {
   CONFIDENCE_WINDOWS_DAYS,
   type ObservationStatus,
   type ObservationTag,
-  type ReactionType,
 } from "./constants";
 import { ageInDays } from "./display";
 import type { SourceSnapshotItem } from "./snapshot";
@@ -21,16 +20,15 @@ export interface ObservationHistoryItem {
   /** ISO timestamp — when the hiker was at the source. */
   observedAt: string;
   confirmationCount: number;
-  disputeCount: number;
-  /** True when the viewer wrote this observation (can't react to it). */
+  /** True when the viewer wrote this observation (can't confirm it). */
   isMine: boolean;
-  /** The viewer's own reaction, if any. */
-  myReaction: ReactionType | null;
+  /** True when the viewer has already confirmed this observation. */
+  myConfirmation: boolean;
 }
 
 export interface SourceDetail {
   source: SourceSnapshotItem;
-  /** Latest first; the first entry is the one confirm/dispute act on. */
+  /** Latest first; the first entry is the one a confirmation acts on. */
   observations: ObservationHistoryItem[];
 }
 
@@ -49,7 +47,7 @@ export function isConfirmWorthPromoting(
   now: Date = new Date(),
 ): boolean {
   if (observation.isMine) return false; // self-inflation; refused server-side
-  if (observation.myReaction !== null) return false; // already had their say
+  if (observation.myConfirmation) return false; // already had their say
   return (
     ageInDays(observation.observedAt, now) <= CONFIDENCE_WINDOWS_DAYS.high
   );
