@@ -103,14 +103,24 @@ describe("parseObservationInput", () => {
     expect(r.ok && r.value.observedAt).toEqual(NOW);
   });
 
-  it("clamps observed_at older than 7 days to the window floor", () => {
+  // Refused, not redated: a deferred-auth capture can sit in the outbox for
+  // days, and clamping would publish a stale reading as a fresh-ish one.
+  it("rejects observed_at older than the window", () => {
+    expect(
+      parseObservationInput(
+        { ...VALID, observedAt: "2026-06-01T00:00:00.000Z" },
+        NOW,
+      ),
+    ).toEqual({ ok: false, error: "observed_at_too_old" });
+  });
+
+  it("accepts observed_at just inside the window floor", () => {
+    const floor = new Date(NOW.getTime() - 7 * 24 * 60 * 60 * 1000);
     const r = parseObservationInput(
-      { ...VALID, observedAt: "2026-06-01T00:00:00.000Z" },
+      { ...VALID, observedAt: new Date(floor.getTime() + 1000).toISOString() },
       NOW,
     );
-    expect(r.ok && r.value.observedAt).toEqual(
-      new Date("2026-07-19T12:00:00.000Z"),
-    );
+    expect(r.ok).toBe(true);
   });
 
   it("rejects unparsable observed_at", () => {

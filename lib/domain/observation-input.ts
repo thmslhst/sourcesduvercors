@@ -2,8 +2,11 @@
  * Validation of observation submissions, shared by the API route today and
  * the offline outbox replay in Phase 3 — one set of rules, one place.
  *
- * DATABASE.md: the server clamps `observed_at` to <= now and to a sane past
- * window; client clock skew is accepted, never trusted.
+ * DATABASE.md: the server clamps `observed_at` to <= now — client clock skew
+ * is accepted, never trusted. A date *older* than the window is refused
+ * rather than clamped: with deferred-auth capture an observation can sit in
+ * the outbox for days, and silently redating it to the floor would publish a
+ * two-week-old reading as a seven-day-old one (PRODUCT_PRINCIPLES § 5).
  */
 
 import {
@@ -26,7 +29,7 @@ export interface ObservationInput {
   status: ObservationStatus;
   /** Optional details, deduplicated; descriptive only (never trust inputs). */
   tags: ObservationTag[];
-  /** Clamped into [now − 7 days, now]. */
+  /** Clamped to <= now; refused if older than the window. */
   observedAt: Date;
 }
 
@@ -79,9 +82,13 @@ export function parseObservationInput(
     return { ok: false, error: "invalid_observed_at" };
   }
   const floor = now.getTime() - OBSERVED_AT_MAX_PAST_DAYS * 24 * 60 * 60 * 1000;
-  const observedAt = new Date(
-    Math.min(Math.max(observedAtMs, floor), now.getTime()),
-  );
+  if (observedAtMs < floor) {
+    // Terminal: the outbox drops the item and says so, rather than retrying
+    // something that can only get older (lib/offline/sync.ts).
+    return { ok: false, error: "observed_at_too_old" };
+  }
+  // A future date is skew, not a claim — clamp it and carry on.
+  const observedAt = new Date(Math.min(observedAtMs, now.getTime()));
 
   return {
     ok: true,
