@@ -10,7 +10,7 @@
  * `observedAt` = now, and lib/offline/sync replays it later.
  */
 
-import { useState } from "react";
+import { useId, useState } from "react";
 
 import {
   OBSERVATION_STATUSES,
@@ -37,6 +37,7 @@ export default function ObservationForm({
   const [status, setStatus] = useState<ObservationStatus | null>(null);
   const [tags, setTags] = useState<ObservationTag[]>([]);
   const [phase, setPhase] = useState<Phase>("idle");
+  const tagsLabelId = useId();
 
   const toggleTag = (tag: ObservationTag) =>
     setTags((current) =>
@@ -123,13 +124,20 @@ export default function ObservationForm({
 
       {status !== null && (
         <>
-          <fieldset>
-            {/* A <legend> is the fieldset's rendered legend box, not a flex
-                item, so a container `gap` would never reach it — the spacing
-                below the label has to be its own margin. */}
-            <legend className="mb-1.5 text-xs text-secondary/75">
+          {/* A labelled group rather than <fieldset>/<legend>: the legend is
+              laid out inside the fieldset's border box, and engines disagree
+              on how much room that leaves — WebKit left dead space under the
+              chips that snapped away on the next relayout (a re-render from
+              picking another status). A div groups the chips identically for
+              assistive tech and lays out the same everywhere. */}
+          <div
+            role="group"
+            aria-labelledby={tagsLabelId}
+            className="flex flex-col gap-1.5"
+          >
+            <p id={tagsLabelId} className="text-xs text-secondary/75">
               {fr.tagsTitle}
-            </legend>
+            </p>
             {/* Two columns, echoing the status grid above: the four French
                 labels can't fit on one line at 390pt, so the wrap is made
                 deliberate instead of ragged. Kept lighter than the statuses
@@ -151,12 +159,15 @@ export default function ObservationForm({
                 </button>
               ))}
             </div>
-          </fieldset>
+          </div>
+          {/* mt-1 lifts the container's 8px to the 12px the section separator
+              already uses above the heading — the send button closes the
+              block, so it gets the same breathing room that opens it. */}
           <button
             type="button"
             onClick={submit}
             disabled={phase === "sending"}
-            className="rounded-lg bg-secondary px-3 py-2 text-sm font-semibold text-primary disabled:opacity-50"
+            className="mt-1 rounded-lg bg-secondary px-3 py-2 text-sm font-semibold text-primary disabled:opacity-50"
           >
             {phase === "sending" ? fr.sending : fr.send}
           </button>
