@@ -24,3 +24,17 @@ body {
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }
+
+/* iOS zooms the layout viewport when a focused field is under 16px, which
+   leaves the fixed-position sheets spanning a viewport wider than the screen
+   — they look scaled up and overflow sideways. This is WebKit-level, so it
+   hits every iOS browser (Chrome and Firefox included), not just Safari. A
+   16px floor on text fields kills the zoom. Not scoped to `pointer: coarse`:
+   an iPad with a trackpad reports `fine` and still zooms. The :not() chain is
+   only there to out-specify Tailwind's text-* utilities — a field that
+   genuinely wants to be bigger needs an inline style or its own !important. */
+input:not([type="checkbox"]):not([type="radio"]),
+textarea,
+select {
+  font-size: 1rem;
+}

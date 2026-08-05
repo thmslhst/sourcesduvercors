@@ -47,7 +47,9 @@ export default function SignInForm() {
         onChange={(e) => setEmail(e.target.value)}
         placeholder={fr.emailPlaceholder}
         autoComplete="email"
-        className="rounded-lg border border-secondary/50 bg-transparent px-3 py-2 text-sm text-secondary placeholder:text-secondary/60"
+        // No text-sm here: globals.css holds text fields at 16px so iOS
+        // browsers don't zoom the sheet on focus.
+        className="rounded-lg border border-secondary/50 bg-transparent px-3 py-2 text-secondary placeholder:text-secondary/60"
       />
       <button
         type="submit"
