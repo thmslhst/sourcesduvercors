@@ -17,6 +17,16 @@ import { sendMagicLinkEmail } from "./email";
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, { provider: "postgresql" }),
+  /**
+   * Better Auth defaults to a 7-day session. That is a trap here: a hiker
+   * who installs the PWA in June and walks in August arrives on the plateau
+   * signed out, with no way to sign in. A year, refreshed on any online
+   * visit, makes that rare — the outbox covers what's left.
+   */
+  session: {
+    expiresIn: 60 * 60 * 24 * 365,
+    updateAge: 60 * 60 * 24,
+  },
   user: {
     additionalFields: {
       role: {
