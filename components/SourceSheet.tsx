@@ -4,7 +4,13 @@
  * Bottom sheet with the details of the selected source: identity, live
  * status + confidence with the underlying facts (honesty principle —
  * DOMAIN.md), observation history, and the contribute flow (report /
- * confirm / dispute, behind magic-link sign-in).
+ * confirm / dispute).
+ *
+ * Contributing is never gated on a session: the form is the default view for
+ * everyone, and a missing session is resolved at send time (the write is
+ * queued, then a sign-in is asked for). Hiding it behind sign-in bought no
+ * security — the API's 401 is the whole defense — and cost the funnel its
+ * cheapest step (PRODUCT_PRINCIPLES § 6).
  */
 
 import { useCallback, useEffect, useState } from "react";
@@ -17,13 +23,12 @@ import {
 } from "@/lib/domain/detail";
 import { STATUS_COLORS } from "@/lib/domain/display";
 import type { SourceSnapshotItem } from "@/lib/domain/snapshot";
-import { enqueueOutbox } from "@/lib/offline/outbox";
+import { enqueueOutbox, reactionOutboxKey } from "@/lib/offline/outbox";
 import { fr } from "@/lib/i18n/fr";
 import AccountActions from "./AccountActions";
 import ConfirmPrompt from "./ConfirmPrompt";
 import ObservationForm from "./ObservationForm";
 import ObservationHistory from "./ObservationHistory";
-import SignInForm from "./SignInForm";
 
 /**
  * A fast detail call resolves well under this, so the placeholder never
@@ -37,16 +42,26 @@ interface SourceSheetProps {
   onClose: () => void;
   /** Called after any successful write so the map snapshot refreshes. */
   onMutated: () => void;
+  /** Open the sign-in prompt — a write was queued that only a session unblocks. */
+  onNeedsSignIn: () => void;
 }
 
 export default function SourceSheet({
   source,
   onClose,
   onMutated,
+  onNeedsSignIn,
 }: SourceSheetProps) {
   // Offline-tolerant: falls back to the mirrored session when the
   // get-session call can't reach the server (lib/offline/session.ts).
-  const session = useOfflineSession();
+  const sessionState = useOfflineSession();
+  const session = sessionState.status === "signed-in" ? sessionState : null;
+  // No session: writes still work, into the outbox — the sign-in is owed at
+  // flush time. Offline we know it up front; online the 401 tells us.
+  const deferredAuth = sessionState.status !== "signed-in";
+  // Offline-only preamble: online, the sign-in prompt at send time explains
+  // itself, so the form needs no warning label.
+  const offlineNotice = sessionState.status === "unreachable";
   // Keyed by source id so a stale detail (or error) never shows for the
   // newly selected source — no state reset needed on selection change.
   const [detailFor, setDetailFor] = useState<{
@@ -115,26 +130,41 @@ export default function SourceSheet({
     async (observationId: string, type: ReactionType) => {
       setReactionErrorFor(null);
       setReactionQueuedFor(null);
+
+      // Outbox with a client UUID (idempotent replay, ARCHITECTURE.md
+      // § Write path offline).
+      const queueReaction = async (needsSignIn: boolean) => {
+        try {
+          await enqueueOutbox({
+            kind: "reaction",
+            // Keyed by the observation: tapping confirm then dispute (or the
+            // same one twice) replaces the queued reaction rather than
+            // stacking another pending contribution.
+            id: reactionOutboxKey(observationId),
+            reactionId: crypto.randomUUID(),
+            enqueuedAt: new Date().toISOString(),
+            observationId,
+            type,
+          });
+          setReactionQueuedFor(sourceId);
+          if (needsSignIn) onNeedsSignIn();
+        } catch {
+          setReactionErrorFor(sourceId);
+        }
+      };
+
       let res: Response;
       try {
         res = await fetch(`/api/v1/observations/${observationId}/${type}`, {
           method: "POST",
         });
       } catch {
-        // Network unreachable → outbox with a client UUID (idempotent
-        // replay, ARCHITECTURE.md § Write path offline).
-        try {
-          await enqueueOutbox({
-            kind: "reaction",
-            id: crypto.randomUUID(),
-            enqueuedAt: new Date().toISOString(),
-            observationId,
-            type,
-          });
-          setReactionQueuedFor(sourceId);
-        } catch {
-          setReactionErrorFor(sourceId);
-        }
+        await queueReaction(false);
+        return;
+      }
+      if (res.status === 401) {
+        // Same rule as the report form: keep the write, ask for the session.
+        await queueReaction(true);
         return;
       }
       if (!res.ok) {
@@ -144,7 +174,7 @@ export default function SourceSheet({
       await fetchDetail();
       onMutated();
     },
-    [fetchDetail, onMutated, sourceId],
+    [fetchDetail, onMutated, onNeedsSignIn, sourceId],
   );
 
   /**
@@ -195,7 +225,11 @@ export default function SourceSheet({
   // where it reads as the minor action it is.
   const latest = detail?.observations[0] ?? null;
   const hoistedConfirm =
-    session && latest && isConfirmWorthPromoting(latest) ? latest : null;
+    sessionState.status !== "pending" &&
+    latest &&
+    isConfirmWorthPromoting(latest)
+      ? latest
+      : null;
 
   const facts = [
     current.lastObservedAt !== null && fr.timeAgo(current.lastObservedAt),
@@ -272,7 +306,10 @@ export default function SourceSheet({
           <div className="border-t border-secondary/30 pt-3">
             <ObservationHistory
               observations={detail.observations}
-              canReact={session !== null && session !== undefined}
+              // Confirm/dispute is the cheapest useful contribution
+              // (PRODUCT_PRINCIPLES § 4), so it follows the same rule as the
+              // report form: no session still queues.
+              canReact={sessionState.status !== "pending"}
               onReact={onReact}
               reactionError={reactionError}
               reactionQueued={reactionQueued}
@@ -291,10 +328,43 @@ export default function SourceSheet({
             onConfirm={() => void onReact(hoistedConfirm.id, "confirm")}
           />
         )}
-        {session ? (
-          <ObservationForm sourceId={source.id} onSaved={onSaved} />
-        ) : (
-          <SignInForm />
+        {/* The form is the default view for everyone. "pending" alone renders
+            nothing — committing to a branch before the session answers is
+            what used to flash the sign-in form at signed-in hikers. */}
+        {sessionState.status !== "pending" && (
+          <>
+            {offlineNotice && (
+              <div className="flex flex-col gap-1">
+                <p className="text-sm font-medium">
+                  {fr.contributeOfflineTitle}
+                </p>
+                <p className="text-xs text-secondary/75">
+                  {fr.contributeOfflineIntro}
+                </p>
+              </div>
+            )}
+            <ObservationForm
+              sourceId={source.id}
+              onSaved={onSaved}
+              deferredAuth={deferredAuth}
+              onNeedsSignIn={onNeedsSignIn}
+            />
+            {/* Signing in is possible right now and sends immediately, so keep
+                a way to do it — quiet enough not to compete with the form.
+                Pointless offline, where the magic link can't be delivered. */}
+            {sessionState.status === "signed-out" && (
+              <p className="text-xs text-secondary/75">
+                {fr.signInPrompt}{" "}
+                <button
+                  type="button"
+                  onClick={onNeedsSignIn}
+                  className="font-semibold text-secondary underline"
+                >
+                  {fr.signInAction}
+                </button>
+              </p>
+            )}
+          </>
         )}
       </div>
 

@@ -14,10 +14,11 @@ import { decaySnapshotItem } from "@/lib/domain/display";
 import type { SourcesSnapshot } from "@/lib/domain/snapshot";
 import { loadSnapshot, saveSnapshot } from "@/lib/offline/snapshot-cache";
 import { subscribeOutbox } from "@/lib/offline/outbox";
-import { startSyncTriggers } from "@/lib/offline/sync";
+import { startSyncTriggers, type DropReason } from "@/lib/offline/sync";
 import { fr } from "@/lib/i18n/fr";
 import AboutSheet from "./AboutSheet";
 import OfflinePanel from "./OfflinePanel";
+import SignInSheet from "./SignInSheet";
 import SourceSheet from "./SourceSheet";
 
 const SourcesMap = dynamic(() => import("./SourcesMap"), { ssr: false });
@@ -43,6 +44,13 @@ export default function MapShell() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [reloadKey, setReloadKey] = useState(0);
   const [pendingCount, setPendingCount] = useState(0);
+  // The queue is stuck on a sign-in, which no retry can clear — the pill
+  // turns into a way in (lib/offline/sync § blockedBy).
+  const [authBlocked, setAuthBlocked] = useState(false);
+  const [signInOpen, setSignInOpen] = useState(false);
+  // Contributions removed without being delivered; reported once, then
+  // dismissed by the user. Never silently discarded (honesty principle).
+  const [dropped, setDropped] = useState<DropReason[]>([]);
   const [aboutOpen, setAboutOpen] = useState(false);
   // Slow clock driving offline confidence decay while the app stays open.
   const [decayTick, setDecayTick] = useState(0);
@@ -129,7 +137,24 @@ export default function MapShell() {
 
   // Outbox: pending-count badge + replay on reconnect/focus/interval.
   useEffect(() => subscribeOutbox(setPendingCount), []);
-  useEffect(() => startSyncTriggers(onMutated), [onMutated]);
+  useEffect(
+    () =>
+      startSyncTriggers({
+        onSynced: onMutated,
+        onResult: ({ blockedBy, dropped: justDropped }) => {
+          // Never touches signInOpen: the interval flush fires every 60 s and
+          // must not yank the sheet out from under someone mid-typing.
+          setAuthBlocked(blockedBy === "auth");
+          if (justDropped.length > 0) {
+            setDropped((prev) => [...prev, ...justDropped]);
+          }
+        },
+      }),
+    [onMutated],
+  );
+
+  const droppedTooOld = dropped.filter((r) => r === "too_old").length;
+  const droppedOther = dropped.length - droppedTooOld;
 
   useEffect(() => {
     const interval = window.setInterval(
@@ -210,9 +235,38 @@ export default function MapShell() {
               : fr.refreshFailedDataAsOf(state.fetchedAt)}
           </p>
         )}
-        {pendingCount > 0 && (
-          <p className="rounded-full border border-secondary/60 bg-primary px-3 py-1 text-xs font-medium text-secondary shadow">
-            {fr.pendingContributions(pendingCount)}
+        {pendingCount > 0 &&
+          (authBlocked ? (
+            // Retrying can't clear a 401 — offer the only thing that can.
+            <button
+              type="button"
+              onClick={() => setSignInOpen(true)}
+              className="pointer-events-auto rounded-full border border-secondary bg-primary px-3 py-1 text-xs font-semibold text-secondary underline shadow"
+            >
+              {fr.pendingNeedSignIn(pendingCount)}
+            </button>
+          ) : (
+            <p className="rounded-full border border-secondary/60 bg-primary px-3 py-1 text-xs font-medium text-secondary shadow">
+              {fr.pendingContributions(pendingCount)}
+            </p>
+          ))}
+        {dropped.length > 0 && (
+          <p className="pointer-events-auto flex items-center gap-2 rounded-full border border-secondary/60 bg-primary px-3 py-1 text-xs font-medium text-secondary shadow">
+            <span>
+              {[
+                droppedTooOld > 0 && fr.droppedTooOld(droppedTooOld),
+                droppedOther > 0 && fr.droppedOther(droppedOther),
+              ]
+                .filter(Boolean)
+                .join(" ")}
+            </span>
+            <button
+              type="button"
+              onClick={() => setDropped([])}
+              className="font-semibold underline"
+            >
+              {fr.dismiss}
+            </button>
           </p>
         )}
       </div>
@@ -253,10 +307,19 @@ export default function MapShell() {
 
       <AboutSheet open={aboutOpen} onClose={() => setAboutOpen(false)} />
 
+      {/* Opened both by the blocked-queue pill and by the quiet "se connecter"
+          link in the sheet, so it must not be gated on pendingCount. */}
+      <SignInSheet
+        open={signInOpen}
+        pendingCount={pendingCount}
+        onClose={() => setSignInOpen(false)}
+      />
+
       <SourceSheet
         source={selected}
         onClose={() => setSelectedId(null)}
         onMutated={onMutated}
+        onNeedsSignIn={() => setSignInOpen(true)}
       />
     </div>
   );

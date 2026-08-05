@@ -142,6 +142,38 @@ export const fr = {
   reactionQueued:
     "Avis enregistré hors ligne — envoi automatique au retour du réseau.",
 
+  // Deferred auth: captured while signed out. Say plainly that the
+  // observation is only on this phone, and that there is a deadline — the
+  // server refuses an observation older than 7 days (honesty principle).
+  // The preamble is offline-only: online, the sign-in prompt opens at send
+  // time and explains itself, so the form needs no warning label.
+  contributeOfflineTitle: "Vous n’êtes pas connecté·e",
+  contributeOfflineIntro:
+    "Pas de réseau ici : notez l’état de la source maintenant, elle sera conservée sur cet appareil. Vous vous connecterez au retour du réseau pour l’envoyer.",
+  observationQueuedNeedsSignIn:
+    "Enregistrée sur cet appareil. Connectez-vous dans les 7 jours pour l’envoyer — au-delà, l’observation sera trop ancienne.",
+  pendingNeedSignIn: (n: number) =>
+    n === 1
+      ? "1 contribution en attente — connectez-vous"
+      : `${n} contributions en attente — connectez-vous`,
+  /** Low-key path for someone who wants to sign in without contributing. */
+  signInPrompt: "Déjà un compte ?",
+  signInAction: "Se connecter",
+  signInToSendTitle: "Connectez-vous pour envoyer",
+  signInToSendIntro: (n: number) =>
+    n === 1
+      ? "Votre contribution est enregistrée sur cet appareil. Connectez-vous pour l’envoyer."
+      : `Vos ${n} contributions sont enregistrées sur cet appareil. Connectez-vous pour les envoyer.`,
+  droppedTooOld: (n: number) =>
+    n === 1
+      ? "1 contribution n’a pas pu être envoyée : trop ancienne."
+      : `${n} contributions n’ont pas pu être envoyées : trop anciennes.`,
+  droppedOther: (n: number) =>
+    n === 1
+      ? "1 contribution n’a pas pu être envoyée."
+      : `${n} contributions n’ont pas pu être envoyées.`,
+  dismiss: "Ignorer",
+
   offlineMapButton: "Carte hors ligne",
   offlineMapTitle: "Carte hors ligne",
   offlineMapIntro: (size: string) =>

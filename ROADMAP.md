@@ -59,6 +59,7 @@ Make it trustworthy and known.
 - [ ] French UI pass (French-first, English secondary)
 - [ ] Empty/edge states, safety disclaimer copy, about page (licensing, how confidence works)
 - [x] Contribute flow polish: confirm-first CTA on a fresh observation, structured tags instead of free-text comments, author retraction
+- [x] Offline contribution without a session: capture into the outbox, claim it with a sign-in on reconnect (auth gates the flush, not the capture)
 - [ ] Performance pass against budgets in [ARCHITECTURE.md](ARCHITECTURE.md)
 - [ ] Seed real data: contributors observe sources on actual Vercors outings
 - [ ] Outreach: local hiking groups/forums, park contact, open-source announcement

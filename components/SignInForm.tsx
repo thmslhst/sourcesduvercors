@@ -13,7 +13,12 @@ import { fr } from "@/lib/i18n/fr";
 
 type Phase = "idle" | "sending" | "sent" | "error";
 
-export default function SignInForm() {
+interface SignInFormProps {
+  /** The sheet carries its own heading — don't repeat it above the field. */
+  hideTitle?: boolean;
+}
+
+export default function SignInForm({ hideTitle = false }: SignInFormProps) {
   const [email, setEmail] = useState("");
   const [phase, setPhase] = useState<Phase>("idle");
 
@@ -38,7 +43,7 @@ export default function SignInForm() {
         setPhase(error ? "error" : "sent");
       }}
     >
-      <p className="text-sm font-medium">{fr.signInTitle}</p>
+      {!hideTitle && <p className="text-sm font-medium">{fr.signInTitle}</p>}
       <p className="text-xs text-secondary/75">{fr.signInIntro}</p>
       <input
         type="email"

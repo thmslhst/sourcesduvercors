@@ -29,11 +29,26 @@ export interface QueuedObservation {
 
 export interface QueuedReaction {
   kind: "reaction";
-  /** Client UUID of the reaction itself. */
+  /**
+   * Outbox key — derived from the observation, not random, so re-tapping
+   * confirm/dispute *replaces* the queued reaction instead of stacking a new
+   * one. The server upserts on (observation, user) and treats confirm ⇄
+   * dispute as an edit, so only the last tap could ever apply; queueing the
+   * earlier ones would inflate the pending count with writes that are
+   * already superseded. Observations are the opposite — each is a distinct
+   * append-only fact — so they keep their own UUID as the key.
+   */
   id: string;
+  /** Client UUID of the reaction row itself (idempotent replay). */
+  reactionId: string;
   enqueuedAt: string;
   observationId: string;
   type: ReactionType;
+}
+
+/** The one outbox slot a given observation's reaction may occupy. */
+export function reactionOutboxKey(observationId: string): string {
+  return `reaction:${observationId}`;
 }
 
 export type OutboxItem = QueuedObservation | QueuedReaction;

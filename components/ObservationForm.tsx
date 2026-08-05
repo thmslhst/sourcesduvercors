@@ -8,6 +8,10 @@
  * Offline (ARCHITECTURE.md § Write path): when the network is unreachable
  * the observation goes to the IndexedDB outbox with its client UUID and
  * `observedAt` = now, and lib/offline/sync replays it later.
+ *
+ * A missing session is handled the same way, online or off: auth gates the
+ * flush, not the capture, so a 401 queues the observation and asks for the
+ * sign-in *after* the taps are spent rather than gating the form behind one.
  */
 
 import { useId, useState } from "react";
@@ -22,17 +26,35 @@ import { STATUS_COLORS } from "@/lib/domain/display";
 import { enqueueOutbox } from "@/lib/offline/outbox";
 import { fr } from "@/lib/i18n/fr";
 
-type Phase = "idle" | "sending" | "saved" | "queued" | "error";
+type Phase =
+  | "idle"
+  | "sending"
+  | "saved"
+  /** Queued behind the network; the replay carries the existing cookie. */
+  | "queued"
+  /** Queued behind a missing session; only a sign-in can send it. */
+  | "queuedNeedsSignIn"
+  | "error";
 
 interface ObservationFormProps {
   sourceId: string;
   /** Called after a successful save so detail + map refresh. */
   onSaved: () => void;
+  /**
+   * No session: the queued observation needs one before it can be sent, so
+   * promise that instead of automatic delivery. Known up front when offline;
+   * discovered from a 401 when online.
+   */
+  deferredAuth?: boolean;
+  /** Ask for the sign-in that would unblock what we just queued. */
+  onNeedsSignIn?: () => void;
 }
 
 export default function ObservationForm({
   sourceId,
   onSaved,
+  deferredAuth = false,
+  onNeedsSignIn,
 }: ObservationFormProps) {
   const [status, setStatus] = useState<ObservationStatus | null>(null);
   const [tags, setTags] = useState<ObservationTag[]>([]);
@@ -57,6 +79,25 @@ export default function ObservationForm({
       // When the hiker is at the source — distinct from server receipt time.
       observedAt: new Date().toISOString(),
     };
+
+    /** Park it in the outbox; sync replays it (idempotent by UUID). */
+    const queue = async (needsSignIn: boolean) => {
+      try {
+        await enqueueOutbox({
+          kind: "observation",
+          id: body.id,
+          enqueuedAt: new Date().toISOString(),
+          body,
+        });
+        setPhase(needsSignIn ? "queuedNeedsSignIn" : "queued");
+        setStatus(null);
+        setTags([]);
+        if (needsSignIn) onNeedsSignIn?.();
+      } catch {
+        setPhase("error");
+      }
+    };
+
     let res: Response;
     try {
       res = await fetch("/api/v1/observations", {
@@ -65,25 +106,17 @@ export default function ObservationForm({
         body: JSON.stringify(body),
       });
     } catch {
-      // Network unreachable → outbox; sync replays it (idempotent by UUID).
-      try {
-        await enqueueOutbox({
-          kind: "observation",
-          id: body.id,
-          enqueuedAt: new Date().toISOString(),
-          body,
-        });
-        setPhase("queued");
-        setStatus(null);
-        setTags([]);
-      } catch {
-        setPhase("error");
-      }
+      await queue(deferredAuth);
+      return;
+    }
+    if (res.status === 401) {
+      // Signed out, but the observation itself is good — keep it and ask for
+      // the one thing that can send it, now that the taps are already spent.
+      await queue(true);
       return;
     }
     if (!res.ok) {
-      // Server reached but refused (signed out, invalid…) — queueing
-      // wouldn't help; surface the failure.
+      // Refused on the merits (invalid, source gone…) — queueing can't help.
       setPhase("error");
       return;
     }
@@ -181,6 +214,11 @@ export default function ObservationForm({
       )}
       {phase === "queued" && (
         <p className="text-sm text-secondary/80">{fr.observationQueued}</p>
+      )}
+      {phase === "queuedNeedsSignIn" && (
+        <p className="text-sm text-secondary/80">
+          {fr.observationQueuedNeedsSignIn}
+        </p>
       )}
       {phase === "error" && (
         <p className="text-sm font-medium text-red-200">
