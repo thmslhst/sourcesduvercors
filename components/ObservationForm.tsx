@@ -123,18 +123,25 @@ export default function ObservationForm({
 
       {status !== null && (
         <>
-          <fieldset className="flex flex-col gap-1.5">
-            <legend className="text-xs text-secondary/75">
+          <fieldset>
+            {/* A <legend> is the fieldset's rendered legend box, not a flex
+                item, so a container `gap` would never reach it — the spacing
+                below the label has to be its own margin. */}
+            <legend className="mb-1.5 text-xs text-secondary/75">
               {fr.tagsTitle}
             </legend>
-            <div className="flex flex-wrap gap-2">
+            {/* Two columns, echoing the status grid above: the four French
+                labels can't fit on one line at 390pt, so the wrap is made
+                deliberate instead of ragged. Kept lighter than the statuses
+                (smaller text, shorter) — these are optional. */}
+            <div className="grid grid-cols-2 gap-2">
               {OBSERVATION_TAGS.map((t) => (
                 <button
                   key={t}
                   type="button"
                   onClick={() => toggleTag(t)}
                   aria-pressed={tags.includes(t)}
-                  className={`rounded-full border px-3 py-1 text-xs font-semibold ${
+                  className={`rounded-full border px-3 py-1.5 text-xs font-semibold ${
                     tags.includes(t)
                       ? "border-secondary bg-secondary text-primary"
                       : "border-secondary/50 text-secondary"
