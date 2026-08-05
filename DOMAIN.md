@@ -34,7 +34,7 @@ Listed in the order a hiker meets the source — find it, fill it, then judge it
 | Tag | FR label | What the reader does about it |
 |---|---|---|
 | `hard_to_find` | Difficile à trouver | Budget time, look around |
-| `hard_to_fill` | Écoulement peu accessible | Bring a cup; don't plan a 3 L refill |
+| `hard_to_fill` | Difficile à remplir | Bring a cup; don't plan a 3 L refill |
 | `out_of_order` | Hors service | Don't count on it at all |
 | `cloudy_water` | Eau trouble | Filter or treat it, or skip |
 
