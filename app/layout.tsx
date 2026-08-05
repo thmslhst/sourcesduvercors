@@ -31,6 +31,15 @@ export const metadata: Metadata = {
   // auto-linked by Next — no manual `icons` entry needed.
   // iOS has no install prompt; these make "Add to Home Screen" behave.
   appleWebApp: { capable: true, title: "Sources du Vercors" },
+  // iOS data detectors turn plain text into links (the signed-in e-mail became
+  // a mailto:, and relative dates are candidates too). Nothing here is meant
+  // to be tappable, so opt the whole document out.
+  formatDetection: {
+    telephone: false,
+    email: false,
+    address: false,
+    date: false,
+  },
 };
 
 export default function RootLayout({
