@@ -24,16 +24,16 @@ describe("deriveConfidence", () => {
     expect(deriveConfidence({ ageDays: 3, confirmations: 0 })).toBe("medium");
   });
 
-  it("is medium up to 21 days", () => {
-    expect(deriveConfidence({ ageDays: 21, confirmations: 0 })).toBe("medium");
+  it("is medium up to 7 days", () => {
+    expect(deriveConfidence({ ageDays: 7, confirmations: 0 })).toBe("medium");
   });
 
   it("confirmations past 7 days do not raise to high", () => {
-    expect(deriveConfidence({ ageDays: 10, confirmations: 4 })).toBe("medium");
+    expect(deriveConfidence({ ageDays: 10, confirmations: 4 })).toBe("low");
   });
 
-  it("is low between 22 and 60 days", () => {
-    expect(deriveConfidence({ ageDays: 22, confirmations: 0 })).toBe("low");
+  it("is low from a week old to 60 days", () => {
+    expect(deriveConfidence({ ageDays: 7.1, confirmations: 0 })).toBe("low");
     expect(deriveConfidence({ ageDays: 60, confirmations: 0 })).toBe("low");
   });
 

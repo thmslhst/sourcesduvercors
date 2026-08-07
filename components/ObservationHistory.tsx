@@ -1,13 +1,16 @@
 "use client";
 
 /**
- * Recent observation list. A confirmation only applies to the latest
- * observation — that is the one the derived status is computed from
- * (DOMAIN.md § Source display state).
+ * Recent observation list — a record, not a place to act. Everything that
+ * can be said about the latest observation is said once, in the prompt above
+ * the report form (components/SourcePrompt.tsx); a second, smaller confirm
+ * button lived here until August 2026 and only made the same act look
+ * inconsistent depending on the observation's age.
  *
- * Your own entries can be retracted: a mis-tapped "à sec" is otherwise the
- * map's answer for weeks and only an admin could take it back. Confirming
- * is inline, in two taps, rather than window.confirm.
+ * The exception is retraction, which belongs to a row and not to the source:
+ * a mis-tapped "à sec" is otherwise the map's answer for weeks and only an
+ * admin could take it back. Confirming it is inline, in two taps, rather
+ * than window.confirm.
  */
 
 import { useState } from "react";
@@ -18,34 +21,18 @@ import { fr } from "@/lib/i18n/fr";
 
 interface ObservationHistoryProps {
   observations: ObservationHistoryItem[];
-  /** Signed-in? The confirm button renders only when true. */
-  canReact: boolean;
-  onReact: (observationId: string) => void;
-  reactionError: boolean;
-  /** True when the confirmation went to the offline outbox instead of the API. */
-  reactionQueued: boolean;
+  /** Signed-in? The retract link renders only when true. */
+  canRetract: boolean;
   onRetract: (observationId: string) => void;
   /** Observation whose retraction failed, if any. */
   retractErrorFor: string | null;
-  /**
-   * Observation whose confirm button is shown above the report form
-   * (ConfirmPrompt) — suppressed here so the action isn't offered twice.
-   * Confirming is now the only reaction, so this hides the row outright:
-   * when the source has changed, the useful contribution is a fresh
-   * observation, and the status grid below the prompt already is that path.
-   */
-  hoistedConfirmFor: string | null;
 }
 
 export default function ObservationHistory({
   observations,
-  canReact,
-  onReact,
-  reactionError,
-  reactionQueued,
+  canRetract,
   onRetract,
   retractErrorFor,
-  hoistedConfirmFor,
 }: ObservationHistoryProps) {
   const [confirmingRetract, setConfirmingRetract] = useState<string | null>(
     null,
@@ -57,7 +44,7 @@ export default function ObservationHistory({
     <div className="flex flex-col gap-2">
       <p className="text-sm font-medium">{fr.recentObservations}</p>
       <ul className="flex flex-col gap-3">
-        {observations.map((o, i) => (
+        {observations.map((o) => (
           <li key={o.id} className="text-sm">
             <div className="flex items-center gap-2">
               <span
@@ -88,23 +75,7 @@ export default function ObservationHistory({
                 {fr.confirmedBy(o.confirmationCount)}
               </p>
             )}
-            {i === 0 && canReact && !o.isMine && hoistedConfirmFor !== o.id && (
-              <div className="mt-1.5 pl-[18px]">
-                <button
-                  type="button"
-                  onClick={() => onReact(o.id)}
-                  aria-pressed={o.myConfirmation}
-                  className={`rounded-full border px-3 py-1 text-xs font-semibold ${
-                    o.myConfirmation
-                      ? "border-secondary bg-secondary text-primary"
-                      : "border-secondary/50 text-secondary"
-                  }`}
-                >
-                  ✓ {fr.confirm}
-                </button>
-              </div>
-            )}
-            {canReact && o.isMine && (
+            {canRetract && o.isMine && (
               <div className="mt-1.5 pl-[18px] text-xs">
                 {confirmingRetract === o.id ? (
                   <span className="flex flex-wrap items-center gap-2">
@@ -143,16 +114,6 @@ export default function ObservationHistory({
             {retractErrorFor === o.id && (
               <p className="mt-1 pl-[18px] text-xs font-medium text-red-200">
                 {fr.retractFailed}
-              </p>
-            )}
-            {i === 0 && reactionError && (
-              <p className="mt-1 pl-[18px] text-xs font-medium text-red-200">
-                {fr.reactionFailed}
-              </p>
-            )}
-            {i === 0 && reactionQueued && (
-              <p className="mt-1 pl-[18px] text-xs text-secondary/80">
-                {fr.reactionQueued}
               </p>
             )}
           </li>

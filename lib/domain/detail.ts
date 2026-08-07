@@ -33,22 +33,46 @@ export interface SourceDetail {
 }
 
 /**
- * Is confirming this observation worth offering as the primary action?
+ * What the sheet's one-tap prompt offers for the latest observation.
  *
- * A confirmation only ever changes the derived confidence inside the `high`
- * window (see `deriveConfidence`) — beyond it, tapping "Confirmer" moves
- * nothing. Leading with a button that does nothing would be exactly the kind
- * of false reassurance PRODUCT_PRINCIPLES.md § honesty about uncertainty
- * rules out, so the CTA is gated on the same constant the derivation uses.
- * Keep the two in step.
+ * There is a single prompt above the report form, and this decides which of
+ * its states it wears. The rule it encodes: never offer a tap that cannot
+ * move the derived confidence — a button that silently does nothing is the
+ * false reassurance PRODUCT_PRINCIPLES.md § honesty about uncertainty rules
+ * out. So every branch below is gated on the same constants
+ * `deriveConfidence` reads; keep them in step.
+ *
+ * - `confirm`  — inside the `high` window a confirmation is what lifts the
+ *                source to high. Cheapest useful contribution, so it leads.
+ *                Still asked once the source is already high: the second
+ *                voice raises nothing but is real corroboration, and the
+ *                sheet prints it ("confirmé par 3 randonneurs").
+ * - `confirmed`— the viewer already had their say; nothing left to tap.
+ * - `reobserve`— past the `medium` window nothing can raise this observation
+ *                any more, but the hiker standing there can say the same
+ *                thing again with today's date. That is a *new* observation
+ *                (append-only, DOMAIN.md § Observation), not an edit of the
+ *                old one, and it lands the source back at `medium`.
+ * - `none`     — no honest one-tap action: it is the viewer's own fresh
+ *                observation, or so old (`known`) that re-reading it is the
+ *                only real answer, which the status grid below already is.
  */
-export function isConfirmWorthPromoting(
+export type SourcePromptState = "confirm" | "confirmed" | "reobserve" | "none";
+
+export function sourcePromptState(
   observation: ObservationHistoryItem,
   now: Date = new Date(),
-): boolean {
-  if (observation.isMine) return false; // self-inflation; refused server-side
-  if (observation.myConfirmation) return false; // already had their say
-  return (
-    ageInDays(observation.observedAt, now) <= CONFIDENCE_WINDOWS_DAYS.high
-  );
+): SourcePromptState {
+  const ageDays = ageInDays(observation.observedAt, now);
+
+  if (ageDays > CONFIDENCE_WINDOWS_DAYS.known) return "none";
+
+  // Too old to lift, recent enough to still be worth restating. Offered to
+  // the author too: a fresh observation carries no confirmations, so it can
+  // only reach `medium` — there is no self-inflation to guard against.
+  if (ageDays > CONFIDENCE_WINDOWS_DAYS.medium) return "reobserve";
+
+  if (observation.isMine) return "none"; // self-inflation; refused server-side
+  if (observation.myConfirmation) return "confirmed";
+  return ageDays <= CONFIDENCE_WINDOWS_DAYS.high ? "confirm" : "none";
 }

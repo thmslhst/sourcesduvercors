@@ -50,7 +50,20 @@ Known limitation: `hard_to_find` is really a property of the *source*, not of a 
 
 A lightweight "+1" on an existing recent observation: "I was there, it's still like this." Cheaper to give than a full observation, and it raises confidence. Modeled as its own record pointing at the observation it confirms.
 
-Because it is the cheapest useful contribution — and the only one that can lift a source to high confidence — it is the **promoted action** in the sheet, above the report form. It is offered only while a confirmation would still change the derived confidence (inside the `high` age window); past that, a fresh observation is the useful contribution, not a "+1" on a stale one.
+Because it is the cheapest useful contribution — and the only one that can lift a source to high confidence — it is the **promoted action** in the sheet, above the report form. It is offered while a confirmation can still change the derived confidence (inside the `high` age window). Past that window a "+1" moves nothing, so the same prompt switches to asking for the reading again — see § Re-observing below.
+
+There is exactly one prompt, in one shape, whatever it is asking. A smaller inline "Confirmer" pill lived in the history list until August 2026 for the cases the promoted card refused; the same act looking major or minor depending on the observation's age was the inconsistency, not the size of either control.
+
+### Re-observing
+
+Past the freshness window, a hiker standing at the source can restate the latest reading in one tap: **"C'est toujours le cas"**. This is a *new observation* carrying the old one's status, dated now — never an edit or a redating of the old row (observations are append-only, and the server refuses a backdated observation outright rather than clamping it). Tags are not carried over: they described what that hiker saw, and restating a status is not a claim that "difficile à trouver" still holds.
+
+Two consequences worth stating plainly:
+
+- It lands the source at `medium`, never `high` — a brand-new observation has no confirmations. So it can only raise trust from `low`, which is why it is offered exactly past the freshness window and not inside it. Inside, replacing a confirmed observation with an unconfirmed one would *lower* confidence.
+- It is offered to the original author too. There is no self-inflation to guard against for the same reason: an uncorroborated observation cannot reach `high` however many times its author restates it.
+
+Beyond the `known` window (60 days) the prompt disappears entirely. Nothing about a two-month-old reading is worth restating; the status grid is the honest path.
 
 Confirmation is the **only** reaction. A `dispute` ("Signaler obsolète") existed until August 2026 and capped confidence at `low`; it was removed. Three reasons, in order of weight:
 
@@ -88,9 +101,11 @@ Initial rules (v1 — deliberately simple, tunable constants in one place in cod
 | Confidence | Rule (v1) |
 |---|---|
 | **High** | age ≤ 7 days AND confirmations ≥ 1 |
-| **Medium** | age ≤ 21 days |
+| **Medium** | age ≤ 7 days |
 | **Low** | age ≤ 60 days |
 | **Unknown** | no observation in the last 60 days |
+
+Read out loud: **high** = seen this week and corroborated, **medium** = seen this week, **low** = older than a week, **unknown** = nothing in two months. `Medium` ran to 21 days until August 2026; the middle window was the one nobody could justify, and three weeks of `medium` on a karst spring in August is precisely where the unmodelled seasonality below did the most damage. Collapsing it also gives the sheet's re-observe prompt something visible to deliver (`low` → `medium`).
 
 Additional rules:
 

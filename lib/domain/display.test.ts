@@ -47,11 +47,11 @@ describe("decaySnapshotItem", () => {
     expect(decaySnapshotItem(item, now)).toBe(item);
   });
 
-  it("degrades a cached high once past the high window", () => {
+  it("degrades a cached high once past the freshness window", () => {
     const now = new Date();
     const item = { ...base, lastObservedAt: daysAgo(now, 10) };
     const decayed = decaySnapshotItem(item, now);
-    expect(decayed.confidence).toBe("medium");
+    expect(decayed.confidence).toBe("low");
     expect(decayed.status).toBe("flowing"); // status survives, badge degrades
   });
 

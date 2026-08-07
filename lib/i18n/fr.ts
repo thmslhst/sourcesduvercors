@@ -80,13 +80,24 @@ export const fr = {
   loadingObservations: "Chargement des observations…",
   yourObservation: "votre observation",
   confirm: "Confirmer",
-  /** Confirm-first CTA above the report form (components/ConfirmPrompt.tsx). */
-  confirmPromptTitle: "Toujours d’accord ?",
-  confirmPromptClaim: (status: string, when: string) =>
+
+  /**
+   * The one-tap prompt above the report form (components/SourcePrompt.tsx).
+   * Inside the week it asks for a confirmation; past it, a confirmation can
+   * no longer raise anything, so it asks for the same reading again with
+   * today's date (DOMAIN.md § Confirmation).
+   */
+  sourcePromptTitle: "Toujours d’accord ?",
+  sourcePromptClaim: (status: string, when: string) =>
     `Dernière observation : ${status}, ${when}.`,
-  confirmPromptAlternative:
+  sourcePromptAlternative:
     "Si ce n’est plus le cas, signalez l’état actuel ci-dessous.",
-  reactionFailed: "Impossible d’enregistrer votre avis. Réessayez.",
+  sourcePromptConfirmed: "Vous avez confirmé cette observation.",
+  reobserveTitle: "C’est toujours le cas ?",
+  reobserveExplainer:
+    "Cette observation a plus d’une semaine : la confirmer n’y changerait plus rien. Si l’état est le même, réenregistrez-la en date d’aujourd’hui.",
+  reobserve: "Oui, c’est toujours le cas",
+  sourcePromptFailed: "Impossible d’enregistrer. Réessayez.",
 
   /** Author retraction of their own observation (soft-delete, never an edit). */
   retract: "Retirer",
@@ -136,8 +147,9 @@ export const fr = {
     n === 1 ? "1 contribution à envoyer" : `${n} contributions à envoyer`,
   observationQueued:
     "Enregistrée hors ligne — envoi automatique au retour du réseau.",
-  reactionQueued:
-    "Avis enregistré hors ligne — envoi automatique au retour du réseau.",
+  /** Same promise, for the sheet's one-tap prompt (confirm or re-observe). */
+  sourcePromptQueued:
+    "Enregistré hors ligne — envoi automatique au retour du réseau.",
 
   // Deferred auth: captured while signed out. Say plainly that the
   // observation is only on this phone, and that there is a deadline — the

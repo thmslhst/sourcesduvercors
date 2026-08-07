@@ -57,12 +57,20 @@ export const OBSERVATION_TAGS = [
 ] as const;
 export type ObservationTag = (typeof OBSERVATION_TAGS)[number];
 
-/** Age windows in days (DOMAIN.md § Confidence model, v1). */
+/**
+ * Age windows in days (DOMAIN.md § Confidence model, v1).
+ *
+ * `high` and `medium` coincide at a week — that is the current tuning, not a
+ * constraint: they are independent knobs and the derivation reads each one
+ * separately. Together they say "trust nothing older than a week without
+ * re-reading it", which is also what makes the sheet's re-observe prompt
+ * honest — see `sourcePromptState` in ./detail.ts.
+ */
 export const CONFIDENCE_WINDOWS_DAYS = {
   /** high requires age ≤ this AND ≥ 1 confirmation */
   high: 7,
   /** medium requires age ≤ this */
-  medium: 21,
+  medium: 7,
   /** beyond this the source is `unknown` regardless of anything else */
   known: 60,
 } as const;

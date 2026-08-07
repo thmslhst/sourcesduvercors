@@ -23,7 +23,7 @@ import {
   type ObservationTag,
 } from "@/lib/domain/constants";
 import { STATUS_COLORS } from "@/lib/domain/display";
-import { enqueueOutbox } from "@/lib/offline/outbox";
+import { submitObservation } from "@/lib/offline/submit-observation";
 import { fr } from "@/lib/i18n/fr";
 
 type Phase =
@@ -71,59 +71,23 @@ export default function ObservationForm({
   const submit = async () => {
     if (!status) return;
     setPhase("sending");
-    const body = {
-      id: crypto.randomUUID(),
-      sourceId,
-      status,
-      tags,
-      // When the hiker is at the source — distinct from server receipt time.
-      observedAt: new Date().toISOString(),
-    };
-
-    /** Park it in the outbox; sync replays it (idempotent by UUID). */
-    const queue = async (needsSignIn: boolean) => {
-      try {
-        await enqueueOutbox({
-          kind: "observation",
-          id: body.id,
-          enqueuedAt: new Date().toISOString(),
-          body,
-        });
-        setPhase(needsSignIn ? "queuedNeedsSignIn" : "queued");
-        setStatus(null);
-        setTags([]);
-        if (needsSignIn) onNeedsSignIn?.();
-      } catch {
-        setPhase("error");
-      }
-    };
-
-    let res: Response;
-    try {
-      res = await fetch("/api/v1/observations", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-    } catch {
-      await queue(deferredAuth);
-      return;
-    }
-    if (res.status === 401) {
-      // Signed out, but the observation itself is good — keep it and ask for
-      // the one thing that can send it, now that the taps are already spent.
-      await queue(true);
-      return;
-    }
-    if (!res.ok) {
-      // Refused on the merits (invalid, source gone…) — queueing can't help.
-      setPhase("error");
-      return;
-    }
-    setPhase("saved");
+    const outcome = await submitObservation(
+      {
+        id: crypto.randomUUID(),
+        sourceId,
+        status,
+        tags,
+        // When the hiker is at the source — distinct from server receipt time.
+        observedAt: new Date().toISOString(),
+      },
+      deferredAuth,
+    );
+    setPhase(outcome);
+    if (outcome === "error") return;
     setStatus(null);
     setTags([]);
-    onSaved();
+    if (outcome === "queuedNeedsSignIn") onNeedsSignIn?.();
+    if (outcome === "saved") onSaved();
   };
 
   return (

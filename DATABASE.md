@@ -95,7 +95,7 @@ SELECT
     WHEN o.id IS NULL OR o.observed_at < now() - interval '60 days' THEN 'unknown'
     WHEN o.observed_at >= now() - interval '7 days'
          AND COALESCE(r.confirms, 0) >= 1                           THEN 'high'
-    WHEN o.observed_at >= now() - interval '21 days'                THEN 'medium'
+    WHEN o.observed_at >= now() - interval '7 days'                 THEN 'medium'
     ELSE 'low'
   END AS confidence
 FROM water_sources s
@@ -112,7 +112,7 @@ LEFT JOIN LATERAL (
 WHERE s.is_active;
 ```
 
-Because the view is the whole trust model, it is dropped and recreated in full by any migration that changes it — see `20260805120000_remove_dispute_reaction` for the version that removed the `dispute_count` column and the dispute branch of the `CASE`. `lib/domain/confidence.ts` mirrors this `CASE` exactly and is locked to it by unit tests.
+Because the view is the whole trust model, any migration that changes it restates it in full — see `20260805120000_remove_dispute_reaction` for the version that removed the `dispute_count` column and the dispute branch of the `CASE`, and `20260807120000_confidence_low_after_a_week` for the one that shrank the `medium` window to a week. A change that alters the output columns has to `DROP` first; one that only rewrites the `CASE` uses `CREATE OR REPLACE`, which leaves no instant where the view is missing — this database is the one production reads. `lib/domain/confidence.ts` mirrors this `CASE` exactly and is locked to it by unit tests.
 
 At Vercors scale (hundreds of sources, thousands of observations) this view needs no materialization. Revisit if `GET /api/v1/sources` exceeds ~100 ms.
 

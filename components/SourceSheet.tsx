@@ -17,17 +17,19 @@ import { useCallback, useEffect, useState } from "react";
 
 import { useOfflineSession } from "@/lib/offline/session";
 import {
-  isConfirmWorthPromoting,
+  sourcePromptState,
+  type ObservationHistoryItem,
   type SourceDetail,
 } from "@/lib/domain/detail";
 import { STATUS_COLORS } from "@/lib/domain/display";
 import type { SourceSnapshotItem } from "@/lib/domain/snapshot";
 import { enqueueOutbox, reactionOutboxKey } from "@/lib/offline/outbox";
+import { submitObservation } from "@/lib/offline/submit-observation";
 import { fr } from "@/lib/i18n/fr";
 import AccountActions from "./AccountActions";
-import ConfirmPrompt from "./ConfirmPrompt";
 import ObservationForm from "./ObservationForm";
 import ObservationHistory from "./ObservationHistory";
+import SourcePrompt from "./SourcePrompt";
 
 /**
  * A fast detail call resolves well under this, so the placeholder never
@@ -73,10 +75,13 @@ export default function SourceSheet({
   const [settledFor, setSettledFor] = useState<string | null>(null);
   // …and the id whose call has been in flight long enough to deserve one.
   const [slowFor, setSlowFor] = useState<string | null>(null);
-  const [reactionErrorFor, setReactionErrorFor] = useState<string | null>(null);
-  const [reactionQueuedFor, setReactionQueuedFor] = useState<string | null>(
-    null,
-  );
+  // Outcome of the prompt's one tap — confirm and re-observe share the slot
+  // because only one of them is ever on screen. Keyed by source id so it
+  // can't follow the hiker to the next sheet.
+  const [promptOutcomeFor, setPromptOutcomeFor] = useState<{
+    sourceId: string;
+    outcome: "queued" | "error";
+  } | null>(null);
   // Keyed by observation id, not source id — the failure belongs to the row.
   const [retractErrorFor, setRetractErrorFor] = useState<string | null>(null);
 
@@ -125,10 +130,10 @@ export default function SourceSheet({
     return () => clearTimeout(timer);
   }, [historyPending, sourceId]);
 
-  const onReact = useCallback(
+  const onConfirm = useCallback(
     async (observationId: string) => {
-      setReactionErrorFor(null);
-      setReactionQueuedFor(null);
+      if (!sourceId) return;
+      setPromptOutcomeFor(null);
 
       // Outbox with a client UUID (idempotent replay, ARCHITECTURE.md
       // § Write path offline).
@@ -144,10 +149,10 @@ export default function SourceSheet({
             enqueuedAt: new Date().toISOString(),
             observationId,
           });
-          setReactionQueuedFor(sourceId);
+          setPromptOutcomeFor({ sourceId, outcome: "queued" });
           if (needsSignIn) onNeedsSignIn();
         } catch {
-          setReactionErrorFor(sourceId);
+          setPromptOutcomeFor({ sourceId, outcome: "error" });
         }
       };
 
@@ -166,13 +171,54 @@ export default function SourceSheet({
         return;
       }
       if (!res.ok) {
-        setReactionErrorFor(sourceId);
+        setPromptOutcomeFor({ sourceId, outcome: "error" });
         return;
       }
       await fetchDetail();
       onMutated();
     },
     [fetchDetail, onMutated, onNeedsSignIn, sourceId],
+  );
+
+  /**
+   * Past the freshness window a confirmation can no longer lift anything, so
+   * the prompt asks for the reading again instead — which is a new
+   * observation carrying the old one's status, dated now. Never an edit of
+   * the old row: observations are append-only, and the server refuses a
+   * backdated one outright rather than redating it.
+   *
+   * Tags are deliberately not copied. They described what that hiker saw;
+   * restating the status is not a claim that "difficile à trouver" still
+   * holds, and inventing it on their behalf is exactly the kind of borrowed
+   * certainty the honesty principle rules out.
+   */
+  const onReobserve = useCallback(
+    async (observation: ObservationHistoryItem) => {
+      if (!sourceId) return;
+      setPromptOutcomeFor(null);
+      const outcome = await submitObservation(
+        {
+          id: crypto.randomUUID(),
+          sourceId,
+          status: observation.status,
+          tags: [],
+          observedAt: new Date().toISOString(),
+        },
+        deferredAuth,
+      );
+      if (outcome === "error") {
+        setPromptOutcomeFor({ sourceId, outcome: "error" });
+        return;
+      }
+      if (outcome !== "saved") {
+        setPromptOutcomeFor({ sourceId, outcome: "queued" });
+        if (outcome === "queuedNeedsSignIn") onNeedsSignIn();
+        return;
+      }
+      await fetchDetail();
+      onMutated();
+    },
+    [deferredAuth, fetchDetail, onMutated, onNeedsSignIn, sourceId],
   );
 
   /**
@@ -212,22 +258,20 @@ export default function SourceSheet({
 
   const detail = detailFor?.sourceId === source.id ? detailFor.detail : null;
   const loadingObservations = historyPending && slowFor === source.id;
-  const reactionError = reactionErrorFor === source.id;
-  const reactionQueued = reactionQueuedFor === source.id;
+  const promptOutcome =
+    promptOutcomeFor?.sourceId === source.id ? promptOutcomeFor.outcome : null;
 
   // Fresher-than-snapshot facts once the detail call lands.
   const current = detail?.source ?? source;
 
-  // Promote the one-tap confirm only when it would actually move confidence
-  // (isConfirmWorthPromoting); otherwise the pill stays in the history list,
-  // where it reads as the minor action it is.
+  // The one place the latest observation can be acted on. `sourcePromptState`
+  // owns which tap is honest here — the sheet only decides that a tap needs a
+  // resolved session first.
   const latest = detail?.observations[0] ?? null;
-  const hoistedConfirm =
-    sessionState.status !== "pending" &&
-    latest &&
-    isConfirmWorthPromoting(latest)
-      ? latest
-      : null;
+  const promptState =
+    sessionState.status === "pending" || !latest
+      ? "none"
+      : sourcePromptState(latest);
 
   const facts = [
     current.lastObservedAt !== null && fr.timeAgo(current.lastObservedAt),
@@ -304,26 +348,25 @@ export default function SourceSheet({
           <div className="border-t border-secondary/30 pt-3">
             <ObservationHistory
               observations={detail.observations}
-              // Confirming is the cheapest useful contribution
-              // (PRODUCT_PRINCIPLES § 4), so it follows the same rule as the
-              // report form: no session still queues.
-              canReact={sessionState.status !== "pending"}
-              onReact={onReact}
-              reactionError={reactionError}
-              reactionQueued={reactionQueued}
+              // Retraction needs the network anyway, so unlike the prompt
+              // there is nothing to offer before the session resolves.
+              canRetract={sessionState.status !== "pending"}
               onRetract={onRetract}
               retractErrorFor={retractErrorFor}
-              hoistedConfirmFor={hoistedConfirm?.id ?? null}
             />
           </div>
         )
       )}
 
       <div className="flex flex-col gap-3 border-t border-secondary/30 pt-3">
-        {hoistedConfirm && (
-          <ConfirmPrompt
-            observation={hoistedConfirm}
-            onConfirm={() => void onReact(hoistedConfirm.id)}
+        {latest && promptState !== "none" && (
+          <SourcePrompt
+            observation={latest}
+            state={promptState}
+            onConfirm={() => void onConfirm(latest.id)}
+            onReobserve={() => void onReobserve(latest)}
+            queued={promptOutcome === "queued"}
+            failed={promptOutcome === "error"}
           />
         )}
         {/* The form is the default view for everyone. "pending" alone renders
