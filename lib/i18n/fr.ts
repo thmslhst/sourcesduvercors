@@ -173,15 +173,30 @@ export const fr = {
     n === 1
       ? "Votre contribution est enregistrée sur cet appareil. Connectez-vous pour l’envoyer."
       : `Vos ${n} contributions sont enregistrées sur cet appareil. Connectez-vous pour les envoyer.`,
-  droppedTooOld: (n: number) =>
-    n === 1
-      ? "1 contribution n’a pas pu être envoyée : trop ancienne."
-      : `${n} contributions n’ont pas pu être envoyées : trop anciennes.`,
-  droppedOther: (n: number) =>
-    n === 1
-      ? "1 contribution n’a pas pu être envoyée."
-      : `${n} contributions n’ont pas pu être envoyées.`,
-  dismiss: "Ignorer",
+  // Refused contributions. They stay on the device until the hiker decides
+  // — the taps were spent standing at a spring, and a dismissable banner is
+  // not a decision (PRODUCT_PRINCIPLES § honesty about uncertainty).
+  blockedPill: (n: number) =>
+    n === 1 ? "1 contribution bloquée" : `${n} contributions bloquées`,
+  blockedTitle: "Contributions bloquées",
+  blockedIntro:
+    "Le serveur a refusé ces contributions. Elles restent sur cet appareil : rien n’est supprimé sans vous.",
+  blockedReason: {
+    too_old: (days: number) =>
+      `Trop ancienne : une observation de plus de ${days} jours n’est plus acceptée, et la redater en dirait plus que ce que vous avez vu.`,
+    own_observation:
+      "C’est votre propre observation : on ne peut pas confirmer la sienne. Elle compte déjà.",
+    retired:
+      "Cette action n’existe plus dans l’application et ne peut plus être envoyée.",
+    rejected: "Le serveur l’a refusée.",
+  },
+  blockedObservation: (status: string, source: string) =>
+    `${status} — ${source}`,
+  blockedReaction: (source: string) => `Confirmation — ${source}`,
+  blockedAt: (iso: string, now?: Date) => `Refusée ${fr.timeAgo(iso, now)}`,
+  blockedDelete: "Supprimer",
+  blockedDeleteAll: "Tout supprimer",
+  blockedEmpty: "Plus rien en attente. Merci !",
 
   offlineMapButton: "Carte hors ligne",
   offlineMapTitle: "Carte hors ligne",

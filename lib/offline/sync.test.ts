@@ -1,14 +1,21 @@
 /**
- * Replay classification. The distinction that matters: a 401 keeps the item
- * and reports "auth", because no retry can clear it — the UI has to ask for
- * a sign-in or the queue wedges forever (the pre-deferred-auth behaviour).
+ * Replay classification. Two distinctions carry the whole design:
+ *
+ * - a 401 *blocks*: the item stays queued and the flush reports "auth",
+ *   because no retry can clear it — the UI has to ask for a sign-in or the
+ *   queue wedges forever (the pre-deferred-auth behaviour);
+ * - a terminal 4xx *fails*: the item is kept too, stamped with why, and the
+ *   flush carries on past it. Nothing is deleted by a flush. Deleting a
+ *   refused contribution behind a dismissable banner is what made a queue
+ *   full of real observations vanish in one tap.
  */
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { flushOutbox } from "./sync";
 import {
-  listOutbox,
+  listSendableOutbox,
+  markOutboxFailed,
   reactionOutboxKey,
   removeOutboxItem,
   type OutboxItem,
@@ -18,7 +25,8 @@ import {
 // one, since the dedup invariant is exactly what it encodes.
 vi.mock("./outbox", async (importOriginal) => ({
   ...(await importOriginal<typeof import("./outbox")>()),
-  listOutbox: vi.fn(),
+  listSendableOutbox: vi.fn(),
+  markOutboxFailed: vi.fn(async () => {}),
   removeOutboxItem: vi.fn(async () => {}),
 }));
 
@@ -42,7 +50,8 @@ function respond(status: number, body: unknown = {}): Response {
 }
 
 beforeEach(() => {
-  vi.mocked(listOutbox).mockResolvedValue([OBSERVATION]);
+  vi.mocked(listSendableOutbox).mockResolvedValue([OBSERVATION]);
+  vi.mocked(markOutboxFailed).mockClear();
   vi.mocked(removeOutboxItem).mockClear();
 });
 
@@ -56,9 +65,14 @@ describe("flushOutbox", () => {
 
     const result = await flushOutbox();
 
-    expect(result).toMatchObject({ sent: 1, remaining: 0, blockedBy: null });
-    expect(result.dropped).toEqual([]);
+    expect(result).toMatchObject({
+      sent: 1,
+      pending: 0,
+      failed: 0,
+      blockedBy: null,
+    });
     expect(removeOutboxItem).toHaveBeenCalledWith(OBSERVATION.id);
+    expect(markOutboxFailed).not.toHaveBeenCalled();
   });
 
   it("keeps the item and reports auth on 401 — only a sign-in clears it", async () => {
@@ -69,8 +83,9 @@ describe("flushOutbox", () => {
 
     const result = await flushOutbox();
 
-    expect(result).toMatchObject({ sent: 0, remaining: 1, blockedBy: "auth" });
+    expect(result).toMatchObject({ sent: 0, pending: 1, blockedBy: "auth" });
     expect(removeOutboxItem).not.toHaveBeenCalled();
+    expect(markOutboxFailed).not.toHaveBeenCalled();
   });
 
   it("keeps the item and reports offline when the fetch throws", async () => {
@@ -83,7 +98,7 @@ describe("flushOutbox", () => {
 
     const result = await flushOutbox();
 
-    expect(result).toMatchObject({ remaining: 1, blockedBy: "offline" });
+    expect(result).toMatchObject({ pending: 1, blockedBy: "offline" });
     expect(removeOutboxItem).not.toHaveBeenCalled();
   });
 
@@ -92,10 +107,11 @@ describe("flushOutbox", () => {
 
     const result = await flushOutbox();
 
-    expect(result).toMatchObject({ remaining: 1, blockedBy: "server" });
+    expect(result).toMatchObject({ pending: 1, blockedBy: "server" });
+    expect(markOutboxFailed).not.toHaveBeenCalled();
   });
 
-  it("drops a stale observation as too_old, so the loss is reportable", async () => {
+  it("keeps a stale observation, stamped too_old — never deletes it", async () => {
     vi.stubGlobal(
       "fetch",
       vi.fn(async () => respond(422, { error: "observed_at_too_old" })),
@@ -104,22 +120,71 @@ describe("flushOutbox", () => {
 
     const result = await flushOutbox();
 
-    expect(result).toMatchObject({ sent: 0, remaining: 0, blockedBy: null });
-    expect(result.dropped).toEqual(["too_old"]);
-    expect(removeOutboxItem).toHaveBeenCalledWith(OBSERVATION.id);
+    expect(result).toMatchObject({ sent: 0, failed: 1, blockedBy: null });
+    expect(removeOutboxItem).not.toHaveBeenCalled();
+    expect(markOutboxFailed).toHaveBeenCalledWith(
+      OBSERVATION.id,
+      expect.objectContaining({ reason: "too_old", status: 422 }),
+    );
   });
 
-  it("drops other terminal 4xx rather than wedging the queue", async () => {
+  /**
+   * The failure this whole change exists to survive: a signed-out sheet is
+   * told `isMine: false` for every observation, so a hiker could queue a
+   * confirmation of their own reading. The sheet no longer offers it, but
+   * an outbox filled by an older build still holds some — and losing them
+   * on the sign-in that was supposed to *send* them is the reported bug.
+   */
+  it("keeps a self-confirmation, stamped own_observation", async () => {
+    const observationId = "44444444-4444-4444-8444-444444444444";
+    vi.mocked(listSendableOutbox).mockResolvedValue([
+      {
+        kind: "reaction",
+        id: reactionOutboxKey(observationId),
+        reactionId: "55555555-5555-4555-8555-555555555555",
+        enqueuedAt: "2026-08-01T10:00:00.000Z",
+        observationId,
+      },
+    ]);
     vi.stubGlobal(
       "fetch",
-      vi.fn(async () => respond(409, { error: "id_conflict" })),
+      vi.fn(async () => respond(403, { error: "own_observation" })),
     );
     vi.spyOn(console, "warn").mockImplementation(() => {});
 
     const result = await flushOutbox();
 
-    expect(result.dropped).toEqual(["other"]);
-    expect(removeOutboxItem).toHaveBeenCalledWith(OBSERVATION.id);
+    expect(result).toMatchObject({ failed: 1, blockedBy: null });
+    expect(removeOutboxItem).not.toHaveBeenCalled();
+    expect(markOutboxFailed).toHaveBeenCalledWith(
+      reactionOutboxKey(observationId),
+      expect.objectContaining({ reason: "own_observation" }),
+    );
+  });
+
+  it("keeps other terminal 4xx as rejected, and carries on past them", async () => {
+    const second: OutboxItem = {
+      ...OBSERVATION,
+      id: "33333333-3333-4333-8333-333333333333",
+      enqueuedAt: "2026-08-01T11:00:00.000Z",
+    };
+    vi.mocked(listSendableOutbox).mockResolvedValue([OBSERVATION, second]);
+    const fetchMock = vi
+      .fn<() => Promise<Response>>()
+      .mockResolvedValueOnce(respond(409, { error: "id_conflict" }))
+      .mockResolvedValueOnce(respond(201, { id: second.id }));
+    vi.stubGlobal("fetch", fetchMock);
+    vi.spyOn(console, "warn").mockImplementation(() => {});
+
+    const result = await flushOutbox();
+
+    // One refusal must not strand the contributions behind it.
+    expect(result).toMatchObject({ sent: 1, failed: 1, blockedBy: null });
+    expect(markOutboxFailed).toHaveBeenCalledWith(
+      OBSERVATION.id,
+      expect.objectContaining({ reason: "rejected", status: 409 }),
+    );
+    expect(removeOutboxItem).toHaveBeenCalledWith(second.id);
   });
 
   it("posts a reaction under its own UUID, not its outbox key", async () => {
@@ -134,7 +199,7 @@ describe("flushOutbox", () => {
       observationId,
       type: "confirm",
     };
-    vi.mocked(listOutbox).mockResolvedValue([reaction]);
+    vi.mocked(listSendableOutbox).mockResolvedValue([reaction]);
     const fetchMock = vi.fn<(url: string, init: RequestInit) => Promise<Response>>(
       async () => respond(200, { ok: true }),
     );
@@ -157,7 +222,7 @@ describe("flushOutbox", () => {
       observationId: "44444444-4444-4444-8444-444444444444",
       type: "confirm",
     } as unknown as OutboxItem; // no reactionId — persisted by an older build
-    vi.mocked(listOutbox).mockResolvedValue([legacy]);
+    vi.mocked(listSendableOutbox).mockResolvedValue([legacy]);
     const fetchMock = vi.fn<(url: string, init: RequestInit) => Promise<Response>>(
       async () => respond(200, { ok: true }),
     );
@@ -172,10 +237,10 @@ describe("flushOutbox", () => {
   /**
    * The dispute reaction was retired (DOMAIN.md § Confirmation) while items
    * could already be sitting in someone's outbox. Delivering one to the only
-   * remaining endpoint would turn "this is wrong" into "+1", so it is dropped
-   * and reported instead — the loss is visible, never silently inverted.
+   * remaining endpoint would turn "this is wrong" into "+1", so it is refused
+   * without being sent — and still kept, for the hiker to dispose of.
    */
-  it("drops a dispute queued before the reaction was retired", async () => {
+  it("refuses a dispute queued before the reaction was retired", async () => {
     const retired = {
       kind: "reaction",
       id: reactionOutboxKey("44444444-4444-4444-8444-444444444444"),
@@ -184,17 +249,19 @@ describe("flushOutbox", () => {
       observationId: "44444444-4444-4444-8444-444444444444",
       type: "dispute",
     } as unknown as OutboxItem;
-    vi.mocked(listOutbox).mockResolvedValue([retired]);
+    vi.mocked(listSendableOutbox).mockResolvedValue([retired]);
     const fetchMock = vi.fn(async () => respond(200, { ok: true }));
     vi.stubGlobal("fetch", fetchMock);
-    vi.spyOn(console, "warn").mockImplementation(() => {});
 
     const result = await flushOutbox();
 
     expect(fetchMock).not.toHaveBeenCalled();
-    expect(result.sent).toBe(0);
-    expect(result.dropped).toEqual(["other"]);
-    expect(removeOutboxItem).toHaveBeenCalledWith(retired.id);
+    expect(result).toMatchObject({ sent: 0, failed: 1 });
+    expect(removeOutboxItem).not.toHaveBeenCalled();
+    expect(markOutboxFailed).toHaveBeenCalledWith(
+      retired.id,
+      expect.objectContaining({ reason: "retired" }),
+    );
   });
 
   it("gives one observation exactly one reaction slot", () => {
@@ -212,13 +279,13 @@ describe("flushOutbox", () => {
       id: "33333333-3333-4333-8333-333333333333",
       enqueuedAt: "2026-08-01T11:00:00.000Z",
     };
-    vi.mocked(listOutbox).mockResolvedValue([OBSERVATION, second]);
+    vi.mocked(listSendableOutbox).mockResolvedValue([OBSERVATION, second]);
     const fetchMock = vi.fn(async () => respond(401, { error: "unauthorized" }));
     vi.stubGlobal("fetch", fetchMock);
 
     const result = await flushOutbox();
 
     expect(fetchMock).toHaveBeenCalledTimes(1);
-    expect(result).toMatchObject({ remaining: 2, blockedBy: "auth" });
+    expect(result).toMatchObject({ pending: 2, blockedBy: "auth" });
   });
 });

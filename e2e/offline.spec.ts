@@ -18,22 +18,30 @@ const PORT = 3210;
 const E2E_EMAIL = "e2e-offline@sources-du-vercors.test";
 /** Second scenario signs in only at the end — its own user, its own cleanup. */
 const E2E_DEFERRED_EMAIL = "e2e-deferred@sources-du-vercors.test";
+/** The two scenarios about refused contributions. */
+const E2E_BLOCKED_EMAIL = "e2e-blocked@sources-du-vercors.test";
+const E2E_OWN_EMAIL = "e2e-own@sources-du-vercors.test";
+
+const EMAILS = [
+  E2E_EMAIL,
+  E2E_DEFERRED_EMAIL,
+  E2E_BLOCKED_EMAIL,
+  E2E_OWN_EMAIL,
+];
 
 let server: AppServer;
 
 test.beforeAll(async () => {
   loadDotEnv();
   // Leftovers from an aborted run.
-  await cleanupE2eUser(E2E_EMAIL);
-  await cleanupE2eUser(E2E_DEFERRED_EMAIL);
+  for (const email of EMAILS) await cleanupE2eUser(email);
   server = new AppServer(PORT);
   await server.start();
 });
 
 test.afterAll(async () => {
   await server.stop();
-  await cleanupE2eUser(E2E_EMAIL);
-  await cleanupE2eUser(E2E_DEFERRED_EMAIL);
+  for (const email of EMAILS) await cleanupE2eUser(email);
 });
 
 /** Drive selection through the e2e hook — no flaky canvas-pixel clicks. */
@@ -48,6 +56,14 @@ async function selectSource(page: Page, id: string | null): Promise<void> {
       ).__selectSource(sourceId),
     id,
   );
+}
+
+/** Magic-link sign-in, from wherever the form currently is on screen. */
+async function signIn(page: Page, email: string): Promise<void> {
+  await page.getByPlaceholder("Votre e-mail").fill(email);
+  await page.getByRole("button", { name: /Recevoir le lien/ }).click();
+  const link = await server.waitForLog(/Lien de connexion pour \S+ : (http\S+)/);
+  await page.goto(link[1]); // verifies the token, redirects to /
 }
 
 /** Polled via waitForFunction: is the sources snapshot persisted locally? */
@@ -100,12 +116,7 @@ test("mode avion : consulter, signaler, reconnecter, synchroniser", async ({
   await selectSource(page, sourceId);
   await page.getByRole("button", { name: fr.signInAction }).click();
   // Email is the only field — no display name is collected or stored.
-  await page.getByPlaceholder("Votre e-mail").fill(E2E_EMAIL);
-  await page.getByRole("button", { name: /Recevoir le lien/ }).click();
-  const link = await server.waitForLog(
-    /Lien de connexion pour \S+ : (http\S+)/,
-  );
-  await page.goto(link[1]); // verifies the token, redirects to /
+  await signIn(page, E2E_EMAIL);
   await selectSource(page, sourceId);
   await expect(page.getByText(/Signaler l.état actuel/)).toBeVisible();
   // Session mirror + snapshot must both be persisted before going dark.
@@ -251,27 +262,25 @@ test("hors ligne sans compte : capturer maintenant, se connecter au retour", asy
   await page.getByRole("button", { name: "Coule bien" }).click();
   await page.getByRole("button", { name: "Envoyer", exact: true }).click();
   // Honest copy: on this device, not "sent" — and it names the deadline.
+  // The badge says what is actually true straight away: this one is waiting
+  // on a sign-in, not on the network. Waiting for a flush to prove it would
+  // promise automatic delivery for up to a minute.
   await expect(page.getByText(/Enregistrée sur cet appareil/)).toBeVisible();
-  await expect(page.getByText("1 contribution à envoyer")).toBeVisible();
-
-  // --- Reconnect. The replay 401s, which no retry can ever clear, so the
-  // badge must turn into a way in rather than spinning forever.
-  await server.start();
-  await selectSource(page, null);
-  await page.evaluate(() => window.dispatchEvent(new Event("focus")));
   const signInPill = page.getByRole("button", {
     name: fr.pendingNeedSignIn(1),
   });
+  await expect(signInPill).toBeVisible();
+
+  // --- Reconnect. The replay 401s, which no retry can ever clear, so the
+  // badge must stay a way in rather than spinning forever.
+  await server.start();
+  await selectSource(page, null);
+  await page.evaluate(() => window.dispatchEvent(new Event("focus")));
   await expect(signInPill).toBeVisible({ timeout: 30_000 });
 
   // --- Sign in from the prompt; the queue drains on its own afterwards.
   await signInPill.click();
-  await page.getByPlaceholder("Votre e-mail").fill(E2E_DEFERRED_EMAIL);
-  await page.getByRole("button", { name: /Recevoir le lien/ }).click();
-  const link = await server.waitForLog(
-    /Lien de connexion pour \S+ : (http\S+)/,
-  );
-  await page.goto(link[1]); // verifies the token, redirects to /
+  await signIn(page, E2E_DEFERRED_EMAIL);
 
   // Sync runs at app start: the observation captured while signed out is now
   // attributed to the account that claimed it.
@@ -304,8 +313,126 @@ test("en ligne sans compte : l’observation est gardée, la connexion est deman
   // Kept, not lost — and the prompt opens on its own, at the moment the
   // hiker is most invested.
   await expect(page.getByText(/Enregistrée sur cet appareil/)).toBeVisible();
-  await expect(page.getByText("1 contribution à envoyer")).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: fr.pendingNeedSignIn(1) }),
+  ).toBeVisible();
   await expect(
     page.getByRole("region", { name: fr.signInToSendTitle }),
   ).toBeVisible();
+});
+
+/**
+ * The bug this pair of scenarios exists to prevent, from both ends.
+ *
+ * `GET /api/v1/sources/:id` answers `isMine` from the session, so a
+ * signed-out sheet was told `false` for every observation — including the
+ * hiker's own. It offered "Confirmer", the tap queued behind the missing
+ * session, and the sign-in that was supposed to *send* the queue instead
+ * got the whole thing refused with `own_observation`.
+ */
+test("déconnecté : sa propre observation n’est pas proposée à la confirmation", async ({
+  page,
+}) => {
+  await page.goto(server.baseURL);
+  await page.waitForFunction(snapshotInIdb, undefined, { timeout: 15_000 });
+
+  const res = await page.request.get(`${server.baseURL}/api/v1/sources`);
+  const snapshot = (await res.json()) as { sources: { id: string }[] };
+  const sourceId = snapshot.sources[0].id;
+
+  // Sign in and file an observation of our own.
+  await selectSource(page, sourceId);
+  await page.getByRole("button", { name: fr.signInAction }).click();
+  await signIn(page, E2E_OWN_EMAIL);
+  await selectSource(page, sourceId);
+  await page.getByRole("button", { name: "Coule bien" }).click();
+  await page.getByRole("button", { name: "Envoyer", exact: true }).click();
+  await expect(page.getByText(fr.observationSaved)).toBeVisible();
+
+  // Sign out: the server can no longer say whose observation that is, but
+  // this device still knows it wrote it.
+  await page.getByRole("button", { name: fr.signOut }).click();
+  await page.waitForTimeout(1_000);
+  await page.reload();
+  await selectSource(page, sourceId);
+
+  // The report form is still the default view for everyone (the promise of
+  // the deferred-auth flow) — only the impossible tap is withheld.
+  await expect(page.getByText(/Signaler l.état actuel/)).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: new RegExp(fr.confirm) }),
+  ).toHaveCount(0);
+  await expect(page.getByText(/contribution/)).toHaveCount(0);
+});
+
+/**
+ * And when a write really is refused — here a source that no longer exists,
+ * which is terminal — it stays on the device. The old behaviour reported
+ * "1 contribution n’a pas pu être envoyée" over a single "Ignorer" that
+ * deleted it: a loss announced after the fact, with no way to inspect or
+ * act on it.
+ */
+test("une contribution refusée reste sur l’appareil jusqu’à décision", async ({
+  page,
+}) => {
+  await page.goto(server.baseURL);
+  await page.waitForFunction(snapshotInIdb, undefined, { timeout: 15_000 });
+
+  const res = await page.request.get(`${server.baseURL}/api/v1/sources`);
+  const snapshot = (await res.json()) as { sources: { id: string }[] };
+  await selectSource(page, snapshot.sources[0].id);
+  await page.getByRole("button", { name: fr.signInAction }).click();
+  await signIn(page, E2E_BLOCKED_EMAIL);
+
+  // An observation of a source the server has never heard of — the shape a
+  // terminal refusal takes without waiting a week for one to go stale.
+  await page.evaluate(() => {
+    const item = {
+      kind: "observation",
+      id: crypto.randomUUID(),
+      enqueuedAt: new Date().toISOString(),
+      body: {
+        id: crypto.randomUUID(),
+        sourceId: crypto.randomUUID(), // no such source
+        status: "dry",
+        observedAt: new Date().toISOString(),
+      },
+    };
+    item.body.id = item.id;
+    return new Promise<void>((resolve, reject) => {
+      const req = indexedDB.open("sdv-offline");
+      req.onsuccess = () => {
+        const db = req.result;
+        const tx = db.transaction("outbox", "readwrite");
+        tx.objectStore("outbox").put(item);
+        tx.oncomplete = () => {
+          db.close();
+          resolve();
+        };
+        tx.onerror = () => reject(tx.error);
+      };
+      req.onerror = () => reject(req.error);
+    });
+  });
+  await page.reload();
+
+  // Refused, and *kept*: the pill leads to the contribution, not to a way
+  // of making it disappear.
+  const pill = page.getByRole("button", { name: fr.blockedPill(1) });
+  await expect(pill).toBeVisible({ timeout: 30_000 });
+
+  // It survives a restart — this is storage, not a toast.
+  await page.reload();
+  await expect(pill).toBeVisible({ timeout: 30_000 });
+
+  await pill.click();
+  const sheet = page.getByRole("region", { name: fr.blockedTitle });
+  await expect(sheet.getByText(fr.status.dry)).toBeVisible();
+  await expect(sheet.getByText(fr.blockedReason.rejected)).toBeVisible();
+
+  // Deleting is explicit, per contribution, with the reason on screen.
+  await sheet.getByRole("button", { name: fr.blockedDelete }).click();
+  await expect(sheet.getByText(fr.blockedEmpty)).toBeVisible();
+  await sheet.getByRole("button", { name: fr.close }).click();
+  await expect(page.getByText(/contribution/)).toHaveCount(0);
 });

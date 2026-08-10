@@ -4,9 +4,21 @@
  * the on-focus path is the reliable one on iOS, where SW Background Sync
  * doesn't exist. Replay is idempotent (client UUIDs), so retrying is
  * always safe.
+ *
+ * Two outcomes stop an item: a *block* (offline, server error, no session)
+ * keeps it queued and stops the flush there, preserving order; a *refusal*
+ * (terminal 4xx) keeps it too, stamped with why, and the flush moves on to
+ * the rest. Nothing is deleted here — only the hiker deletes contributions
+ * (lib/offline/outbox.ts).
  */
 
-import { listOutbox, removeOutboxItem, type OutboxItem } from "./outbox";
+import {
+  listSendableOutbox,
+  markOutboxFailed,
+  removeOutboxItem,
+  type FailureReason,
+  type OutboxItem,
+} from "./outbox";
 
 /** Why a flush stopped before draining the queue. */
 export type BlockedReason =
@@ -17,26 +29,19 @@ export type BlockedReason =
   /** Server error; the triggers will retry. */
   | "server";
 
-/** Why an item was removed without being delivered. */
-export type DropReason =
-  /** Sat in the outbox past the observed_at window — unsendable, ever. */
-  | "too_old"
-  /** Terminal 4xx (source gone, own observation, id conflict…). */
-  | "other";
-
 export interface FlushResult {
   /** Items accepted by the server during this flush. */
   sent: number;
-  /** Items still queued (offline, server error, or signed out). */
-  remaining: number;
+  /** Items still sendable (offline, server error, or signed out). */
+  pending: number;
+  /** Items refused for good this flush — kept, and now needing a decision. */
+  failed: number;
   /**
    * Set when the flush stopped early. "auth" is the one the UI must act on:
    * retrying can never clear it, so the queue needs a visible way in
    * (MapShell surfaces a sign-in prompt) or it wedges forever.
    */
   blockedBy: BlockedReason | null;
-  /** Items dropped this flush — surfaced, never silently lost. */
-  dropped: DropReason[];
 }
 
 function requestFor(item: OutboxItem): { url: string; body: unknown } {
@@ -55,24 +60,34 @@ function requestFor(item: OutboxItem): { url: string; body: unknown } {
 /**
  * A dispute queued before the reaction was retired (DOMAIN.md § Confirmation).
  * There is no endpoint left to deliver it to, and the one remaining endpoint
- * means the opposite, so the item is dropped and reported rather than sent.
+ * means the opposite, so the item is refused rather than sent.
  */
 function isRetiredDispute(item: OutboxItem): boolean {
   return item.kind === "reaction" && item.type === "dispute";
 }
 
+/** Terminal 4xx → the reason the blocked list will explain to the hiker. */
+function failureReasonFor(error: string | undefined): FailureReason {
+  if (error === "observed_at_too_old") return "too_old";
+  // 403 on the confirm endpoint has exactly one cause, and it is worth
+  // naming: a signed-out sheet cannot tell whose observation it is showing,
+  // so this is the confirmation the hiker was allowed to queue but the
+  // domain never allows to land (DOMAIN.md § Confirmation).
+  if (error === "own_observation") return "own_observation";
+  return "rejected";
+}
+
 type ReplayOutcome =
   /** Accepted (2xx) — remove from the outbox. */
   | { kind: "sent" }
-  /** Terminal — retrying can never succeed, so remove rather than wedge. */
-  | { kind: "dropped"; reason: DropReason }
+  /** Terminal — retrying can never succeed on its own; keep it and say why. */
+  | { kind: "failed"; reason: FailureReason; status?: number }
   /** Keep the item and stop this flush; the caller reports why. */
   | { kind: "blocked"; reason: BlockedReason };
 
 async function replayItem(item: OutboxItem): Promise<ReplayOutcome> {
   if (isRetiredDispute(item)) {
-    console.warn(`[outbox] dropping retired dispute ${item.id}`);
-    return { kind: "dropped", reason: "other" };
+    return { kind: "failed", reason: "retired" };
   }
   const { url, body } = requestFor(item);
   let res: Response;
@@ -95,11 +110,14 @@ async function replayItem(item: OutboxItem): Promise<ReplayOutcome> {
     .json()
     .then((b: unknown) => (b as { error?: string })?.error)
     .catch(() => undefined);
-  const reason: DropReason = error === "observed_at_too_old" ? "too_old" : "other";
   console.warn(
-    `[outbox] dropping ${item.kind} ${item.id}: HTTP ${res.status} ${error ?? ""}`,
+    `[outbox] ${item.kind} ${item.id} refused: HTTP ${res.status} ${error ?? ""}`,
   );
-  return { kind: "dropped", reason };
+  return {
+    kind: "failed",
+    reason: failureReasonFor(error),
+    status: res.status,
+  };
 }
 
 let inFlight: Promise<FlushResult> | null = null;
@@ -109,22 +127,32 @@ export function flushOutbox(): Promise<FlushResult> {
   if (inFlight) return inFlight;
   inFlight = (async () => {
     let sent = 0;
+    let failed = 0;
     let blockedBy: BlockedReason | null = null;
-    const dropped: DropReason[] = [];
-    const items = await listOutbox();
-    let remaining = items.length;
+    const items = await listSendableOutbox();
+    let pending = items.length;
     for (const item of items) {
       const outcome = await replayItem(item);
       if (outcome.kind === "blocked") {
         blockedBy = outcome.reason;
         break;
       }
-      await removeOutboxItem(item.id);
-      remaining -= 1;
-      if (outcome.kind === "sent") sent += 1;
-      else dropped.push(outcome.reason);
+      pending -= 1;
+      if (outcome.kind === "sent") {
+        await removeOutboxItem(item.id);
+        sent += 1;
+      } else {
+        // Kept, not discarded: one refusal must not take the contribution
+        // with it, and must not stop the items behind it either.
+        await markOutboxFailed(item.id, {
+          reason: outcome.reason,
+          at: new Date().toISOString(),
+          status: outcome.status,
+        });
+        failed += 1;
+      }
     }
-    return { sent, remaining, blockedBy, dropped };
+    return { sent, pending, failed, blockedBy };
   })().finally(() => {
     inFlight = null;
   });

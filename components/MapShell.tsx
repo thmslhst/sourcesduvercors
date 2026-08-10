@@ -13,10 +13,20 @@ import dynamic from "next/dynamic";
 import { decaySnapshotItem } from "@/lib/domain/display";
 import type { SourcesSnapshot } from "@/lib/domain/snapshot";
 import { loadSnapshot, saveSnapshot } from "@/lib/offline/snapshot-cache";
-import { subscribeOutbox } from "@/lib/offline/outbox";
-import { startSyncTriggers, type DropReason } from "@/lib/offline/sync";
+import {
+  removeOutboxItem,
+  retryOutboxItem,
+  subscribeOutbox,
+  type OutboxItem,
+} from "@/lib/offline/outbox";
+import {
+  flushOutbox,
+  startSyncTriggers,
+  type FlushResult,
+} from "@/lib/offline/sync";
 import { fr } from "@/lib/i18n/fr";
 import AboutSheet from "./AboutSheet";
+import BlockedSheet from "./BlockedSheet";
 import OfflinePanel from "./OfflinePanel";
 import SignInSheet from "./SignInSheet";
 import SourceSheet from "./SourceSheet";
@@ -43,14 +53,14 @@ export default function MapShell() {
   const [state, setState] = useState<LoadState>({ phase: "loading" });
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [reloadKey, setReloadKey] = useState(0);
-  const [pendingCount, setPendingCount] = useState(0);
+  // The whole outbox, not a count: the pills and the blocked list are two
+  // readings of the same store, so neither can drift from it.
+  const [outbox, setOutbox] = useState<OutboxItem[]>([]);
   // The queue is stuck on a sign-in, which no retry can clear — the pill
   // turns into a way in (lib/offline/sync § blockedBy).
   const [authBlocked, setAuthBlocked] = useState(false);
   const [signInOpen, setSignInOpen] = useState(false);
-  // Contributions removed without being delivered; reported once, then
-  // dismissed by the user. Never silently discarded (honesty principle).
-  const [dropped, setDropped] = useState<DropReason[]>([]);
+  const [blockedOpen, setBlockedOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   // Slow clock driving offline confidence decay while the app stays open.
   const [decayTick, setDecayTick] = useState(0);
@@ -135,26 +145,54 @@ export default function MapShell() {
   // changed server-side: re-fetch without dropping the rendered map data.
   const onMutated = useCallback(() => setReloadKey((k) => k + 1), []);
 
-  // Outbox: pending-count badge + replay on reconnect/focus/interval.
-  useEffect(() => subscribeOutbox(setPendingCount), []);
+  // Outbox: pending/blocked badges + replay on reconnect/focus/interval.
+  useEffect(() => subscribeOutbox(setOutbox), []);
+
+  // Every flush is read the same way, wherever it was triggered from — the
+  // badge must not depend on which one ran. Never touches signInOpen: the
+  // interval flush fires every 60 s and must not yank the sheet out from
+  // under someone mid-typing.
+  const onFlushResult = useCallback(({ blockedBy }: FlushResult) => {
+    setAuthBlocked(blockedBy === "auth");
+  }, []);
+
   useEffect(
-    () =>
-      startSyncTriggers({
-        onSynced: onMutated,
-        onResult: ({ blockedBy, dropped: justDropped }) => {
-          // Never touches signInOpen: the interval flush fires every 60 s and
-          // must not yank the sheet out from under someone mid-typing.
-          setAuthBlocked(blockedBy === "auth");
-          if (justDropped.length > 0) {
-            setDropped((prev) => [...prev, ...justDropped]);
-          }
-        },
-      }),
-    [onMutated],
+    () => startSyncTriggers({ onSynced: onMutated, onResult: onFlushResult }),
+    [onMutated, onFlushResult],
   );
 
-  const droppedTooOld = dropped.filter((r) => r === "too_old").length;
-  const droppedOther = dropped.length - droppedTooOld;
+  const pending = useMemo(
+    () => outbox.filter((item) => item.failure === undefined),
+    [outbox],
+  );
+  const blocked = useMemo(
+    () => outbox.filter((item) => item.failure !== undefined),
+    [outbox],
+  );
+
+  // A write that queued behind a missing session: say so now, rather than
+  // promising automatic delivery until the next flush proves otherwise (up
+  // to a minute later).
+  const onNeedsSignIn = useCallback(() => {
+    setAuthBlocked(true);
+    setSignInOpen(true);
+  }, []);
+
+  // Unblocking is worth an immediate attempt — the hiker just asked for it.
+  const onRetryBlocked = useCallback(
+    (id: string) => {
+      void retryOutboxItem(id)
+        .then(() => flushOutbox())
+        .then((result) => {
+          if (result.sent > 0) onMutated();
+          onFlushResult(result);
+        });
+    },
+    [onFlushResult, onMutated],
+  );
+  const onDeleteBlocked = useCallback((id: string) => {
+    void removeOutboxItem(id);
+  }, []);
 
   useEffect(() => {
     const interval = window.setInterval(
@@ -235,7 +273,7 @@ export default function MapShell() {
               : fr.refreshFailedDataAsOf(state.fetchedAt)}
           </p>
         )}
-        {pendingCount > 0 &&
+        {pending.length > 0 &&
           (authBlocked ? (
             // Retrying can't clear a 401 — offer the only thing that can.
             <button
@@ -243,31 +281,24 @@ export default function MapShell() {
               onClick={() => setSignInOpen(true)}
               className="pointer-events-auto rounded-full border border-secondary bg-primary px-3 py-1 text-xs font-semibold text-secondary underline shadow"
             >
-              {fr.pendingNeedSignIn(pendingCount)}
+              {fr.pendingNeedSignIn(pending.length)}
             </button>
           ) : (
             <p className="rounded-full border border-secondary/60 bg-primary px-3 py-1 text-xs font-medium text-secondary shadow">
-              {fr.pendingContributions(pendingCount)}
+              {fr.pendingContributions(pending.length)}
             </p>
           ))}
-        {dropped.length > 0 && (
-          <p className="pointer-events-auto flex items-center gap-2 rounded-full border border-secondary/60 bg-primary px-3 py-1 text-xs font-medium text-secondary shadow">
-            <span>
-              {[
-                droppedTooOld > 0 && fr.droppedTooOld(droppedTooOld),
-                droppedOther > 0 && fr.droppedOther(droppedOther),
-              ]
-                .filter(Boolean)
-                .join(" ")}
-            </span>
-            <button
-              type="button"
-              onClick={() => setDropped([])}
-              className="font-semibold underline"
-            >
-              {fr.dismiss}
-            </button>
-          </p>
+        {/* Refused, still here. The pill opens the list rather than offering
+            to make it go away — deleting a contribution is the hiker's call
+            and needs to be made per item, with the reason in front of them. */}
+        {blocked.length > 0 && (
+          <button
+            type="button"
+            onClick={() => setBlockedOpen(true)}
+            className="pointer-events-auto rounded-full border border-secondary bg-primary px-3 py-1 text-xs font-semibold text-secondary underline shadow"
+          >
+            {fr.blockedPill(blocked.length)}
+          </button>
         )}
       </div>
 
@@ -311,15 +342,24 @@ export default function MapShell() {
           link in the sheet, so it must not be gated on pendingCount. */}
       <SignInSheet
         open={signInOpen}
-        pendingCount={pendingCount}
+        pendingCount={pending.length}
         onClose={() => setSignInOpen(false)}
+      />
+
+      <BlockedSheet
+        open={blockedOpen}
+        items={blocked}
+        sources={sources}
+        onRetry={onRetryBlocked}
+        onDelete={onDeleteBlocked}
+        onClose={() => setBlockedOpen(false)}
       />
 
       <SourceSheet
         source={selected}
         onClose={() => setSelectedId(null)}
         onMutated={onMutated}
-        onNeedsSignIn={() => setSignInOpen(true)}
+        onNeedsSignIn={onNeedsSignIn}
       />
     </div>
   );

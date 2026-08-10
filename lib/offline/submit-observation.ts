@@ -10,6 +10,7 @@
  */
 
 import type { ObservationStatus, ObservationTag } from "@/lib/domain/constants";
+import { rememberAuthored } from "./authored";
 import { enqueueOutbox } from "./outbox";
 
 export interface NewObservationBody {
@@ -35,6 +36,11 @@ export async function submitObservation(
   /** Known signed-out up front (offline); online a 401 tells us instead. */
   deferredAuth: boolean,
 ): Promise<SubmitObservationOutcome> {
+  // Before anything is attempted: whichever way this goes, this device is
+  // the author, and a signed-out sheet has no other way to know that
+  // (lib/offline/authored.ts).
+  rememberAuthored(body.id);
+
   const queue = async (
     needsSignIn: boolean,
   ): Promise<SubmitObservationOutcome> => {

@@ -89,11 +89,20 @@ export class AppServer {
     throw new Error(`port :${this.port} still answering after stop()`);
   }
 
+  /**
+   * Wait for a line, and consume the log up to it. Magic links are
+   * single-use while the buffer spans the whole run — without consuming,
+   * a second sign-in would be handed the first one's already spent token
+   * and silently stay signed out.
+   */
   async waitForLog(re: RegExp, timeoutMs = 20_000): Promise<RegExpExecArray> {
     const deadline = Date.now() + timeoutMs;
     while (Date.now() < deadline) {
       const m = re.exec(this.logs);
-      if (m) return m;
+      if (m) {
+        this.logs = this.logs.slice(m.index + m[0].length);
+        return m;
+      }
       await sleep(200);
     }
     throw new Error(`log never matched ${re}\n--- server logs ---\n${this.logs}`);

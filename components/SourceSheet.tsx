@@ -23,6 +23,7 @@ import {
 } from "@/lib/domain/detail";
 import { STATUS_COLORS } from "@/lib/domain/display";
 import type { SourceSnapshotItem } from "@/lib/domain/snapshot";
+import { isAuthoredHere } from "@/lib/offline/authored";
 import { enqueueOutbox, reactionOutboxKey } from "@/lib/offline/outbox";
 import { submitObservation } from "@/lib/offline/submit-observation";
 import { fr } from "@/lib/i18n/fr";
@@ -148,6 +149,9 @@ export default function SourceSheet({
             reactionId: crypto.randomUUID(),
             enqueuedAt: new Date().toISOString(),
             observationId,
+            // Only the sheet knows this, and a blocked confirmation has to
+            // be able to say which source it was about.
+            sourceId,
           });
           setPromptOutcomeFor({ sourceId, outcome: "queued" });
           if (needsSignIn) onNeedsSignIn();
@@ -266,12 +270,22 @@ export default function SourceSheet({
 
   // The one place the latest observation can be acted on. `sourcePromptState`
   // owns which tap is honest here — the sheet only decides that a tap needs a
-  // resolved session first.
+  // resolved session first, and supplies the one fact the server cannot.
+  //
+  // `isMine` comes from the session, so a signed-out viewer is told `false`
+  // for every observation including their own. Offering "Confirmer" there
+  // queues a confirmation the server refuses outright (own_observation) as
+  // soon as they sign in, which is exactly how a whole queue used to end up
+  // unsendable. The device remembers what it filed; that answer holds
+  // signed out and offline both.
   const latest = detail?.observations[0] ?? null;
   const promptState =
     sessionState.status === "pending" || !latest
       ? "none"
-      : sourcePromptState(latest);
+      : sourcePromptState({
+          ...latest,
+          isMine: latest.isMine || isAuthoredHere(latest.id),
+        });
 
   const facts = [
     current.lastObservedAt !== null && fr.timeAgo(current.lastObservedAt),
