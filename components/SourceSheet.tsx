@@ -287,10 +287,24 @@ export default function SourceSheet({
           isMine: latest.isMine || isAuthoredHere(latest.id),
         });
 
-  const facts = [
-    current.lastObservedAt !== null && fr.timeAgo(current.lastObservedAt),
-    current.confirmationCount > 0 && fr.confirmedBy(current.confirmationCount),
-  ].filter(Boolean);
+  // Three answers to "what is known here?", not two. A source that decayed
+  // to `unknown` is not the same as one nobody has ever reported: somebody
+  // found this one, which is worth saying, and its confirmations are not —
+  // they corroborate an observation that no longer supports anything, so
+  // printing "confirmé par 2 randonneurs" under a "Confiance inconnue" badge
+  // only lends weight the app just withdrew.
+  const knowledge =
+    current.lastObservedAt === null
+      ? fr.noObservationYet
+      : current.confidence === "unknown"
+        ? fr.staleObservation(fr.timeAgo(current.lastObservedAt))
+        : [
+            fr.timeAgo(current.lastObservedAt),
+            current.confirmationCount > 0 &&
+              fr.confirmedBy(current.confirmationCount),
+          ]
+            .filter(Boolean)
+            .join(" · ");
 
   return (
     <section
@@ -338,9 +352,7 @@ export default function SourceSheet({
             {fr.confidence[current.confidence]}
           </span>
         </div>
-        <p className="mt-1 text-sm text-secondary/75">
-          {facts.length > 0 ? facts.join(" · ") : fr.noObservationYet}
-        </p>
+        <p className="mt-1 text-sm text-secondary/75">{knowledge}</p>
       </div>
 
       {loadingObservations ? (

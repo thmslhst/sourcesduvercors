@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import { CONFIDENCE_WINDOWS_DAYS, type Confidence } from "./constants";
 import { deriveConfidence } from "./confidence";
-import { sourcePromptState } from "./detail";
+import { isDecayed, sourcePromptState } from "./detail";
 import type { ObservationHistoryItem } from "./detail";
 
 const NOW = new Date("2026-07-30T12:00:00.000Z");
@@ -32,6 +32,31 @@ const RANK: Record<Confidence, number> = {
   low: 1,
   unknown: 0,
 };
+
+describe("isDecayed", () => {
+  it("keeps an observation inside the known window in its status color", () => {
+    expect(isDecayed(daysAgo(CONFIDENCE_WINDOWS_DAYS.known), NOW)).toBe(false);
+  });
+
+  it("greys out an observation past the known window", () => {
+    expect(isDecayed(daysAgo(CONFIDENCE_WINDOWS_DAYS.known + 0.01), NOW)).toBe(
+      true,
+    );
+  });
+
+  /**
+   * The whole point of the rule: it reads the same constant the confidence
+   * derivation does, so a row goes grey exactly when it stops supporting a
+   * confidence — never a day either side of it.
+   */
+  it("greys out exactly the observations that support no confidence", () => {
+    for (const ageDays of [0, 1, 7, 30, 59.99, 60, 60.01, 90, 365]) {
+      expect(isDecayed(daysAgo(ageDays), NOW)).toBe(
+        deriveConfidence({ ageDays, confirmations: 0 }) === "unknown",
+      );
+    }
+  });
+});
 
 describe("sourcePromptState", () => {
   it("asks to confirm a fresh observation from someone else", () => {
@@ -64,9 +89,9 @@ describe("sourcePromptState", () => {
   it("offers re-observe on a stale observation whoever wrote or confirmed it", () => {
     const stale = { observedAt: daysAgo(30) };
     expect(sourcePromptState(observation(stale), NOW)).toBe("reobserve");
-    expect(sourcePromptState(observation({ ...stale, isMine: true }), NOW)).toBe(
-      "reobserve",
-    );
+    expect(
+      sourcePromptState(observation({ ...stale, isMine: true }), NOW),
+    ).toBe("reobserve");
     expect(
       sourcePromptState(observation({ ...stale, myConfirmation: true }), NOW),
     ).toBe("reobserve");
@@ -78,7 +103,10 @@ describe("sourcePromptState", () => {
       sourcePromptState(observation({ observedAt: daysAgo(known) }), NOW),
     ).toBe("reobserve");
     expect(
-      sourcePromptState(observation({ observedAt: daysAgo(known + 0.01) }), NOW),
+      sourcePromptState(
+        observation({ observedAt: daysAgo(known + 0.01) }),
+        NOW,
+      ),
     ).toBe("none");
   });
 
@@ -98,8 +126,10 @@ describe("sourcePromptState", () => {
         deriveConfidence({ ageDays, confirmations: 1 }) !==
         deriveConfidence({ ageDays, confirmations: 0 });
       expect(
-        sourcePromptState(observation({ observedAt: daysAgo(ageDays) }), NOW) ===
-          "confirm",
+        sourcePromptState(
+          observation({ observedAt: daysAgo(ageDays) }),
+          NOW,
+        ) === "confirm",
       ).toBe(raises);
     }
   });

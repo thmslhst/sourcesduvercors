@@ -87,6 +87,17 @@ Ordered from best to worst. Exactly these five values, everywhere:
 
 `unknown` is never stored as an observation status — it is the *derived* state of a source with no usable observation.
 
+### No sixth color for decay (August 2026)
+
+A source reads `unknown` for two different reasons: nobody has ever reported it, or somebody did and the reading has aged past `known`. Those are worth telling apart — a source observed once is confirmed to *exist and be findable*, which never expires even though its status does, and much of the map is unverified OSM import. Giving the decayed case its own hue (brown was the candidate) is nonetheless refused:
+
+- **Hue is the status axis.** What the water is doing and how much we know are the two axes this document keeps apart, and only the first is a color. "Decayed" describes the record, not the spring; it is already carried by `confidence`. Adding it to the scale would also force a display-only concern into `DisplayStatus`, which is what the `source_current_status` view emits — the one derivation would then be shaped by a palette decision.
+- **Brown reads as bad water.** It sits perceptually between `dripping` orange and `dry` red, so a source that may well be flowing would be filed by a glance under "don't count on it" — the one misreading direction the honesty principle can't tolerate, since it sends hikers past usable water.
+
+If the distinction is wanted on the map later, it belongs on a channel other than hue (fill vs. outline on the same gray, say), so it composes with the status scale instead of competing with it. It was considered and deferred in August 2026 over legibility at map scale.
+
+In the detail sheet the distinction is made in words instead: a decayed source states its age and asks for a fresh reading, and history rows past `known` drop to the gray swatch so the sheet never re-asserts, in the status palette, a status its own header has just withdrawn (`isDecayed`, `lib/domain/detail.ts`). Their wording is left untouched — the list is a record of what people reported, not a place the app revises.
+
 ## Confidence model
 
 Confidence answers: **"How much should I trust the displayed status?"** It is derived, never stored as ground truth, and must be cheap to compute and easy to explain in the UI.

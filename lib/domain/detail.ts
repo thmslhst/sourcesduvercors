@@ -33,6 +33,25 @@ export interface SourceDetail {
 }
 
 /**
+ * Has this observation aged out of saying anything at all?
+ *
+ * Past the `known` window `deriveConfidence` returns `unknown` whatever the
+ * observation reads, so the history list renders the row in the neutral gray
+ * instead of the status color: the sheet may not print "Statut inconnu" in
+ * its header and then re-assert that same status three lines below, in the
+ * app's own status palette. Only the presentation moves — the words stay
+ * exactly as the hiker reported them, because the list is a record and
+ * rewriting it would be revising what someone said.
+ *
+ * Per observation, not per source. A source whose latest reading is three
+ * days old still lists observations from March, and those are just as
+ * historic as the ones under a source that has gone quiet entirely.
+ */
+export function isDecayed(observedAt: string, now: Date = new Date()): boolean {
+  return ageInDays(observedAt, now) > CONFIDENCE_WINDOWS_DAYS.known;
+}
+
+/**
  * What the sheet's one-tap prompt offers for the latest observation.
  *
  * There is a single prompt above the report form, and this decides which of

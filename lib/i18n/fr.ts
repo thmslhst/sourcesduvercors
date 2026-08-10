@@ -51,6 +51,15 @@ export const fr = {
   noObservationYet:
     "Aucune observation pour le moment. Soyez la première personne à signaler l’état de cette source.",
 
+  /**
+   * The other way a source reads `unknown`: observed once, too long ago to
+   * mean anything. The header used to state the bare age next to the badge
+   * and leave the hiker to connect the two — and the two unknowns differ in
+   * a way that matters, since somebody has at least found this one.
+   */
+  staleObservation: (when: string) =>
+    `Dernière observation ${when} — trop ancienne pour dire ce qu’il en est aujourd’hui. Signalez l’état actuel pour remettre cette source à jour.`,
+
   confidence: {
     high: "Confiance élevée",
     medium: "Confiance moyenne",
