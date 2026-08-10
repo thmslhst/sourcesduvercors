@@ -85,7 +85,10 @@ export const fr = {
    * The one-tap prompt above the report form (components/SourcePrompt.tsx).
    * Inside the week it asks for a confirmation; past it, a confirmation can
    * no longer raise anything, so it asks for the same reading again with
-   * today's date (DOMAIN.md § Confirmation).
+   * today's date (DOMAIN.md § Confirmation). That second ask says nothing
+   * about confirmations or windows: the hiker is answering "is this still
+   * what you see?", and the reason the answer is filed differently is ours
+   * to handle, not theirs to read about.
    */
   sourcePromptTitle: "Toujours d’accord ?",
   sourcePromptClaim: (status: string, when: string) =>
@@ -94,8 +97,6 @@ export const fr = {
     "Si ce n’est plus le cas, signalez l’état actuel ci-dessous.",
   sourcePromptConfirmed: "Vous avez confirmé cette observation.",
   reobserveTitle: "C’est toujours le cas ?",
-  reobserveExplainer:
-    "Cette observation a plus d’une semaine : la confirmer n’y changerait plus rien. Si l’état est le même, réenregistrez-la en date d’aujourd’hui.",
   reobserve: "Oui, c’est toujours le cas",
   sourcePromptFailed: "Impossible d’enregistrer. Réessayez.",
 

@@ -13,7 +13,11 @@
  * here and a pill there: the same act — "yes, that is what I see" — should
  * not change shape and weight depending on how old the observation is. What
  * changes is what the tap can honestly achieve, which `sourcePromptState`
- * decides and the copy states outright.
+ * decides: inside the week it files a confirmation, past it a fresh
+ * observation carrying the same status. Only the wording of the ask moves;
+ * the card never explains the difference, because the hiker is answering the
+ * same question either way and a button that needs a paragraph of reasoning
+ * beneath it is a button that reads as useless.
  *
  * The grid stays exactly where it is, expanded. Collapsing it behind a
  * disclosure would push reporting to four taps and break the ≤3-tap budget
@@ -70,12 +74,6 @@ export default function SourcePrompt({
           fr.timeAgo(observation.observedAt),
         )}
       </p>
-
-      {/* Say why the ask is different here rather than letting the hiker
-          discover that "Confirmer" moved nothing. */}
-      {reobserve && (
-        <p className="text-xs text-secondary/75">{fr.reobserveExplainer}</p>
-      )}
 
       {state === "confirmed" ? (
         <p className="text-sm font-semibold">✓ {fr.sourcePromptConfirmed}</p>
