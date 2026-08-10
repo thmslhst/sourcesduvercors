@@ -19,6 +19,7 @@
   "dependencies": {
     "@prisma/client": "^6.19.3",
     "@protomaps/basemaps": "^5.7.2",
+    "@vercel/analytics": "^2.0.1",
     "better-auth": "^1.6.25",
     "maplibre-gl": "^5.24.0",
     "next": "16.2.12",
