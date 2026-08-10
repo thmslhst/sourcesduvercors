@@ -168,7 +168,7 @@ export const fr = {
   // time and explains itself, so the form needs no warning label.
   contributeOfflineTitle: "Vous n’êtes pas connecté·e",
   contributeOfflineIntro:
-    "Pas de réseau ici : notez l’état de la source maintenant, elle sera conservée sur cet appareil. Vous vous connecterez au retour du réseau pour l’envoyer.",
+    "Pas de réseau ici : notez l’état de la source maintenant, elle sera conservée sur cet appareil. Connectez-vous au retour du réseau pour l’envoyer.",
   observationQueuedNeedsSignIn:
     "Enregistrée sur cet appareil. Connectez-vous dans les 7 jours pour l’envoyer — au-delà, l’observation sera trop ancienne.",
   pendingNeedSignIn: (n: number) =>
@@ -190,12 +190,12 @@ export const fr = {
     n === 1 ? "1 contribution bloquée" : `${n} contributions bloquées`,
   blockedTitle: "Contributions bloquées",
   blockedIntro:
-    "Le serveur a refusé ces contributions. Elles restent sur cet appareil : rien n’est supprimé sans vous.",
+    "Le serveur a refusé ces contributions.",
   blockedReason: {
     too_old: (days: number) =>
-      `Trop ancienne : une observation de plus de ${days} jours n’est plus acceptée, et la redater en dirait plus que ce que vous avez vu.`,
+      `Trop ancienne : une observation de plus de ${days} jours n’est plus acceptée.`,
     own_observation:
-      "C’est votre propre observation : on ne peut pas confirmer la sienne. Elle compte déjà.",
+      "C’est votre propre observation : on ne peut pas confirmer la sienne.",
     retired:
       "Cette action n’existe plus dans l’application et ne peut plus être envoyée.",
     rejected: "Le serveur l’a refusée.",
@@ -211,17 +211,17 @@ export const fr = {
   offlineMapButton: "Carte hors ligne",
   offlineMapTitle: "Carte hors ligne",
   offlineMapIntro: (size: string) =>
-    `Téléchargez le fond de carte du Vercors (${size}) pour l’afficher sans réseau. Les sources et leurs statuts sont déjà conservés automatiquement.`,
+    `Téléchargez la carte du Vercors (${size}) pour l’afficher sans réseau.`,
   offlineMapIntroNoSize:
-    "Téléchargez le fond de carte du Vercors pour l’afficher sans réseau. Les sources et leurs statuts sont déjà conservés automatiquement.",
+    "Téléchargez la carte du Vercors pour l’afficher sans réseau.",
   offlineMapDownload: (size: string) => `Télécharger (${size})`,
   offlineMapDownloadNoSize: "Télécharger",
   offlineMapDownloading: (pct: number) => `Téléchargement… ${pct} %`,
   offlineMapReady: (size: string) =>
-    `Fond de carte disponible hors ligne (${size}).`,
+    `Carte disponible hors ligne (${size}).`,
   offlineMapDelete: "Supprimer",
   offlineMapNeedsNetwork:
-    "Connexion requise pour télécharger le fond de carte.",
+    "Connexion requise pour télécharger la carte.",
   offlineMapFailed: "Échec du téléchargement. Réessayez.",
   megabytes: (bytes: number) =>
     `${Math.max(1, Math.round(bytes / 1_000_000)).toLocaleString("fr-FR")} Mo`,
