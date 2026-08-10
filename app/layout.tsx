@@ -3,6 +3,7 @@ import { Geist, Maname } from "next/font/google";
 import "./globals.css";
 
 import PWARegister from "@/components/PWARegister";
+import { Analytics } from "@vercel/analytics/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -55,6 +56,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <PWARegister />
         {children}
+        <Analytics />
       </body>
     </html>
   );
