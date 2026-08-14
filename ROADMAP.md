@@ -56,13 +56,15 @@ Everything works on the plateau with zero bars.
 
 Make it trustworthy and known.
 
-- [ ] French UI pass (French-first, English secondary)
-- [ ] Empty/edge states, safety disclaimer copy, about page (licensing, how confidence works)
+- [x] French UI pass (French-first, English secondary) — every user-facing string lives in `lib/i18n/fr.ts`; English stays post-MVP
+- [x] Empty/edge states, safety disclaimer copy, about page (licensing, how confidence works, what happens to an e-mail address)
 - [x] Contribute flow polish: confirm-first CTA on a fresh observation, structured tags instead of free-text comments, author retraction
 - [x] Retire the dispute reaction: confirmation is the only "+1", the useful answer to a changed source is a fresh observation, and server and offline client now run one identical derivation ([DOMAIN.md](DOMAIN.md) § Confirmation)
 - [x] Offline contribution without a session: capture into the outbox, claim it with a sign-in on reconnect (auth gates the flush, not the capture)
 - [x] A refused contribution is never deleted by the app: it stays on the device, listed with the reason, retried or removed only by the hiker — and the sheet no longer offers a signed-out hiker the self-confirmation the server always refused
-- [ ] Performance pass against budgets in [ARCHITECTURE.md](ARCHITECTURE.md)
+- [x] Link surface for the announcement: generated social card, canonical `www` host, `robots.txt`
+- [ ] Performance pass against budgets in [ARCHITECTURE.md](ARCHITECTURE.md) — initial JS measured at 221 KB compressed against the 300 KB budget; "map interactive < 3 s" still unmeasured, waiting on Speed Insights field data rather than a lab number
+- [ ] Magic-link delivery from a verified sending domain (until then Resend's shared sender only reaches the account owner, so nobody else can sign in)
 - [ ] Seed real data: contributors observe sources on actual Vercors outings
 - [ ] Outreach: local hiking groups/forums, park contact, open-source announcement
 
