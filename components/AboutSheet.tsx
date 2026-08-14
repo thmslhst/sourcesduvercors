@@ -125,6 +125,17 @@ export default function AboutSheet({ open, onClose }: AboutSheetProps) {
       </section>
 
       <section className="border-t border-secondary/30 pt-3">
+        <h3 className="text-sm font-semibold">{fr.aboutPrivacyTitle}</h3>
+        <div className="mt-1 flex flex-col gap-2">
+          {fr.aboutPrivacyPoints.map((point, i) => (
+            <p key={i} className="text-sm text-secondary/90">
+              {point}
+            </p>
+          ))}
+        </div>
+      </section>
+
+      <section className="border-t border-secondary/30 pt-3">
         <h3 className="text-sm font-semibold">{fr.aboutDataTitle}</h3>
         <p className="mt-1 text-xs text-secondary/75">{fr.aboutData}</p>
         <a

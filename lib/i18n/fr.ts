@@ -263,6 +263,22 @@ export const fr = {
     "Le Parc naturel régional du Vercors publie et met à jour l’état de quelques sources dans un tableau officiel. C’est une source de référence, vérifiée, mais limitée à quelques points et mise à jour ponctuellement. Cette app la complète : elle couvre toutes les sources du massif, en temps quasi réel, à partir de ce que les randonneurs constatent sur le terrain.",
   aboutParkLink: "Le site officiel du Parc du Vercors",
 
+  /**
+   * RGPD in the app's own voice rather than a linked policy nobody opens:
+   * the account holds one field, the map shows no author, and the deletion
+   * this describes is a button two taps away (components/AccountActions).
+   * Keep it true — lib/db/observations.ts serves observations with no author
+   * join, and that is what makes the second point sayable.
+   */
+  aboutPrivacyTitle: "Vie privée",
+  aboutPrivacyPoints: [
+    "Un compte, c’est une adresse e-mail et rien d’autre : pas de nom, pas de mot de passe. Elle sert uniquement à vous envoyer votre lien de connexion, n’est jamais affichée et n’est transmise à personne.",
+    "Vos observations, elles, sont publiques : la carte montre l’état signalé et sa date, sans lien avec votre compte. Personne ne peut voir qui a signalé quoi.",
+    "Vous pouvez supprimer votre compte à tout moment depuis le menu. Votre adresse est alors effacée ; les observations déjà envoyées restent sur la carte, définitivement détachées de vous.",
+    "La fréquentation est mesurée sans cookie et sans profilage (Vercel Analytics et Speed Insights) — rien à accepter, rien qui vous suive d’un site à l’autre.",
+    "Le site et la base de données sont hébergés dans l’Union européenne (Paris et Francfort).",
+  ],
+
   aboutDataTitle: "Données & licences",
   /**
    * ODbL attribution, required on the map *and* on an about page
