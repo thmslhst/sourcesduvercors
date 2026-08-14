@@ -66,6 +66,24 @@ async function signIn(page: Page, email: string): Promise<void> {
   await page.goto(link[1]); // verifies the token, redirects to /
 }
 
+/**
+ * Catalog string with the megabyte figure left open, as a regex. The two
+ * basemap lines carry a size the test cannot know, so they used to be typed
+ * out by hand — and a copy edit then left the assertion matching nothing,
+ * which reads exactly like the download never finishing. Built from `fr`,
+ * a reword fails the diff instead.
+ */
+function withAnySize(template: (size: string) => string): RegExp {
+  // Placeholder chosen to survive the escape below untouched and to
+  // never occur in the copy itself.
+  const SIZE = "__SIZE__";
+  return new RegExp(
+    template(SIZE)
+      .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+      .replace(SIZE, "\\d+\\s*Mo"),
+  );
+}
+
 /** Polled via waitForFunction: is the sources snapshot persisted locally? */
 const snapshotInIdb = () =>
   new Promise<boolean>((resolve) => {
@@ -130,10 +148,12 @@ test("mode avion : consulter, signaler, reconnecter, synchroniser", async ({
   // Storage. Close the sheet first — it covers the corner button on mobile.
   await selectSource(page, null);
   await page.getByRole("button", { name: "Carte hors ligne" }).click();
-  const downloadButton = page.getByRole("button", { name: /^Télécharger \(\d+ Mo\)$/ });
+  const downloadButton = page.getByRole("button", {
+    name: withAnySize(fr.offlineMapDownload),
+  });
   await expect(downloadButton).toBeVisible();
   await downloadButton.click();
-  await expect(page.getByText(/Fond de carte disponible hors ligne/)).toBeVisible({
+  await expect(page.getByText(withAnySize(fr.offlineMapReady))).toBeVisible({
     timeout: 60_000,
   });
   await page.getByRole("button", { name: "Carte hors ligne" }).click(); // close
