@@ -64,7 +64,7 @@ Make it trustworthy and known.
 - [x] A refused contribution is never deleted by the app: it stays on the device, listed with the reason, retried or removed only by the hiker — and the sheet no longer offers a signed-out hiker the self-confirmation the server always refused
 - [x] Link surface for the announcement: generated social card, canonical `www` host, `robots.txt`
 - [ ] Performance pass against budgets in [ARCHITECTURE.md](ARCHITECTURE.md) — initial JS measured at 221 KB compressed against the 300 KB budget; "map interactive < 3 s" still unmeasured, waiting on Speed Insights field data rather than a lab number
-- [ ] Magic-link delivery from a verified sending domain (until then Resend's shared sender only reaches the account owner, so nobody else can sign in)
+- [x] Magic-link delivery from a verified sending domain (Resend's shared sender reached only the account owner, so until this landed nobody but the maintainer could sign in)
 - [ ] Seed real data: contributors observe sources on actual Vercors outings
 - [ ] Outreach: local hiking groups/forums, park contact, open-source announcement
 
